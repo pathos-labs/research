@@ -98,13 +98,40 @@
             box-shadow: 0 2px 12px rgba(13, 148, 136, 0.08);
         }
 
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: clamp(0.5rem, 1vh, 0.75rem);
+        }
+
+        .card-discipline {
+            font-family: var(--font-mono);
+            font-size: clamp(0.5rem, 0.8vw, 0.6rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            padding: 0.3em 0.65em;
+            border-radius: 3px;
+            line-height: 1;
+        }
+
+        .card-discipline.blue {
+            color: #2563EB;
+            background: #EFF6FF;
+        }
+
+        .card-discipline.teal {
+            color: #0D9488;
+            background: #F0FDFA;
+        }
+
         .card-meta {
             font-family: var(--font-mono);
             font-size: clamp(0.55rem, 0.9vw, 0.7rem);
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--text-muted);
-            margin-bottom: clamp(0.3rem, 0.8vh, 0.5rem);
         }
 
         .card h2 {
@@ -298,7 +325,10 @@
 
     <div class="presentations">
         <a class="card" href="executive-coaching-methods/">
-            <div class="card-meta">February 2026</div>
+            <div class="card-top">
+                <span class="card-discipline blue">Coaching & Leadership</span>
+                <span class="card-meta">February 2026</span>
+            </div>
             <h2>Executive Coaching Methods — What the Evidence Actually Shows</h2>
             <p>A rigorous review of what works in executive coaching, grounded in 3 meta-analyses and 70+ sources. Covers foundations, evidence quality, practical tactics, and contrarian perspectives.</p>
             <div class="card-stats">
@@ -311,7 +341,10 @@
         </a>
 
         <a class="card" data-accent="teal" href="networking-to-business/">
-            <div class="card-meta">February 2026</div>
+            <div class="card-top">
+                <span class="card-discipline teal">Business Development</span>
+                <span class="card-meta">February 2026</span>
+            </div>
             <h2>Networking to Business — Converting Connections Into Clients</h2>
             <p>How to turn LinkedIn DMs, Zoom calls, and in-person events into real business. Persuasion psychology, channel-specific tactics, and contrarian stress-tests of conventional networking wisdom.</p>
             <div class="card-stats">
