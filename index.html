@@ -297,6 +297,7 @@
             if (localStorage.getItem('pathos_access')) return;
 
             const KIT_FORM_ID = '9098413';
+            const KIT_API_KEY = 'kit_06154d75658bbcce03fe3d70bd0f1c78';
             let pendingHref = null;
 
             document.querySelectorAll('.card').forEach(card => {
@@ -358,11 +359,11 @@
 
                     try {
                         const res = await fetch(
-                            `https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`,
+                            `https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,
                             {
                                 method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ email_address: input.value }),
+                                headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                                body: JSON.stringify({ api_key: KIT_API_KEY, email: input.value }),
                             }
                         );
 
