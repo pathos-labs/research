@@ -261,6 +261,16 @@
             text-align: center;
         }
 
+        .gate-hp {
+            position: absolute;
+            left: -9999px;
+            opacity: 0;
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            tab-index: -1;
+        }
+
         @media print {
             .gate-overlay { display: none; }
         }
@@ -322,6 +332,7 @@
                         <p class="gate-subtext">Enter your email to get free access to all our research presentations.</p>
                         <form id="gateForm">
                             <input type="email" class="gate-input" placeholder="you@example.com" required autocomplete="email" aria-label="Email address" />
+                            <input type="text" name="website" class="gate-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
                             <button type="submit" class="gate-button">Get Access</button>
                             <div class="gate-error" id="gateError">Something went wrong — try again.</div>
                         </form>
@@ -349,6 +360,17 @@
 
                     if (!input.value || !input.validity.valid) {
                         input.focus();
+                        return;
+                    }
+
+                    const honeypot = form.querySelector('[name="website"]');
+                    if (honeypot && honeypot.value) {
+                        localStorage.setItem('pathos_access', '1');
+                        overlay.classList.add('fade-out');
+                        setTimeout(() => {
+                            overlay.remove();
+                            if (pendingHref) window.location.href = pendingHref;
+                        }, 300);
                         return;
                     }
 
