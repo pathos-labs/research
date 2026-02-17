@@ -1025,6 +1025,7 @@
             }
             .progress-bar, .nav-sections, .slide-counter, .keyboard-hint { display: none; }
             .reveal, .reveal-left { opacity: 1; transform: none; }
+            .gate-overlay { display: none; }
         }
 
         /* ===========================================
@@ -1179,13 +1180,16 @@
 
             const overlay = document.createElement('div');
             overlay.className = 'gate-overlay';
+            overlay.setAttribute('role', 'dialog');
+            overlay.setAttribute('aria-modal', 'true');
+            overlay.setAttribute('aria-labelledby', 'gateHeading');
             overlay.innerHTML = `
                 <div class="gate-card">
                     <div class="gate-meta">Pathos Labs · Research</div>
-                    <h2 class="gate-heading">Unlock this research</h2>
+                    <h2 class="gate-heading" id="gateHeading">Unlock this research</h2>
                     <p class="gate-subtext">Enter your email to get free access to all our research presentations.</p>
                     <form id="gateForm">
-                        <input type="email" class="gate-input" placeholder="you@example.com" required autocomplete="email" />
+                        <input type="email" class="gate-input" placeholder="you@example.com" required autocomplete="email" aria-label="Email address" />
                         <button type="submit" class="gate-button">Get Access</button>
                         <div class="gate-error" id="gateError">Something went wrong — try again.</div>
                     </form>
@@ -1196,6 +1200,7 @@
 
             const form = document.getElementById('gateForm');
             const input = form.querySelector('.gate-input');
+            input.focus();
             const button = form.querySelector('.gate-button');
             const error = document.getElementById('gateError');
 
@@ -2202,6 +2207,7 @@
             /* --- Keyboard Navigation --- */
             setupKeyboardNav() {
                 document.addEventListener('keydown', (e) => {
+                    if (document.body.hasAttribute('data-gated')) return;
                     /* Use tracked index, not scroll position — scrollY is
                        unreliable during smooth-scroll animations */
                     switch (e.key) {
