@@ -143,6 +143,127 @@
         footer a:hover {
             color: var(--accent);
         }
+        /* ===========================================
+           EMAIL GATE
+           =========================================== */
+        .gate-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .gate-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gate-card {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: clamp(2rem, 4vw, 3rem);
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .gate-meta {
+            font-family: var(--font-body);
+            font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .gate-heading {
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.2;
+            margin: 0 0 clamp(0.5rem, 1vw, 0.75rem);
+        }
+
+        .gate-subtext {
+            font-family: var(--font-body);
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0 0 clamp(1.25rem, 2.5vw, 2rem);
+        }
+
+        .gate-input {
+            width: 100%;
+            padding: clamp(0.6rem, 1.2vw, 0.85rem) clamp(0.75rem, 1.5vw, 1rem);
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            color: var(--text);
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s ease;
+            box-sizing: border-box;
+            margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+        }
+        .gate-input:focus {
+            border-color: var(--accent);
+        }
+        .gate-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .gate-button {
+            width: 100%;
+            padding: clamp(0.6rem, 1.2vw, 0.85rem);
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, opacity 0.2s ease;
+        }
+        .gate-button:hover {
+            background: #1D4ED8;
+        }
+        .gate-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .gate-error {
+            font-family: var(--font-body);
+            font-size: clamp(0.65rem, 0.9vw, 0.75rem);
+            color: #DC2626;
+            margin-top: clamp(0.5rem, 1vw, 0.75rem);
+            display: none;
+        }
+        .gate-error.visible {
+            display: block;
+        }
+
+        .gate-fine-print {
+            font-family: var(--font-body);
+            font-size: clamp(0.65rem, 0.9vw, 0.75rem);
+            color: var(--text-muted);
+            margin-top: clamp(0.75rem, 1.5vw, 1rem);
+            text-align: center;
+        }
+
+        @media print {
+            .gate-overlay { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -170,6 +291,100 @@
     <footer>
         <p>Sam Millunchick · <a href="https://pathoslabs.co">Pathos Labs</a></p>
     </footer>
+    <!-- Email gate: intercept card clicks for non-subscribers -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('pathos_access')) return;
+
+            const KIT_FORM_ID = '9098413';
+            let pendingHref = null;
+
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (localStorage.getItem('pathos_access')) return;
+                    e.preventDefault();
+                    pendingHref = card.getAttribute('href');
+                    showGate();
+                });
+            });
+
+            function showGate() {
+                const overlay = document.createElement('div');
+                overlay.className = 'gate-overlay';
+                overlay.setAttribute('role', 'dialog');
+                overlay.setAttribute('aria-modal', 'true');
+                overlay.setAttribute('aria-labelledby', 'gateHeading');
+                overlay.innerHTML = `
+                    <div class="gate-card">
+                        <div class="gate-meta">Pathos Labs · Research</div>
+                        <h2 class="gate-heading" id="gateHeading">Unlock this research</h2>
+                        <p class="gate-subtext">Enter your email to get free access to all our research presentations.</p>
+                        <form id="gateForm">
+                            <input type="email" class="gate-input" placeholder="you@example.com" required autocomplete="email" aria-label="Email address" />
+                            <button type="submit" class="gate-button">Get Access</button>
+                            <div class="gate-error" id="gateError">Something went wrong — try again.</div>
+                        </form>
+                        <div class="gate-fine-print">No spam. Unsubscribe anytime.</div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+
+                const form = document.getElementById('gateForm');
+                const input = form.querySelector('.gate-input');
+                input.focus();
+                const button = form.querySelector('.gate-button');
+                const error = document.getElementById('gateError');
+
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        overlay.classList.add('fade-out');
+                        setTimeout(() => overlay.remove(), 300);
+                        pendingHref = null;
+                    }
+                });
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    if (!input.value || !input.validity.valid) {
+                        input.focus();
+                        return;
+                    }
+
+                    error.classList.remove('visible');
+                    button.disabled = true;
+                    input.disabled = true;
+                    button.textContent = '\u2026';
+
+                    try {
+                        const res = await fetch(
+                            `https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`,
+                            {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ email_address: input.value }),
+                            }
+                        );
+
+                        if (!res.ok) throw new Error('Request failed');
+
+                        localStorage.setItem('pathos_access', '1');
+                        overlay.classList.add('fade-out');
+
+                        setTimeout(() => {
+                            overlay.remove();
+                            if (pendingHref) window.location.href = pendingHref;
+                        }, 300);
+                    } catch (err) {
+                        error.classList.add('visible');
+                        button.disabled = false;
+                        input.disabled = false;
+                        button.textContent = 'Get Access';
+                    }
+                });
+            }
+        });
+    </script>
     <script data-goatcounter="https://pathos-labs.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 </body>
