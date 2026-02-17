@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Coaching Methods — What the Evidence Actually Shows</title>
+
+    <!-- Fonts: General Sans (headings) + Satoshi (body) from Fontshare -->
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,500,700&display=swap">
+
+    <style>
+        /* ===========================================
+           CUSTOM PROPERTIES — SWISS MODERN THEME
+           Change these to reskin the entire deck
+           =========================================== */
+        :root {
+            /* Surfaces */
+            --bg: #FAFBFC;
+            --bg-alt: #F1F5F9;
+            --bg-dark: #0F172A;
+            --bg-dark-subtle: #1E293B;
+
+            /* Typography */
+            --text: #0F172A;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --text-inverse: #F8FAFC;
+            --text-inverse-secondary: #94A3B8;
+
+            /* Accent */
+            --accent: #2563EB;
+            --accent-light: #DBEAFE;
+            --accent-dark: #1D4ED8;
+
+            /* Confidence rating colors */
+            --conf-5: #059669;
+            --conf-5-bg: #D1FAE5;
+            --conf-4: #2563EB;
+            --conf-4-bg: #DBEAFE;
+            --conf-3: #D97706;
+            --conf-3-bg: #FEF3C7;
+            --conf-2: #DC2626;
+            --conf-2-bg: #FEE2E2;
+
+            /* Borders */
+            --border: #E2E8F0;
+            --border-dark: #334155;
+
+            /* Fonts */
+            --font-display: 'General Sans', system-ui, sans-serif;
+            --font-body: 'Satoshi', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+            /* Responsive typography — all clamp() */
+            --title-size: clamp(2rem, 6vw, 4.5rem);
+            --h2-size: clamp(1.4rem, 3.5vw, 2.5rem);
+            --h3-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.65rem, 1vw, 0.85rem);
+            --tag-size: clamp(0.6rem, 0.8vw, 0.75rem);
+            --hero-number: clamp(2.5rem, 6vw, 4.5rem);
+            --section-number: clamp(4rem, 15vw, 12rem);
+
+            /* Spacing */
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --slide-padding-top: clamp(1.5rem, 4vh, 4rem);
+            --content-gap: clamp(0.75rem, 2vw, 2rem);
+            --element-gap: clamp(0.3rem, 0.8vw, 0.75rem);
+
+            /* Animation */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+            --duration: 0.5s;
+            --duration-fast: 0.3s;
+        }
+
+        /* ===========================================
+           RESET & BASE
+           =========================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            height: 100%;
+            overflow-x: hidden;
+            scrollbar-width: none;        /* Firefox */
+            -ms-overflow-style: none;     /* IE/Edge */
+        }
+
+        html::-webkit-scrollbar { display: none; }  /* Chrome/Safari */
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            height: 100%;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===========================================
+           SLIDE CONTAINER
+           Each slide = exactly one viewport height
+           =========================================== */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding: var(--slide-padding-top) var(--slide-padding) var(--slide-padding);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            gap: var(--content-gap);
+        }
+
+        /* Subtle grid background on light slides — Swiss grid nod */
+        .slide:not(.dark) {
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.018) 1px, transparent 1px);
+            background-size: clamp(30px, 4vw, 50px) clamp(30px, 4vw, 50px);
+        }
+
+        .slide.alt {
+            background-color: var(--bg-alt);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.015) 1px, transparent 1px);
+            background-size: clamp(30px, 4vw, 50px) clamp(30px, 4vw, 50px);
+        }
+
+        /* Dark section divider slides */
+        .slide.dark {
+            background: var(--bg-dark);
+            background-image: radial-gradient(ellipse at 70% 30%, rgba(37, 99, 235, 0.06) 0%, transparent 60%);
+            color: var(--text-inverse);
+        }
+
+        /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+        h1 {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        p, li {
+            font-size: var(--body-size);
+            line-height: 1.55;
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .dark .subtitle {
+            color: var(--text-inverse-secondary);
+        }
+
+        .meta {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .dark .meta {
+            color: var(--text-inverse-secondary);
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+        }
+
+        .accent-line {
+            width: clamp(2rem, 4vw, 3.5rem);
+            height: 3px;
+            background: var(--accent);
+            border: none;
+            margin: 0;
+        }
+
+        .dark .accent-line {
+            background: var(--accent);
+            opacity: 0.8;
+        }
+
+        /* ===========================================
+           SECTION DIVIDER ELEMENTS
+           Large decorative section numbers
+           =========================================== */
+        .section-number {
+            font-family: var(--font-display);
+            font-size: var(--section-number);
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.04);
+            position: absolute;
+            right: var(--slide-padding);
+            bottom: clamp(0.5rem, 3vh, 2rem);
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: clamp(0.85rem, 1.5vw, 1.15rem);
+            color: var(--text-inverse-secondary);
+            font-weight: 400;
+            margin-top: var(--element-gap);
+        }
+
+        /* ===========================================
+           HERO NUMBER (big stat)
+           =========================================== */
+        .hero-stat {
+            font-family: var(--font-mono);
+            font-size: var(--hero-number);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .hero-label {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 42ch;
+            line-height: 1.4;
+        }
+
+        /* ===========================================
+           CONFIDENCE BADGES
+           Visual system for evidence ratings
+           =========================================== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(0.2rem, 0.4vw, 0.35rem);
+            padding: clamp(0.15rem, 0.3vw, 0.25rem) clamp(0.4rem, 0.8vw, 0.65rem);
+            border-radius: 100px;
+            font-size: var(--tag-size);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-5 { background: var(--conf-5-bg); color: var(--conf-5); }
+        .badge-4 { background: var(--conf-4-bg); color: var(--conf-4); }
+        .badge-3 { background: var(--conf-3-bg); color: var(--conf-3); }
+        .badge-2 { background: var(--conf-2-bg); color: var(--conf-2); }
+
+        .badge-dots {
+            display: inline-flex;
+            gap: 2px;
+        }
+
+        .badge-dot {
+            width: clamp(4px, 0.4vw, 6px);
+            height: clamp(4px, 0.4vw, 6px);
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .badge-dot.empty {
+            opacity: 0.25;
+        }
+
+        /* On dark backgrounds */
+        .dark .badge-5 { background: rgba(5, 150, 105, 0.2); color: #6EE7B7; }
+        .dark .badge-4 { background: rgba(37, 99, 235, 0.2); color: #93C5FD; }
+        .dark .badge-3 { background: rgba(217, 119, 6, 0.2); color: #FCD34D; }
+
+        /* ===========================================
+           DATA BARS — for effect size visualizations
+           =========================================== */
+        .data-bar-row {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 1vw, 1rem);
+        }
+
+        .data-bar-label {
+            font-size: var(--small-size);
+            font-weight: 500;
+            min-width: clamp(8rem, 14vw, 14rem);
+            text-align: right;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .data-bar-track {
+            flex: 1;
+            height: clamp(6px, 1vh, 10px);
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+            max-width: clamp(10rem, 30vw, 24rem);
+        }
+
+        .data-bar-fill {
+            height: 100%;
+            border-radius: 100px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 1s var(--ease-out-expo) 0.3s;
+        }
+
+        .visible .data-bar-fill { width: var(--bar-width); }
+
+        .data-bar-value {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            font-weight: 600;
+            color: var(--text);
+            min-width: clamp(2.5rem, 4vw, 4rem);
+            flex-shrink: 0;
+        }
+
+        /* ===========================================
+           FINDING ROWS — numbered findings with badges
+           =========================================== */
+        .finding {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.5rem, 1.2vw, 1.25rem);
+            padding: clamp(0.5rem, 1vh, 0.85rem) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .finding:last-child { border-bottom: none; }
+
+        .finding-num {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            font-weight: 600;
+            color: var(--accent);
+            min-width: clamp(1.2rem, 2vw, 1.8rem);
+            flex-shrink: 0;
+            padding-top: 0.1em;
+        }
+
+        .finding-text {
+            font-size: var(--body-size);
+            line-height: 1.45;
+            flex: 1;
+        }
+
+        .finding-text strong {
+            font-weight: 600;
+        }
+
+        .finding-badge {
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        /* ===========================================
+           CARDS — for tactics, etc.
+           =========================================== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, clamp(14rem, 22vw, 20rem)), 1fr));
+            gap: clamp(0.5rem, 1.2vw, 1rem);
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: clamp(6px, 0.6vw, 10px);
+            padding: clamp(0.75rem, 1.5vw, 1.25rem);
+            display: flex;
+            flex-direction: column;
+            gap: var(--element-gap);
+            transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+        }
+
+        .alt .card { background: white; }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(0.25rem, 0.5vw, 0.4rem);
+            font-size: var(--tag-size);
+        }
+
+        .card-meta-tag {
+            padding: clamp(0.1rem, 0.2vw, 0.15rem) clamp(0.3rem, 0.5vw, 0.5rem);
+            background: var(--bg-alt);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .card-desc {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* ===========================================
+           PIPELINE — for Peterson's 5 conditions
+           =========================================== */
+        .pipeline {
+            display: flex;
+            align-items: stretch;
+            gap: clamp(0.2rem, 0.5vw, 0.4rem);
+            width: 100%;
+        }
+
+        .pipeline-step {
+            flex: 1;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: clamp(4px, 0.4vw, 8px);
+            padding: clamp(0.5rem, 1vw, 1rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: clamp(0.15rem, 0.4vh, 0.4rem);
+            transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease;
+        }
+
+        .pipeline-step:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .pipeline-num {
+            font-family: var(--font-mono);
+            font-size: var(--tag-size);
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .pipeline-label {
+            font-family: var(--font-display);
+            font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .pipeline-desc {
+            font-size: clamp(0.55rem, 0.8vw, 0.72rem);
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        /* ===========================================
+           QUOTE
+           =========================================== */
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: clamp(0.75rem, 1.5vw, 1.5rem);
+            font-size: clamp(0.9rem, 1.6vw, 1.2rem);
+            line-height: 1.5;
+            color: var(--text);
+            font-style: italic;
+            max-width: 50ch;
+        }
+
+        blockquote cite {
+            display: block;
+            margin-top: clamp(0.3rem, 0.6vh, 0.6rem);
+            font-size: var(--small-size);
+            font-style: normal;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ===========================================
+           SOURCE LIST
+           =========================================== */
+        .source-group {
+            margin-bottom: clamp(0.5rem, 1vh, 1rem);
+        }
+
+        .source-group-title {
+            font-family: var(--font-display);
+            font-size: var(--small-size);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.5rem);
+        }
+
+        .source-item {
+            font-size: clamp(0.6rem, 0.9vw, 0.78rem);
+            color: var(--text-secondary);
+            line-height: 1.45;
+            padding: clamp(0.1rem, 0.2vh, 0.2rem) 0;
+        }
+
+        .source-item strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ===========================================
+           PREDICTOR LIST (checkmarks / x-marks)
+           =========================================== */
+        .predictor-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.2rem, 0.6vh, 0.5rem);
+        }
+
+        .predictor-list li {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.3rem, 0.6vw, 0.6rem);
+            font-size: var(--body-size);
+        }
+
+        .predictor-list .check {
+            color: var(--conf-5);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .predictor-list .cross {
+            color: var(--conf-2);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ===========================================
+           ITC STEPS (Immunity to Change)
+           =========================================== */
+        .itc-steps {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.25rem, 0.6vh, 0.5rem);
+            counter-reset: itc;
+        }
+
+        .itc-step {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.4rem, 0.8vw, 0.75rem);
+            counter-increment: itc;
+        }
+
+        .itc-num {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .itc-text {
+            font-size: var(--body-size);
+            line-height: 1.45;
+        }
+
+        .itc-example {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* ===========================================
+           OPEN QUESTIONS
+           =========================================== */
+        .questions-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.4rem, 1vh, 0.9rem);
+        }
+
+        .questions-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.4rem, 0.8vw, 0.75rem);
+            font-size: var(--body-size);
+            line-height: 1.45;
+        }
+
+        .question-num {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            font-weight: 600;
+            flex-shrink: 0;
+            min-width: 1.5em;
+        }
+
+        /* ===========================================
+           DECISION TRANSLATION
+           =========================================== */
+        .decision {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.4rem, 1vw, 1rem);
+            padding: clamp(0.4rem, 0.8vh, 0.7rem) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .decision:last-child { border-bottom: none; }
+
+        .decision-if {
+            font-family: var(--font-mono);
+            font-size: var(--tag-size);
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+            min-width: clamp(1.5rem, 2vw, 2rem);
+            padding-top: 0.2em;
+        }
+
+        .decision-text {
+            font-size: var(--body-size);
+            line-height: 1.45;
+        }
+
+        .decision-text strong {
+            font-weight: 600;
+        }
+
+        /* ===========================================
+           CONTRARIAN POINT
+           =========================================== */
+        .contrarian-point {
+            padding: clamp(0.4rem, 1vh, 0.85rem) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .contrarian-point:last-child { border-bottom: none; }
+
+        .contrarian-title {
+            font-family: var(--font-display);
+            font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+            font-weight: 600;
+            margin-bottom: clamp(0.15rem, 0.3vh, 0.3rem);
+        }
+
+        .contrarian-desc {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* ===========================================
+           NAVIGATION ELEMENTS
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.25s var(--ease-out-quart);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: clamp(0.75rem, 2vh, 1.5rem);
+            right: clamp(1rem, 2vw, 2rem);
+            font-family: var(--font-mono);
+            font-size: clamp(0.6rem, 0.8vw, 0.75rem);
+            color: var(--text-muted);
+            z-index: 100;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .slide-counter.inverted {
+            color: var(--text-inverse-secondary);
+        }
+
+        .nav-sections {
+            position: fixed;
+            right: clamp(0.75rem, 1.5vw, 1.5rem);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(6px, 1vh, 14px);
+            z-index: 100;
+        }
+
+        .nav-section-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: clamp(4px, 0.5vw, 8px);
+            cursor: pointer;
+            padding: 0;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-section-item:hover { opacity: 0.75; }
+        .nav-section-item.active { opacity: 1; }
+
+        .nav-section-label {
+            font-family: var(--font-mono);
+            font-size: clamp(0.5rem, 0.65vw, 0.6rem);
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 500;
+            max-width: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-width 0.3s var(--ease-out-expo), opacity 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-sections:hover .nav-section-label {
+            max-width: 8rem;
+            opacity: 1;
+        }
+
+        .nav-section-pip {
+            width: clamp(6px, 0.6vw, 8px);
+            height: clamp(6px, 0.6vw, 8px);
+            border-radius: 50%;
+            border: 1.5px solid currentColor;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .nav-section-item.active .nav-section-pip {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .nav-section-item.inverted { color: var(--text-inverse-secondary); }
+        .nav-section-item.inverted.active .nav-section-pip {
+            background: white;
+            border-color: white;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: fixed;
+            bottom: clamp(0.75rem, 2vh, 1.5rem);
+            left: clamp(1rem, 2vw, 2rem);
+            font-size: clamp(0.55rem, 0.7vw, 0.65rem);
+            color: var(--text-muted);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            opacity: 0.6;
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .keyboard-hint.inverted { color: var(--text-inverse-secondary); }
+
+        .keyboard-hint kbd {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.1em 0.4em;
+            border: 1px solid currentColor;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+        }
+
+        /* ===========================================
+           REVEAL ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger children */
+        .reveal:nth-child(1) { transition-delay: 0.05s; }
+        .reveal:nth-child(2) { transition-delay: 0.12s; }
+        .reveal:nth-child(3) { transition-delay: 0.19s; }
+        .reveal:nth-child(4) { transition-delay: 0.26s; }
+        .reveal:nth-child(5) { transition-delay: 0.33s; }
+        .reveal:nth-child(6) { transition-delay: 0.40s; }
+        .reveal:nth-child(7) { transition-delay: 0.47s; }
+        .reveal:nth-child(8) { transition-delay: 0.54s; }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal-left {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Individual card stagger — each card animates in sequence */
+        .card-grid .card,
+        .pipeline .pipeline-step {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo),
+                        border-color var(--duration-fast) ease,
+                        box-shadow var(--duration-fast) ease;
+        }
+
+        .slide.visible .card-grid .card,
+        .slide.visible .pipeline .pipeline-step {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide.visible .card-grid .card:nth-child(1),
+        .slide.visible .pipeline .pipeline-step:nth-child(1) { transition-delay: 0.1s; }
+        .slide.visible .card-grid .card:nth-child(2),
+        .slide.visible .pipeline .pipeline-step:nth-child(2) { transition-delay: 0.18s; }
+        .slide.visible .card-grid .card:nth-child(3),
+        .slide.visible .pipeline .pipeline-step:nth-child(3) { transition-delay: 0.26s; }
+        .slide.visible .card-grid .card:nth-child(4),
+        .slide.visible .pipeline .pipeline-step:nth-child(4) { transition-delay: 0.34s; }
+        .slide.visible .card-grid .card:nth-child(5) { transition-delay: 0.42s; }
+
+        /* Predictor list items stagger individually */
+        .predictor-list li {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.4s var(--ease-out-expo),
+                        transform 0.4s var(--ease-out-expo);
+        }
+
+        .slide.visible .predictor-list li { opacity: 1; transform: translateX(0); }
+        .slide.visible .predictor-list li:nth-child(1) { transition-delay: 0.1s; }
+        .slide.visible .predictor-list li:nth-child(2) { transition-delay: 0.15s; }
+        .slide.visible .predictor-list li:nth-child(3) { transition-delay: 0.2s; }
+        .slide.visible .predictor-list li:nth-child(4) { transition-delay: 0.25s; }
+
+        /* Data bars stagger */
+        .data-bar-row {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.4s var(--ease-out-expo),
+                        transform 0.4s var(--ease-out-expo);
+        }
+
+        .slide.visible .data-bar-row { opacity: 1; transform: translateX(0); }
+        .slide.visible .data-bar-row:nth-child(1) { transition-delay: 0.15s; }
+        .slide.visible .data-bar-row:nth-child(2) { transition-delay: 0.25s; }
+        .slide.visible .data-bar-row:nth-child(3) { transition-delay: 0.35s; }
+        .slide.visible .data-bar-row:nth-child(4) { transition-delay: 0.45s; }
+
+        /* ===========================================
+           RESPONSIVE — SHORT VIEWPORTS
+           =========================================== */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(1rem, 3.5vw, 3rem);
+                --slide-padding-top: clamp(1rem, 3vh, 2.5rem);
+                --content-gap: clamp(0.5rem, 1.5vw, 1.25rem);
+                --title-size: clamp(1.6rem, 5vw, 3rem);
+                --h2-size: clamp(1.2rem, 3vw, 2rem);
+                --hero-number: clamp(2rem, 7vw, 4.5rem);
+                --section-number: clamp(3rem, 12vw, 9rem);
+            }
+        }
+
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --slide-padding-top: clamp(0.75rem, 2vh, 1.5rem);
+                --content-gap: clamp(0.4rem, 1vw, 1rem);
+                --title-size: clamp(1.3rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1rem, 2.5vw, 1.6rem);
+                --body-size: clamp(0.65rem, 1.1vw, 0.9rem);
+                --hero-number: clamp(1.8rem, 6vw, 3.5rem);
+            }
+
+            .nav-sections, .keyboard-hint { display: none; }
+        }
+
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --h2-size: clamp(0.9rem, 2.2vw, 1.3rem);
+                --body-size: clamp(0.6rem, 1vw, 0.8rem);
+                --small-size: clamp(0.5rem, 0.8vw, 0.7rem);
+            }
+        }
+
+        /* RESPONSIVE — NARROW VIEWPORTS */
+        @media (max-width: 600px) {
+            :root {
+                --title-size: clamp(1.5rem, 8vw, 3rem);
+                --hero-number: clamp(2rem, 10vw, 4rem);
+            }
+
+            .card-grid { grid-template-columns: 1fr; }
+
+            .pipeline {
+                flex-direction: column;
+                gap: clamp(0.2rem, 0.5vh, 0.3rem);
+            }
+
+            .pipeline-step {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+            }
+
+            .data-bar-label { min-width: clamp(5rem, 25vw, 8rem); }
+        }
+
+        @media (max-width: 400px) {
+            .finding { flex-wrap: wrap; }
+            .finding-badge { margin-left: auto; }
+        }
+
+        /* ===========================================
+           REDUCED MOTION
+           =========================================== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.15s !important;
+            }
+            html { scroll-behavior: auto; }
+            .reveal, .reveal-left,
+            .card-grid .card, .pipeline .pipeline-step,
+            .predictor-list li, .data-bar-row {
+                opacity: 1;
+                transform: none;
+            }
+            .data-bar-fill { transition-duration: 0.01ms !important; }
+        }
+
+        /* ===========================================
+           PRINT STYLES
+           =========================================== */
+        @media print {
+            html { scroll-snap-type: none; }
+            .slide {
+                height: auto;
+                min-height: 100vh;
+                page-break-after: always;
+                overflow: visible;
+            }
+            .progress-bar, .nav-sections, .slide-counter, .keyboard-hint { display: none; }
+            .reveal, .reveal-left { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Slide counter -->
+    <div class="slide-counter" id="slideCounter">01 / 27</div>
+
+    <!-- Section nav (generated by JS) -->
+    <nav class="nav-sections" id="navSections" aria-label="Section navigation"></nav>
+
+    <!-- Keyboard hint -->
+    <div class="keyboard-hint" id="keyHint">
+        <kbd>&darr;</kbd> <kbd>&uarr;</kbd> to navigate
+    </div>
+
+
+    <!-- =========================================
+         SLIDE 1: TITLE
+         ========================================= -->
+    <section class="slide dark" id="slide-1">
+        <div class="slide-content" style="align-items: flex-start; max-width: 52ch;">
+            <span class="meta reveal">Pathos Labs &middot; Research</span>
+            <hr class="accent-line reveal">
+            <h1 class="reveal" style="margin-top: clamp(0.5rem, 1.5vh, 1rem);">Executive Coaching Methods</h1>
+            <p class="subtitle reveal">What the Evidence Actually Shows</p>
+            <p class="meta reveal" style="margin-top: auto; padding-top: 1rem;">
+                Sam Millunchick &middot; 3 Meta-Analyses &middot; 70+ Sources &middot; February 2026
+            </p>
+        </div>
+        <span class="section-number reveal" style="opacity: 0.03;">PL</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 2: HERO STAT
+         ========================================= -->
+    <section class="slide" id="slide-2">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">The Bottom Line</span>
+            <hr class="accent-line reveal">
+            <div class="hero-stat reveal">g = 0.40–0.59</div>
+            <p class="hero-label reveal">
+                Moderate positive effect size across three independent meta-analyses of randomized controlled trials. Comparable to psychotherapy effect sizes.
+            </p>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                De Haan &amp; Nilsson 2023 &middot; Nicolau et al. 2023 &middot; Cannon-Bowers et al. 2023
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 3: LANDSCAPE
+         ========================================= -->
+    <section class="slide alt" id="slide-3">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">The Field</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">A Young Science</h2>
+            <p class="reveal" style="color: var(--text-secondary);">
+                Executive coaching sits at the intersection of organizational psychology, leadership development, and adult development theory. The first Coaching Psychology Unit was established in 2000. Rigorous research has accumulated meaningfully only in the last 15 years.
+            </p>
+            <div class="reveal" style="display: flex; flex-wrap: wrap; gap: clamp(0.3rem, 0.6vw, 0.5rem); margin-top: var(--element-gap);">
+                <span class="card-meta-tag">De Haan</span>
+                <span class="card-meta-tag">Grant</span>
+                <span class="card-meta-tag">Peterson</span>
+                <span class="card-meta-tag">Goldsmith</span>
+                <span class="card-meta-tag">Kegan</span>
+                <span class="card-meta-tag">Bachkirova</span>
+                <span class="card-meta-tag">Passmore</span>
+            </div>
+            <div class="reveal" style="display: flex; flex-wrap: wrap; gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">Harvard/McLean</span>
+                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">ICF</span>
+                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">Ashridge/Hult</span>
+                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">U. Sydney</span>
+                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">CCL</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 4: KEY FINDINGS 1-4
+         ========================================= -->
+    <section class="slide" id="slide-4">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Key Findings</span>
+            <hr class="accent-line reveal">
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>Coaching works.</strong> Three independent meta-analyses of RCTs converge on moderate positive effects.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>The relationship is the strongest predictor.</strong> Working alliance predicts outcomes across all studied populations.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text"><strong>Specific methodology barely matters.</strong> No framework shows reliable superiority over any other.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">04</span>
+                    <span class="finding-text"><strong>Behavior changes more than beliefs.</strong> Largest effects on observable behaviors, smallest on personality.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 5: KEY FINDINGS 5-8
+         ========================================= -->
+    <section class="slide alt" id="slide-5">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Key Findings</span>
+            <hr class="accent-line reveal">
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">05</span>
+                    <span class="finding-text"><strong>Session count ≠ outcomes.</strong> No dose-response found — likely a measurement artifact, not a true null.</span>
+                    <span class="finding-badge"><span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">06</span>
+                    <span class="finding-text"><strong>Virtual ≈ face-to-face.</strong> No significant difference (g = 0.48 vs g = 0.35).</span>
+                    <span class="finding-badge"><span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">07</span>
+                    <span class="finding-text"><strong>ROI claims are inflated.</strong> The "788% ROI" is from a single industry-funded study, not independent research.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">08</span>
+                    <span class="finding-text"><strong>Coachee readiness is a major predictor.</strong> Self-efficacy and motivation matter as much as anything the coach does.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 6: SECTION — FOUNDATIONS
+         ========================================= -->
+    <section class="slide dark" id="slide-6">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <h2 class="section-title reveal">Foundations</h2>
+            <p class="section-subtitle reveal">The 80/20 of what the research shows</p>
+        </div>
+        <span class="section-number">02</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 7: RELATIONSHIP IS THE METHOD
+         ========================================= -->
+    <section class="slide" id="slide-7">
+        <div class="slide-content" style="align-items: flex-start; max-width: 58ch;">
+            <span class="meta reveal">Foundation 1</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">The Relationship Is the Method</h2>
+            <p class="reveal" style="color: var(--text-secondary);">
+                The working alliance — agreement on goals, tasks, and the bond between coach and coachee — is the most consistent predictor across all studied populations. This mirrors 50+ years of psychotherapy research on common factors.
+            </p>
+            <div class="reveal" style="display: flex; flex-direction: column; gap: var(--element-gap); padding: clamp(0.5rem, 1vh, 0.8rem) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem;">
+                    <span style="font-size: var(--small-size);"><strong>Graßmann et al. 2020</strong> — 27 samples, N = 3,563</span>
+                    <span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem;">
+                    <span style="font-size: var(--small-size);"><strong>De Haan et al. 2019</strong> — 180 coachees, effect sizes up to d = 1.1</span>
+                    <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary);">
+                Personality matching between coach and coachee is <strong style="color: var(--conf-2);">not</strong> supported by the evidence. What matters is the relationship that develops, not demographic or personality similarity.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 8: BEHAVIOR CHANGE > BELIEFS
+         ========================================= -->
+    <section class="slide alt" id="slide-8">
+        <div class="slide-content" style="align-items: flex-start; max-width: 58ch;">
+            <span class="meta reveal">Foundation 2</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Behavior Change Beats Belief Change</h2>
+            <div class="reveal" style="display: flex; flex-direction: column; gap: clamp(0.35rem, 0.8vh, 0.65rem); width: 100%;">
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Cognitive activities</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 85%;"></div></div>
+                    <span class="data-bar-value">g = 1.28</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Performance behaviors</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 74%;"></div></div>
+                    <span class="data-bar-value">g = 1.11</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Leadership behaviors</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 29%;"></div></div>
+                    <span class="data-bar-value">g = 0.44</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label" style="color: var(--text-muted);">Attitudes</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 23%; background: var(--text-muted);"></div></div>
+                    <span class="data-bar-value" style="color: var(--text-muted);">g = 0.34</span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); max-width: 50ch;">
+                Source: Nicolau et al. 2023. Behavioral wins create momentum, build self-efficacy, and often pull attitudes along behind them.
+            </p>
+            <blockquote class="reveal" style="border-color: var(--accent); font-size: var(--body-size);">
+                "What will you do differently in the next meeting?" is more powerful than "How do you need to think differently about leadership?"
+            </blockquote>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 9: READINESS TRUMPS TECHNIQUE
+         ========================================= -->
+    <section class="slide" id="slide-9">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Foundation 3</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Readiness Trumps Technique</h2>
+            <p class="reveal" style="color: var(--text-secondary);">
+                Coachee self-efficacy and readiness for change predict outcomes at least as strongly as anything the coach does. Coaching is not something done <em>to</em> someone.
+            </p>
+            <div class="reveal" style="display: flex; flex-direction: column; gap: var(--element-gap); padding: clamp(0.5rem, 1vh, 0.8rem) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem;">
+                    <span style="font-size: var(--small-size);">Self-efficacy predicts outcomes independently (De Haan 2013)</span>
+                    <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem;">
+                    <span style="font-size: var(--small-size);">Readiness + core self-evaluations predict outcomes (MacKie 2015)</span>
+                    <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--body-size); font-weight: 500;">
+                "Forced coaching" is a fundamentally different proposition. When readiness is low, the first phase of coaching should focus on <em>building</em> readiness — not jumping to behavior change.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 10: METHODOLOGY IS A VEHICLE
+         ========================================= -->
+    <section class="slide alt" id="slide-10">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Foundation 4</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Methodology Is a Vehicle, Not a Destination</h2>
+            <p class="reveal" style="color: var(--text-secondary);">
+                GROW, Co-Active, Solutions-Focused, Cognitive-Behavioral — no specific methodology has been shown to be reliably superior. Most share the same active ingredients: goal-setting, reflective questioning, accountability, a supportive relationship.
+            </p>
+            <div class="reveal" style="display: flex; gap: clamp(1rem, 3vw, 3rem); flex-wrap: wrap;">
+                <div>
+                    <div class="mono" style="font-size: var(--small-size); font-weight: 600; color: var(--accent);">Process-oriented</div>
+                    <div class="mono" style="font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 700;">g = 0.45</div>
+                </div>
+                <div style="display: flex; align-items: center; font-size: var(--body-size); color: var(--text-muted);">vs</div>
+                <div>
+                    <div class="mono" style="font-size: var(--small-size); font-weight: 600; color: var(--accent);">Outcome-oriented</div>
+                    <div class="mono" style="font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 700;">g = 0.39</div>
+                </div>
+                <div style="display: flex; align-items: flex-end;">
+                    <span class="badge badge-3" style="font-size: var(--tag-size);">No significant difference</span>
+                </div>
+            </div>
+            <blockquote class="reveal">
+                "Commit yourself heart and soul to your approach, even if you know that it doesn't matter which professional approach you choose."
+                <cite>Erik de Haan — Relational Coaching</cite>
+            </blockquote>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 11: VERTICAL DEVELOPMENT
+         ========================================= -->
+    <section class="slide" id="slide-11">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Foundation 5</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Vertical, Not Just Horizontal</h2>
+            <div class="reveal" style="display: flex; gap: clamp(1rem, 3vw, 2.5rem); flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 12rem;">
+                    <div style="font-size: var(--small-size); font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Horizontal</div>
+                    <p style="font-size: var(--body-size); color: var(--text-secondary); margin-top: 0.2rem;">Adding skills at the same level of complexity</p>
+                </div>
+                <div style="flex: 1; min-width: 12rem;">
+                    <div style="font-size: var(--small-size); font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Vertical</div>
+                    <p style="font-size: var(--body-size); margin-top: 0.2rem;">Increasing the sophistication of how someone makes meaning</p>
+                </div>
+            </div>
+            <div class="reveal" style="display: flex; align-items: center; gap: clamp(0.3rem, 0.8vw, 0.75rem); flex-wrap: wrap;">
+                <span class="card-meta-tag" style="background: var(--bg-alt); font-size: var(--small-size);">Socialized Mind</span>
+                <span style="color: var(--text-muted); font-size: var(--small-size);">&rarr;</span>
+                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent); font-size: var(--small-size);">Self-Authoring Mind</span>
+                <span style="color: var(--text-muted); font-size: var(--small-size);">&rarr;</span>
+                <span class="card-meta-tag" style="background: var(--accent); color: white; font-size: var(--small-size);">Self-Transforming Mind</span>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); max-width: 50ch;">
+                Kegan &amp; Lahey's framework (2009). Strong theoretical base, but limited RCT evidence specific to coaching applications. <span class="badge badge-2" style="vertical-align: middle;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 12: SECTION — EVIDENCE
+         ========================================= -->
+    <section class="slide dark" id="slide-12">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <h2 class="section-title reveal">The Evidence</h2>
+            <p class="section-subtitle reveal">Three meta-analyses published in 2023</p>
+        </div>
+        <span class="section-number">03</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 13: THREE META-ANALYSES
+         ========================================= -->
+    <section class="slide" id="slide-13">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Meta-Analyses</span>
+            <hr class="accent-line reveal">
+            <div class="card-grid reveal" style="width: 100%;">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div class="card-title">De Haan &amp; Nilsson</div>
+                        <span class="badge badge-5" style="flex-shrink: 0;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span>
+                    </div>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">2023</span>
+                        <span class="card-meta-tag">AMLE</span>
+                    </div>
+                    <div class="card-desc">37 RCTs &middot; N = 2,528</div>
+                    <div class="mono" style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 700; color: var(--accent);">g = 0.59</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div class="card-title">Nicolau et al.</div>
+                        <span class="badge badge-4" style="flex-shrink: 0;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span>
+                    </div>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">2023</span>
+                        <span class="card-meta-tag">Frontiers Psych</span>
+                    </div>
+                    <div class="card-desc">20 RCTs with pre-post tests</div>
+                    <div class="mono" style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 700; color: var(--accent);">g = 0.43</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div class="card-title">Cannon-Bowers et al.</div>
+                        <span class="badge badge-4" style="flex-shrink: 0;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span>
+                    </div>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">2023</span>
+                        <span class="card-meta-tag">Frontiers Psych</span>
+                    </div>
+                    <div class="card-desc">11 studies (10 after outlier removal)</div>
+                    <div class="mono" style="font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 700; color: var(--accent);">Medium +</div>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted);">
+                ⚠ De Haan &amp; Nilsson flag "indications of significant publication bias." True effect size may be smaller. Trim-and-fill adjusted: g = 0.27.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 14: WHAT PREDICTS OUTCOMES
+         ========================================= -->
+    <section class="slide alt" id="slide-14">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Outcome Predictors</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">What Predicts Coaching Outcomes?</h2>
+            <ul class="predictor-list reveal">
+                <li><span class="check">&#10003;</span> Working alliance quality</li>
+                <li><span class="check">&#10003;</span> Coachee self-efficacy</li>
+                <li><span class="check">&#10003;</span> Coachee readiness for change</li>
+                <li><span class="check">&#10003;</span> Coach qualifications <span style="font-size: var(--tag-size); color: var(--text-muted);">(in some contexts)</span></li>
+            </ul>
+            <ul class="predictor-list reveal" style="margin-top: var(--element-gap);">
+                <li><span class="cross">&#10007;</span> Personality match between coach and coachee</li>
+                <li><span class="cross">&#10007;</span> Specific coaching methodology</li>
+                <li><span class="cross">&#10007;</span> Number of sessions</li>
+                <li><span class="cross">&#10007;</span> Delivery format (virtual vs face-to-face)</li>
+            </ul>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); margin-top: var(--element-gap);">
+                Coach selection should focus on <strong>relational capacity and skill</strong>, not "fit" questionnaires or personality matching.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 15: DURATION & FORMAT
+         ========================================= -->
+    <section class="slide" id="slide-15">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Counterintuitive Findings</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Surprises From the Data</h2>
+            <div class="reveal" style="display: flex; flex-direction: column; gap: var(--content-gap);">
+                <div>
+                    <h3 style="margin-bottom: 0.2em;">Session count doesn't predict outcomes</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary); max-width: 48ch;">
+                        Appears in all three meta-analyses. Likely reflects measurement limitations — most studies cluster in the 6–12 session range. Quality of sessions likely matters more than quantity.
+                    </p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 0.2em;">Virtual coaching works just as well</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary);">
+                        <span class="mono" style="font-weight: 600;">g = 0.48</span> face-to-face vs <span class="mono" style="font-weight: 600;">g = 0.35</span> virtual — not statistically different (Cannon-Bowers 2023).
+                    </p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 0.2em;">Credentials matter inconsistently</h3>
+                    <p style="font-size: var(--small-size); color: var(--text-secondary); max-width: 48ch;">
+                        Larger effects with qualified coaches in non-leadership contexts. But evidence that credentialing predicts better outcomes is thin. <span class="badge badge-2"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 16: SECTION — TACTICS
+         ========================================= -->
+    <section class="slide dark" id="slide-16">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <h2 class="section-title reveal">Practical Tactics</h2>
+            <p class="section-subtitle reveal">Evidence-grounded moves you can use</p>
+        </div>
+        <span class="section-number">04</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 17: TACTICS 1-4
+         ========================================= -->
+    <section class="slide" id="slide-17">
+        <div class="slide-content" style="align-items: flex-start;">
+            <span class="meta reveal">Tactics</span>
+            <hr class="accent-line reveal">
+            <div class="card-grid reveal" style="width: 100%;">
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">01</span>
+                        <div class="card-title">Front-Load Relationship</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-5" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span><span class="card-meta-tag">Low difficulty</span><span class="card-meta-tag">High impact</span></div>
+                    <div class="card-desc">Dedicate first 1-2 sessions to understanding the coachee's world. Ask about their pressures, wins, what keeps them up at night.</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">02</span>
+                        <div class="card-title">Behavioral Experiments</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-4" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">Low-Med difficulty</span><span class="card-meta-tag">High impact</span></div>
+                    <div class="card-desc">Within the first 2-3 sessions, identify one specific behavioral experiment to run before the next session.</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">03</span>
+                        <div class="card-title">Peterson's Pipeline</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-3" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">Low difficulty</span><span class="card-meta-tag">Med-High impact</span></div>
+                    <div class="card-desc">Diagnose which of 5 conditions is blocked: Insight, Motivation, Capabilities, Practice, or Accountability.</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">04</span>
+                        <div class="card-title">Screen for Readiness</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-4" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">Medium difficulty</span><span class="card-meta-tag">High impact</span></div>
+                    <div class="card-desc">Assess: Is this executive here by choice? Do they believe they can change? What's their prior experience with feedback?</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 18: TACTICS 5-7
+         ========================================= -->
+    <section class="slide alt" id="slide-18">
+        <div class="slide-content" style="align-items: flex-start;">
+            <span class="meta reveal">Tactics</span>
+            <hr class="accent-line reveal">
+            <div class="card-grid reveal" style="width: 100%;">
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">05</span>
+                        <div class="card-title">Integrate the Body</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-2" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">Med-High difficulty</span><span class="card-meta-tag">Med-High impact</span></div>
+                    <div class="card-desc">Somatic approaches for presence and performance. State management — breath, posture, grounding — operates below conscious thought.</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">06</span>
+                        <div class="card-title">Immunity to Change</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-3" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">High difficulty</span><span class="card-meta-tag">High impact</span></div>
+                    <div class="card-desc">Surface hidden competing commitments when executives can't change despite genuine motivation. Kegan's 5-step mapping process.</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">07</span>
+                        <div class="card-title">Stakeholder Feedback</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-3" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">Medium difficulty</span><span class="card-meta-tag">High impact</span></div>
+                    <div class="card-desc">Build in feedback from 3-5 key stakeholders. Makes results visible (sustains organizational support) and provides real-world accountability.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 19: PETERSON'S PIPELINE VISUAL
+         ========================================= -->
+    <section class="slide" id="slide-19">
+        <div class="slide-content" style="align-items: flex-start; max-width: 62ch;">
+            <span class="meta reveal">Deep Dive</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Peterson's Development Pipeline</h2>
+            <p class="reveal subtitle" style="font-size: var(--small-size); max-width: 50ch;">Where is the coachee stuck? Most coaching failures happen because coaches apply "more of the same" instead of diagnosing which condition is missing.</p>
+            <div class="pipeline reveal" style="width: 100%;">
+                <div class="pipeline-step">
+                    <span class="pipeline-num">1</span>
+                    <span class="pipeline-label">Insight</span>
+                    <span class="pipeline-desc">Do they know what to change?</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">2</span>
+                    <span class="pipeline-label">Motivation</span>
+                    <span class="pipeline-desc">Do they care enough?</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">3</span>
+                    <span class="pipeline-label">Capabilities</span>
+                    <span class="pipeline-desc">Do they know how?</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">4</span>
+                    <span class="pipeline-label">Practice</span>
+                    <span class="pipeline-desc">Do they get to practice?</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">5</span>
+                    <span class="pipeline-label">Accountability</span>
+                    <span class="pipeline-desc">Are structures reinforcing it?</span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary);">
+                From David Peterson (Google). A coachee with insight and motivation but lacking capabilities needs <strong>teaching</strong>, not more reflective questions. <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 20: IMMUNITY TO CHANGE
+         ========================================= -->
+    <section class="slide alt" id="slide-20">
+        <div class="slide-content" style="align-items: flex-start; max-width: 58ch;">
+            <span class="meta reveal">Deep Dive</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Immunity to Change</h2>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); max-width: 48ch;">
+                For executives who <em>know</em> what to do but <em>can't seem to do it</em>. The closest coaching gets to therapeutic depth without crossing the therapy line.
+            </p>
+            <div class="itc-steps reveal">
+                <div class="itc-step">
+                    <span class="itc-num">1</span>
+                    <span class="itc-text">Name the <strong>stated commitment</strong> <span class="itc-example">"I want to delegate more"</span></span>
+                </div>
+                <div class="itc-step">
+                    <span class="itc-num">2</span>
+                    <span class="itc-text">Identify <strong>behaviors that work against it</strong> <span class="itc-example">micromanaging, rescuing tasks</span></span>
+                </div>
+                <div class="itc-step">
+                    <span class="itc-num">3</span>
+                    <span class="itc-text">Surface the <strong>hidden competing commitment</strong> <span class="itc-example">"never being seen as not having the answers"</span></span>
+                </div>
+                <div class="itc-step">
+                    <span class="itc-num">4</span>
+                    <span class="itc-text">Identify the <strong>big assumption</strong> <span class="itc-example">"if people see me not knowing, they'll lose confidence"</span></span>
+                </div>
+                <div class="itc-step">
+                    <span class="itc-num">5</span>
+                    <span class="itc-text">Design <strong>small, safe tests</strong> of the big assumption</span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted);">
+                Kegan &amp; Lahey (2009). <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 21: SECTION — CONTRARIAN
+         ========================================= -->
+    <section class="slide dark" id="slide-21">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <h2 class="section-title reveal">Contrarian Views</h2>
+            <p class="section-subtitle reveal">What the critics say — and where they're right</p>
+        </div>
+        <span class="section-number">05</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 22: EVIDENCE & ROI CRITIQUE
+         ========================================= -->
+    <section class="slide" id="slide-22">
+        <div class="slide-content" style="align-items: flex-start; max-width: 58ch;">
+            <span class="meta reveal">Contrarian Views</span>
+            <hr class="accent-line reveal">
+            <div class="contrarian-point reveal">
+                <div class="contrarian-title">"The evidence is weaker than the industry claims"</div>
+                <div class="contrarian-desc">
+                    Total RCT pool across all 3 meta-analyses: just 37 + 20 + 11 studies. De Haan flags "significant publication bias." Most studies use self-report. Much research is by practitioners with financial interests.
+                    <span class="badge badge-4" style="vertical-align: middle; margin-left: 0.3rem;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong critique</span>
+                </div>
+            </div>
+            <div class="contrarian-point reveal">
+                <div class="contrarian-title">"ROI claims are marketing, not science"</div>
+                <div class="contrarian-desc">
+                    The widely cited "788% ROI" is from a single MetrixGlobal industry-funded study. ICF's "7x return" traces to similar sources. The honest answer: "Reliable moderate positive effects on behavior. Specific dollar returns are not credibly established."
+                </div>
+            </div>
+            <div class="contrarian-point reveal">
+                <div class="contrarian-title">"Coaching models are post-hoc rationalizations"</div>
+                <div class="contrarian-desc">
+                    GROW, Co-Active, CLEAR, OSKAR — developed from practitioner experience, not derived from research. No RCT tests any named model against alternatives. These serve training revenue more than clients.
+                    <span class="badge badge-4" style="vertical-align: middle; margin-left: 0.3rem;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong critique</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 23: INDUSTRY PROBLEMS
+         ========================================= -->
+    <section class="slide alt" id="slide-23">
+        <div class="slide-content" style="align-items: flex-start; max-width: 58ch;">
+            <span class="meta reveal">Contrarian Views</span>
+            <hr class="accent-line reveal">
+            <div class="contrarian-point reveal">
+                <div class="contrarian-title">"The unregulated industry problem is real"</div>
+                <div class="contrarian-desc">
+                    100,000+ practitioners globally with wildly varying quality. ICF's ACC credential requires just 60 hours of training — roughly 7 working days. The barrier to entry is lower than almost any other profession working intimately with people's psychology.
+                </div>
+            </div>
+            <div class="contrarian-point reveal">
+                <div class="contrarian-title">"Coaches without psychological training are dangerous"</div>
+                <div class="contrarian-desc">
+                    Berglas (HBR, 2002): coaches who lack psychological training "make a bad situation worse" by treating narcissistic personality traits or clinical depression as "leadership challenges."
+                </div>
+            </div>
+            <blockquote class="reveal" style="font-size: var(--body-size);">
+                Negative effects are real but uncommon: dependency on coach, worsening supervisor relationships when the coachee changes but the system doesn't, reduced job satisfaction when coaching reveals values-job misfit.
+                <cite>Schermuly &amp; Graßmann, 2019</cite>
+            </blockquote>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 24: SECTION — IMPLICATIONS
+         ========================================= -->
+    <section class="slide dark" id="slide-24">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <h2 class="section-title reveal">So What?</h2>
+            <p class="section-subtitle reveal">Decision translation — what changes if this is true</p>
+        </div>
+        <span class="section-number">06</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 25: DECISION TRANSLATION
+         ========================================= -->
+    <section class="slide" id="slide-25">
+        <div class="slide-content" style="align-items: flex-start; max-width: 58ch;">
+            <span class="meta reveal">Implications</span>
+            <hr class="accent-line reveal">
+            <div class="decision reveal">
+                <span class="decision-if">If</span>
+                <span class="decision-text"><strong>relationship &gt; method</strong> → Invest in relational capacity, not certification collection. Your ability to make someone feel seen matters more than your framework.</span>
+            </div>
+            <div class="decision reveal">
+                <span class="decision-if">If</span>
+                <span class="decision-text"><strong>behavior first</strong> → Structure around experiments from session 2. "What will you do differently?" before "How should you think differently?"</span>
+            </div>
+            <div class="decision reveal">
+                <span class="decision-if">If</span>
+                <span class="decision-text"><strong>readiness matters most</strong> → Screen for it. When an org sends you a "problem" executive, clarify whether the executive actually wants to be coached.</span>
+            </div>
+            <div class="decision reveal">
+                <span class="decision-if">If</span>
+                <span class="decision-text"><strong>methodology barely matters</strong> → Master 2-3 approaches. Hold each loosely. Don't chase every new certification.</span>
+            </div>
+            <div class="decision reveal">
+                <span class="decision-if">If</span>
+                <span class="decision-text"><strong>ROI claims are inflated</strong> → Never promise dollar returns. Frame outcomes in observable behavioral terms that stakeholders can verify.</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 26: OPEN QUESTIONS
+         ========================================= -->
+    <section class="slide alt" id="slide-26">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Open Questions</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">What We Don't Know Yet</h2>
+            <ul class="questions-list reveal">
+                <li>
+                    <span class="question-num">01</span>
+                    <span><strong>What is the optimal "dose" of coaching?</strong> No dose-response relationship found — but almost certainly a measurement artifact, not a true null.</span>
+                </li>
+                <li>
+                    <span class="question-num">02</span>
+                    <span><strong>What are the active ingredients?</strong> We know the relationship matters, but not which specific coaching behaviors within it create change. Microprocess research is in its infancy.</span>
+                </li>
+                <li>
+                    <span class="question-num">03</span>
+                    <span><strong>How durable are coaching outcomes?</strong> Most studies measure at end of coaching or shortly after. Few track persistence at 1, 2, or 5 years.</span>
+                </li>
+                <li>
+                    <span class="question-num">04</span>
+                    <span><strong>Differential effects by executive level?</strong> Most studies use middle-management populations. Coaching a CEO may work through entirely different mechanisms.</span>
+                </li>
+                <li>
+                    <span class="question-num">05</span>
+                    <span><strong>AI coaching vs human coaching?</strong> If the working alliance is the mechanism, AI will hit a ceiling. If structure and accountability are the ingredients, AI could democratize coaching at scale.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 27: KEY SOURCES
+         ========================================= -->
+    <section class="slide" id="slide-27">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">References</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Key Sources</h2>
+            <div class="reveal" style="display: flex; gap: clamp(1.5rem, 3vw, 3rem); flex-wrap: wrap; width: 100%;">
+                <div class="source-group" style="flex: 1; min-width: 16rem;">
+                    <div class="source-group-title">Meta-Analyses</div>
+                    <div class="source-item"><strong>De Haan &amp; Nilsson (2023)</strong> — AMLE. 37 RCTs, N = 2,528, g = 0.59</div>
+                    <div class="source-item"><strong>Nicolau et al. (2023)</strong> — Frontiers Psych. 20 RCTs, g = 0.43</div>
+                    <div class="source-item"><strong>Cannon-Bowers et al. (2023)</strong> — Frontiers Psych. 11 studies</div>
+                    <div class="source-item"><strong>Graßmann et al. (2020)</strong> — Human Relations. 27 samples, N = 3,563</div>
+                </div>
+                <div class="source-group" style="flex: 1; min-width: 16rem;">
+                    <div class="source-group-title">Key Studies &amp; Texts</div>
+                    <div class="source-item"><strong>De Haan et al. (2019)</strong> — AMLE. 180 coachees, 66 coaches</div>
+                    <div class="source-item"><strong>Kegan &amp; Lahey (2009)</strong> — Immunity to Change</div>
+                    <div class="source-item"><strong>Peterson (2006)</strong> — The Development Pipeline</div>
+                    <div class="source-item"><strong>Goldsmith</strong> — Stakeholder Centered Coaching</div>
+                    <div class="source-item"><strong>Berglas (2002)</strong> — HBR: Dangers of Executive Coaching</div>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--tag-size); color: var(--text-muted); margin-top: auto;">
+                Full source log with 70+ references available in the complete research document.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 28: END
+         ========================================= -->
+    <section class="slide dark" id="slide-28">
+        <div class="slide-content" style="align-items: flex-start; justify-content: center; max-width: 54ch;">
+            <span class="meta reveal">Pathos Labs</span>
+            <hr class="accent-line reveal">
+            <div class="reveal" style="display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 1.75rem); margin-top: clamp(0.3rem, 1vh, 0.5rem);">
+                <img src="sam-headshot.png" alt="Sam Millunchick" style="
+                    width: clamp(72px, 10vw, 110px);
+                    height: clamp(72px, 10vw, 110px);
+                    border-radius: 50%;
+                    object-fit: cover;
+                    object-position: center 15%;
+                    border: 2px solid rgba(255, 255, 255, 0.08);
+                    flex-shrink: 0;
+                ">
+                <div>
+                    <h1 style="font-size: clamp(1.6rem, 4.5vw, 3rem);">Sam Millunchick</h1>
+                    <p class="subtitle" style="color: var(--text-inverse-secondary); margin-top: clamp(0.15rem, 0.4vh, 0.3rem);">High-stakes communication coaching for founders and executives</p>
+                </div>
+            </div>
+            <div class="reveal" style="margin-top: clamp(1.5rem, 4vh, 3rem); display: flex; flex-direction: column; gap: clamp(0.4rem, 1vh, 0.75rem);">
+                <p style="font-size: var(--small-size); color: var(--text-inverse-secondary);">
+                    <strong style="color: var(--text-inverse);">Executive Coaching Methods</strong> &mdash; What the Evidence Actually Shows
+                </p>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--conf-3);"></span>
+                    <span style="font-size: var(--small-size); color: var(--text-inverse-secondary);">Shelf-life: Monitor &mdash; active research area</span>
+                </div>
+                <p style="font-size: var(--tag-size); color: var(--text-inverse-secondary); opacity: 0.6;">
+                    February 2026 &middot; 3 Meta-Analyses &middot; 70+ Sources
+                </p>
+            </div>
+        </div>
+        <span class="section-number reveal" style="opacity: 0.03;">PL</span>
+    </section>
+
+
+    <!-- =========================================
+       JAVASCRIPT — Presentation Controller
+       ========================================= -->
+    <script>
+        /* ===========================================
+           SLIDE PRESENTATION CONTROLLER
+           Handles navigation, animations, progress,
+           keyboard/touch/scroll interaction
+           =========================================== */
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.totalSlides = this.slides.length;
+                this.progressBar = document.getElementById('progressBar');
+                this.slideCounter = document.getElementById('slideCounter');
+                this.navContainer = document.getElementById('navSections');
+                this.keyHint = document.getElementById('keyHint');
+                this.currentIndex = 0;
+
+                /* Sections: label + first slide index */
+                this.sections = [
+                    { label: 'Overview', start: 0 },
+                    { label: 'Foundations', start: 5 },
+                    { label: 'Evidence', start: 11 },
+                    { label: 'Tactics', start: 15 },
+                    { label: 'Contrarian', start: 20 },
+                    { label: 'So What?', start: 23 },
+                ];
+                this.sectionItems = [];
+
+                this.init();
+            }
+
+            init() {
+                this.createSectionNav();
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupScrollListener();
+                this.markInitialVisible();
+                this.updateUI(0);
+                this.setupAnimatedCounters();
+
+                /* Hide keyboard hint after first interaction */
+                const hideHint = () => {
+                    if (this.keyHint) {
+                        this.keyHint.style.opacity = '0';
+                        setTimeout(() => { this.keyHint.style.display = 'none'; }, 300);
+                    }
+                    window.removeEventListener('keydown', hideHint);
+                    window.removeEventListener('wheel', hideHint);
+                };
+                window.addEventListener('keydown', hideHint);
+                window.addEventListener('wheel', hideHint);
+            }
+
+            /* --- Mark slides already in viewport as visible on load --- */
+            markInitialVisible() {
+                const vh = window.innerHeight;
+                this.slides.forEach(slide => {
+                    const rect = slide.getBoundingClientRect();
+                    if (rect.top < vh && rect.bottom > 0) {
+                        slide.classList.add('visible');
+                    }
+                });
+            }
+
+            /* --- Section Navigation (6 items, labels on hover) --- */
+            createSectionNav() {
+                this.sections.forEach((section, i) => {
+                    const item = document.createElement('button');
+                    item.className = 'nav-section-item';
+                    item.setAttribute('aria-label', `Go to ${section.label}`);
+                    item.innerHTML = `<span class="nav-section-label">${section.label}</span><span class="nav-section-pip"></span>`;
+                    item.addEventListener('click', () => this.goToSlide(section.start));
+                    this.navContainer.appendChild(item);
+                    this.sectionItems.push(item);
+                });
+            }
+
+            /* --- Intersection Observer for scroll-triggered animations --- */
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const idx = Array.from(this.slides).indexOf(entry.target);
+                            if (idx !== -1) {
+                                this.currentIndex = idx;
+                                this.updateUI(idx);
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.15  /* Lower threshold — triggers earlier for faster response */
+                });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            /* --- Keyboard Navigation --- */
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    /* Use tracked index, not scroll position — scrollY is
+                       unreliable during smooth-scroll animations */
+                    switch (e.key) {
+                        case 'ArrowDown':
+                        case 'ArrowRight':
+                        case ' ':
+                        case 'PageDown':
+                            e.preventDefault();
+                            this.goToSlide(Math.min(this.currentIndex + 1, this.totalSlides - 1));
+                            break;
+                        case 'ArrowUp':
+                        case 'ArrowLeft':
+                        case 'PageUp':
+                            e.preventDefault();
+                            this.goToSlide(Math.max(this.currentIndex - 1, 0));
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToSlide(this.totalSlides - 1);
+                            break;
+                    }
+                });
+            }
+
+            /* --- Touch / Swipe Navigation --- */
+            setupTouchNav() {
+                let touchStartY = 0;
+                let touchStartX = 0;
+
+                document.addEventListener('touchstart', (e) => {
+                    touchStartY = e.touches[0].clientY;
+                    touchStartX = e.touches[0].clientX;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const deltaY = touchStartY - e.changedTouches[0].clientY;
+                    const deltaX = touchStartX - e.changedTouches[0].clientX;
+
+                    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) {
+                        if (deltaY > 0) {
+                            this.goToSlide(Math.min(this.currentIndex + 1, this.totalSlides - 1));
+                        } else {
+                            this.goToSlide(Math.max(this.currentIndex - 1, 0));
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            /* --- Scroll-based progress updates --- */
+            setupScrollListener() {
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(() => {
+                            const scrollTop = window.scrollY;
+                            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                            const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+                            this.progressBar.style.width = progress + '%';
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+
+            /* --- Animated counter for hero stat numbers --- */
+            setupAnimatedCounters() {
+                const heroStat = document.querySelector('.hero-stat');
+                if (!heroStat) return;
+
+                const finalText = heroStat.textContent;
+                heroStat.setAttribute('data-final', finalText);
+
+                /* Animate when slide 2 becomes visible */
+                const slide2 = document.getElementById('slide-2');
+                if (!slide2) return;
+
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !heroStat.dataset.animated) {
+                            heroStat.dataset.animated = 'true';
+                            this.animateCounter(heroStat, finalText);
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                counterObserver.observe(slide2);
+            }
+
+            animateCounter(el, finalText) {
+                /* Scramble effect: cycle through random digits before settling */
+                const chars = finalText.split('');
+                const duration = 800;
+                const start = performance.now();
+
+                const animate = (now) => {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+
+                    /* Ease out cubic */
+                    const ease = 1 - Math.pow(1 - progress, 3);
+
+                    const display = chars.map((char, i) => {
+                        if (!/[0-9]/.test(char)) return char; /* Keep non-digits */
+                        const charProgress = Math.min(1, ease * chars.length / (i + 1));
+                        if (charProgress >= 1) return char;
+                        return Math.floor(Math.random() * 10);
+                    }).join('');
+
+                    el.textContent = display;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        el.textContent = finalText;
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }
+
+            /* --- Navigate to specific slide --- */
+            goToSlide(index) {
+                if (index >= 0 && index < this.totalSlides) {
+                    /* Update tracked index eagerly so rapid key presses
+                       always advance from the correct position */
+                    this.currentIndex = index;
+                    this.updateUI(index);
+                    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            /* --- Update progress bar, counter, section nav --- */
+            updateUI(index) {
+                /* Counter */
+                const num = String(index + 1).padStart(2, '0');
+                const total = String(this.totalSlides).padStart(2, '0');
+                this.slideCounter.textContent = `${num} / ${total}`;
+
+                /* Determine active section */
+                let activeSection = 0;
+                for (let i = this.sections.length - 1; i >= 0; i--) {
+                    if (index >= this.sections[i].start) {
+                        activeSection = i;
+                        break;
+                    }
+                }
+
+                /* Invert on dark slides */
+                const isDark = this.slides[index].classList.contains('dark');
+                this.slideCounter.classList.toggle('inverted', isDark);
+                if (this.keyHint) this.keyHint.classList.toggle('inverted', isDark);
+
+                /* Section items */
+                this.sectionItems.forEach((item, i) => {
+                    item.classList.toggle('active', i === activeSection);
+                    item.classList.toggle('inverted', isDark);
+                });
+            }
+        }
+
+        /* Initialize on load */
+        document.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+</body>
+</html>
