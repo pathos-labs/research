@@ -1026,9 +1026,216 @@
             .progress-bar, .nav-sections, .slide-counter, .keyboard-hint { display: none; }
             .reveal, .reveal-left { opacity: 1; transform: none; }
         }
+
+        /* ===========================================
+           EMAIL GATE
+           =========================================== */
+        body[data-gated] {
+            overflow: hidden;
+        }
+        body[data-gated] .slide {
+            filter: blur(20px);
+            pointer-events: none;
+            user-select: none;
+        }
+        body[data-gated] .progress-bar,
+        body[data-gated] .nav-sections,
+        body[data-gated] .slide-counter,
+        body[data-gated] .keyboard-hint {
+            display: none;
+        }
+
+        .gate-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .gate-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gate-card {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: clamp(2rem, 4vw, 3rem);
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .gate-meta {
+            font-family: var(--font-body);
+            font-size: var(--tag-size);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .gate-heading {
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.2;
+            margin: 0 0 clamp(0.5rem, 1vw, 0.75rem);
+        }
+
+        .gate-subtext {
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0 0 clamp(1.25rem, 2.5vw, 2rem);
+        }
+
+        .gate-input {
+            width: 100%;
+            padding: clamp(0.6rem, 1.2vw, 0.85rem) clamp(0.75rem, 1.5vw, 1rem);
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            color: var(--text);
+            background: var(--bg);
+            outline: none;
+            transition: border-color 0.2s ease;
+            box-sizing: border-box;
+            margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+        }
+        .gate-input:focus {
+            border-color: var(--accent);
+        }
+        .gate-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .gate-button {
+            width: 100%;
+            padding: clamp(0.6rem, 1.2vw, 0.85rem);
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-size: var(--body-size);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, opacity 0.2s ease;
+        }
+        .gate-button:hover {
+            background: #1D4ED8;
+        }
+        .gate-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .gate-error {
+            font-family: var(--font-body);
+            font-size: var(--small-size);
+            color: #DC2626;
+            margin-top: clamp(0.5rem, 1vw, 0.75rem);
+            display: none;
+        }
+        .gate-error.visible {
+            display: block;
+        }
+
+        .gate-fine-print {
+            font-family: var(--font-body);
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            margin-top: clamp(0.75rem, 1.5vw, 1rem);
+            text-align: center;
+        }
     </style>
 </head>
-<body>
+<body data-gated>
+
+    <!-- Email gate: immediate check to prevent flash for returning visitors -->
+    <script>
+        if (localStorage.getItem('pathos_access')) {
+            document.body.removeAttribute('data-gated');
+        }
+    </script>
+
+    <!-- Email gate: modal + Kit form submission -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!document.body.hasAttribute('data-gated')) return;
+
+            const KIT_FORM_ID = '9098413';
+
+            const overlay = document.createElement('div');
+            overlay.className = 'gate-overlay';
+            overlay.innerHTML = `
+                <div class="gate-card">
+                    <div class="gate-meta">Pathos Labs · Research</div>
+                    <h2 class="gate-heading">Unlock this research</h2>
+                    <p class="gate-subtext">Enter your email to get free access to all our research presentations.</p>
+                    <form id="gateForm" novalidate>
+                        <input type="email" class="gate-input" placeholder="you@example.com" required autocomplete="email" />
+                        <button type="submit" class="gate-button">Get Access</button>
+                        <div class="gate-error" id="gateError">Something went wrong — try again.</div>
+                    </form>
+                    <div class="gate-fine-print">No spam. Unsubscribe anytime.</div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            const form = document.getElementById('gateForm');
+            const input = form.querySelector('.gate-input');
+            const button = form.querySelector('.gate-button');
+            const error = document.getElementById('gateError');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (!input.value || !input.validity.valid) {
+                    input.focus();
+                    return;
+                }
+
+                error.classList.remove('visible');
+                button.disabled = true;
+                button.textContent = '\u2026';
+
+                try {
+                    const res = await fetch(
+                        `https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`,
+                        {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email_address: input.value }),
+                        }
+                    );
+
+                    if (!res.ok) throw new Error('Request failed');
+
+                    localStorage.setItem('pathos_access', '1');
+                    overlay.classList.add('fade-out');
+                    document.body.removeAttribute('data-gated');
+
+                    setTimeout(() => overlay.remove(), 300);
+                } catch (err) {
+                    error.classList.add('visible');
+                    button.disabled = false;
+                    button.textContent = 'Get Access';
+                }
+            });
+        });
+    </script>
 
     <!-- Progress bar -->
     <div class="progress-bar" id="progressBar"></div>
