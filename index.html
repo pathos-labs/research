@@ -67,7 +67,23 @@
             max-width: 640px;
             display: flex;
             flex-direction: column;
-            gap: clamp(1rem, 2vw, 1.5rem);
+            gap: clamp(2rem, 4vw, 3rem);
+        }
+
+        .discipline {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.75rem, 1.5vw, 1rem);
+        }
+
+        .discipline-label {
+            font-family: var(--font-mono);
+            font-size: clamp(0.6rem, 0.9vw, 0.7rem);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding-left: clamp(0.25rem, 0.5vw, 0.5rem);
         }
 
         .card {
@@ -84,6 +100,11 @@
         .card:hover {
             border-color: var(--accent);
             box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+        }
+
+        .card[data-accent="teal"]:hover {
+            border-color: #0D9488;
+            box-shadow: 0 2px 12px rgba(13, 148, 136, 0.08);
         }
 
         .card-meta {
@@ -112,6 +133,7 @@
 
         .card-stats {
             display: flex;
+            flex-wrap: wrap;
             gap: clamp(0.75rem, 1.5vw, 1.25rem);
             margin-top: clamp(0.6rem, 1.2vh, 0.85rem);
             font-family: var(--font-mono);
@@ -280,22 +302,41 @@
     <header>
         <div class="meta-tag">Pathos Labs · Research</div>
         <h1>Research Presentations</h1>
-        <p class="subtitle">Evidence-based research on high-stakes communication, coaching methodology, and leadership performance.</p>
+        <p class="subtitle">Evidence-based research on coaching, business development, and leadership performance. Every claim confidence-rated against primary sources.</p>
     </header>
 
     <div class="presentations">
-        <a class="card" href="executive-coaching-methods/">
-            <div class="card-meta">February 2026</div>
-            <h2>Executive Coaching Methods — What the Evidence Actually Shows</h2>
-            <p>A rigorous review of what works in executive coaching, grounded in 3 meta-analyses and 70+ sources. Covers foundations, evidence quality, practical tactics, and contrarian perspectives.</p>
-            <div class="card-stats">
-                <span>28 slides</span>
-                <span>·</span>
-                <span>3 meta-analyses</span>
-                <span>·</span>
-                <span>70+ sources</span>
-            </div>
-        </a>
+        <div class="discipline">
+            <div class="discipline-label">Coaching & Leadership</div>
+            <a class="card" href="executive-coaching-methods/">
+                <div class="card-meta">February 2026</div>
+                <h2>Executive Coaching Methods — What the Evidence Actually Shows</h2>
+                <p>A rigorous review of what works in executive coaching, grounded in 3 meta-analyses and 70+ sources. Covers foundations, evidence quality, practical tactics, and contrarian perspectives.</p>
+                <div class="card-stats">
+                    <span>28 slides</span>
+                    <span>·</span>
+                    <span>3 meta-analyses</span>
+                    <span>·</span>
+                    <span>70+ sources</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="discipline">
+            <div class="discipline-label">Business Development</div>
+            <a class="card" data-accent="teal" href="networking-to-business/">
+                <div class="card-meta">February 2026</div>
+                <h2>Networking to Business — Converting Connections Into Clients</h2>
+                <p>How to turn LinkedIn DMs, Zoom calls, and in-person events into real business. Persuasion psychology, channel-specific tactics, and contrarian stress-tests of conventional networking wisdom.</p>
+                <div class="card-stats">
+                    <span>33 slides</span>
+                    <span>·</span>
+                    <span>54 sources</span>
+                    <span>·</span>
+                    <span>3 channels</span>
+                </div>
+            </a>
+        </div>
     </div>
 
     <footer>

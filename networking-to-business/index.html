@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converting Networking Into Business — Evidence-Based Tactics</title>
+
+    <!-- Fonts: General Sans (headings) + Satoshi (body) from Fontshare -->
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,500,700&display=swap">
+
+    <style>
+        /* ===========================================
+           CUSTOM PROPERTIES — SWISS MODERN THEME
+           Change these to reskin the entire deck
+           =========================================== */
+        :root {
+            /* Surfaces */
+            --bg: #FAFBFC;
+            --bg-alt: #F1F5F9;
+            --bg-dark: #0F172A;
+            --bg-dark-subtle: #1E293B;
+
+            /* Typography */
+            --text: #0F172A;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --text-inverse: #F8FAFC;
+            --text-inverse-secondary: #94A3B8;
+
+            /* Accent */
+            --accent: #0D9488;
+            --accent-light: #CCFBF1;
+            --accent-dark: #0F766E;
+
+            /* Confidence rating colors */
+            --conf-5: #059669;
+            --conf-5-bg: #D1FAE5;
+            --conf-4: #2563EB;
+            --conf-4-bg: #DBEAFE;
+            --conf-3: #D97706;
+            --conf-3-bg: #FEF3C7;
+            --conf-2: #DC2626;
+            --conf-2-bg: #FEE2E2;
+
+            /* Borders */
+            --border: #E2E8F0;
+            --border-dark: #334155;
+
+            /* Fonts */
+            --font-display: 'General Sans', system-ui, sans-serif;
+            --font-body: 'Satoshi', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+            /* Responsive typography — all clamp() */
+            --title-size: clamp(2rem, 6vw, 4.5rem);
+            --h2-size: clamp(1.4rem, 3.5vw, 2.5rem);
+            --h3-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.65rem, 1vw, 0.85rem);
+            --tag-size: clamp(0.6rem, 0.8vw, 0.75rem);
+            --hero-number: clamp(2.5rem, 6vw, 4.5rem);
+            --section-number: clamp(4rem, 15vw, 12rem);
+
+            /* Spacing */
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --slide-padding-top: clamp(1.5rem, 4vh, 4rem);
+            --content-gap: clamp(0.75rem, 2vw, 2rem);
+            --element-gap: clamp(0.3rem, 0.8vw, 0.75rem);
+
+            /* Animation */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+            --duration: 0.5s;
+            --duration-fast: 0.3s;
+        }
+
+        /* ===========================================
+           RESET & BASE
+           =========================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            height: 100%;
+            overflow-x: hidden;
+            scrollbar-width: none;        /* Firefox */
+            -ms-overflow-style: none;     /* IE/Edge */
+        }
+
+        html::-webkit-scrollbar { display: none; }  /* Chrome/Safari */
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            height: 100%;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===========================================
+           SLIDE CONTAINER
+           Each slide = exactly one viewport height
+           =========================================== */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding: var(--slide-padding-top) var(--slide-padding) var(--slide-padding);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            gap: var(--content-gap);
+        }
+
+        /* Subtle grid background on light slides — Swiss grid nod */
+        .slide:not(.dark) {
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.018) 1px, transparent 1px);
+            background-size: clamp(30px, 4vw, 50px) clamp(30px, 4vw, 50px);
+        }
+
+        .slide.alt {
+            background-color: var(--bg-alt);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.015) 1px, transparent 1px);
+            background-size: clamp(30px, 4vw, 50px) clamp(30px, 4vw, 50px);
+        }
+
+        /* Dark section divider slides */
+        .slide.dark {
+            background: var(--bg-dark);
+            background-image: radial-gradient(ellipse at 30% 70%, rgba(13, 148, 136, 0.08) 0%, transparent 60%);
+            color: var(--text-inverse);
+        }
+
+        /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+        h1 {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        p, li {
+            font-size: var(--body-size);
+            line-height: 1.55;
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .dark .subtitle {
+            color: var(--text-inverse-secondary);
+        }
+
+        .meta {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .dark .meta {
+            color: var(--text-inverse-secondary);
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+        }
+
+        .accent-line {
+            width: clamp(2rem, 4vw, 3.5rem);
+            height: 3px;
+            background: var(--accent);
+            border: none;
+            margin: 0;
+        }
+
+        .dark .accent-line {
+            background: var(--accent);
+            opacity: 0.8;
+        }
+
+        /* ===========================================
+           SECTION DIVIDER ELEMENTS
+           Large decorative section numbers
+           =========================================== */
+        .section-number {
+            font-family: var(--font-display);
+            font-size: var(--section-number);
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.04);
+            position: absolute;
+            right: var(--slide-padding);
+            bottom: clamp(0.5rem, 3vh, 2rem);
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: clamp(0.85rem, 1.5vw, 1.15rem);
+            color: var(--text-inverse-secondary);
+            font-weight: 400;
+            margin-top: var(--element-gap);
+        }
+
+        /* ===========================================
+           HERO NUMBER (big stat)
+           =========================================== */
+        .hero-stat {
+            font-family: var(--font-mono);
+            font-size: var(--hero-number);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .hero-label {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 42ch;
+            line-height: 1.4;
+        }
+
+        /* ===========================================
+           CONFIDENCE BADGES
+           Visual system for evidence ratings
+           =========================================== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(0.2rem, 0.4vw, 0.35rem);
+            padding: clamp(0.15rem, 0.3vw, 0.25rem) clamp(0.4rem, 0.8vw, 0.65rem);
+            border-radius: 100px;
+            font-size: var(--tag-size);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-5 { background: var(--conf-5-bg); color: var(--conf-5); }
+        .badge-4 { background: var(--conf-4-bg); color: var(--conf-4); }
+        .badge-3 { background: var(--conf-3-bg); color: var(--conf-3); }
+        .badge-2 { background: var(--conf-2-bg); color: var(--conf-2); }
+
+        .badge-dots {
+            display: inline-flex;
+            gap: 2px;
+        }
+
+        .badge-dot {
+            width: clamp(4px, 0.4vw, 6px);
+            height: clamp(4px, 0.4vw, 6px);
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .badge-dot.empty {
+            opacity: 0.25;
+        }
+
+        /* On dark backgrounds */
+        .dark .badge-5 { background: rgba(5, 150, 105, 0.2); color: #6EE7B7; }
+        .dark .badge-4 { background: rgba(37, 99, 235, 0.2); color: #93C5FD; }
+        .dark .badge-3 { background: rgba(217, 119, 6, 0.2); color: #FCD34D; }
+
+        /* ===========================================
+           DATA BARS — for effect size visualizations
+           =========================================== */
+        .data-bar-row {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 1vw, 1rem);
+        }
+
+        .data-bar-label {
+            font-size: var(--small-size);
+            font-weight: 500;
+            min-width: clamp(8rem, 14vw, 14rem);
+            text-align: right;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .data-bar-track {
+            flex: 1;
+            height: clamp(6px, 1vh, 10px);
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+            max-width: clamp(10rem, 30vw, 24rem);
+        }
+
+        .data-bar-fill {
+            height: 100%;
+            border-radius: 100px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 1s var(--ease-out-expo) 0.3s;
+        }
+
+        .visible .data-bar-fill { width: var(--bar-width); }
+
+        .data-bar-value {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            font-weight: 600;
+            color: var(--text);
+            min-width: clamp(2.5rem, 4vw, 4rem);
+            flex-shrink: 0;
+        }
+
+        /* ===========================================
+           FINDING ROWS — numbered findings with badges
+           =========================================== */
+        .finding {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.5rem, 1.2vw, 1.25rem);
+            padding: clamp(0.5rem, 1vh, 0.85rem) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .finding:last-child { border-bottom: none; }
+
+        .finding-num {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            font-weight: 600;
+            color: var(--accent);
+            min-width: clamp(1.2rem, 2vw, 1.8rem);
+            flex-shrink: 0;
+            padding-top: 0.1em;
+        }
+
+        .finding-text {
+            font-size: var(--body-size);
+            line-height: 1.45;
+            flex: 1;
+        }
+
+        .finding-text strong {
+            font-weight: 600;
+        }
+
+        .finding-badge {
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        /* ===========================================
+           CARDS — for tactics, etc.
+           =========================================== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, clamp(14rem, 22vw, 20rem)), 1fr));
+            gap: clamp(0.5rem, 1.2vw, 1rem);
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: clamp(6px, 0.6vw, 10px);
+            padding: clamp(0.75rem, 1.5vw, 1.25rem);
+            display: flex;
+            flex-direction: column;
+            gap: var(--element-gap);
+            transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+        }
+
+        .alt .card { background: white; }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 12px rgba(13, 148, 136, 0.08);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(0.25rem, 0.5vw, 0.4rem);
+            font-size: var(--tag-size);
+        }
+
+        .card-meta-tag {
+            padding: clamp(0.1rem, 0.2vw, 0.15rem) clamp(0.3rem, 0.5vw, 0.5rem);
+            background: var(--bg-alt);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .card-desc {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* ===========================================
+           PIPELINE — for step sequences
+           =========================================== */
+        .pipeline {
+            display: flex;
+            align-items: stretch;
+            gap: clamp(0.2rem, 0.5vw, 0.4rem);
+            width: 100%;
+        }
+
+        .pipeline-step {
+            flex: 1;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: clamp(4px, 0.4vw, 8px);
+            padding: clamp(0.5rem, 1vw, 1rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: clamp(0.15rem, 0.4vh, 0.4rem);
+            transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease;
+        }
+
+        .pipeline-step:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .pipeline-num {
+            font-family: var(--font-mono);
+            font-size: var(--tag-size);
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .pipeline-label {
+            font-family: var(--font-display);
+            font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .pipeline-desc {
+            font-size: clamp(0.55rem, 0.8vw, 0.72rem);
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        /* ===========================================
+           QUOTE
+           =========================================== */
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: clamp(0.75rem, 1.5vw, 1.5rem);
+            font-size: clamp(0.9rem, 1.6vw, 1.2rem);
+            line-height: 1.5;
+            color: var(--text);
+            font-style: italic;
+            max-width: 50ch;
+        }
+
+        blockquote cite {
+            display: block;
+            margin-top: clamp(0.3rem, 0.6vh, 0.6rem);
+            font-size: var(--small-size);
+            font-style: normal;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ===========================================
+           SOURCE LIST
+           =========================================== */
+        .source-group {
+            margin-bottom: clamp(0.5rem, 1vh, 1rem);
+        }
+
+        .source-group-title {
+            font-family: var(--font-display);
+            font-size: var(--small-size);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.5rem);
+        }
+
+        .source-item {
+            font-size: clamp(0.6rem, 0.9vw, 0.78rem);
+            color: var(--text-secondary);
+            line-height: 1.45;
+            padding: clamp(0.1rem, 0.2vh, 0.2rem) 0;
+        }
+
+        .source-item strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Links — subtle, only visible in source sections */
+        a { color: inherit; text-decoration: none; }
+        .source-item a, .finding-text a, .card-desc a, cite a, .contrarian-desc a {
+            color: var(--accent);
+            transition: opacity 0.2s ease;
+        }
+        .source-item a:hover, .finding-text a:hover, .card-desc a:hover, cite a:hover, .contrarian-desc a:hover {
+            text-decoration: underline;
+        }
+        .dark .source-item a { color: #99F6E4; }
+
+        /* ===========================================
+           PREDICTOR LIST (checkmarks / x-marks)
+           =========================================== */
+        .predictor-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.2rem, 0.6vh, 0.5rem);
+        }
+
+        .predictor-list li {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.3rem, 0.6vw, 0.6rem);
+            font-size: var(--body-size);
+        }
+
+        .predictor-list .check {
+            color: var(--conf-5);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .predictor-list .cross {
+            color: var(--conf-2);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ===========================================
+           DECISION TRANSLATION
+           =========================================== */
+        .decision {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.4rem, 1vw, 1rem);
+            padding: clamp(0.4rem, 0.8vh, 0.7rem) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .decision:last-child { border-bottom: none; }
+
+        .decision-if {
+            font-family: var(--font-mono);
+            font-size: var(--tag-size);
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+            min-width: clamp(1.5rem, 2vw, 2rem);
+            padding-top: 0.2em;
+        }
+
+        .decision-text {
+            font-size: var(--body-size);
+            line-height: 1.45;
+        }
+
+        .decision-text strong {
+            font-weight: 600;
+        }
+
+        /* ===========================================
+           CONTRARIAN POINT
+           =========================================== */
+        .contrarian-point {
+            padding: clamp(0.4rem, 1vh, 0.85rem) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .contrarian-point:last-child { border-bottom: none; }
+
+        .contrarian-title {
+            font-family: var(--font-display);
+            font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+            font-weight: 600;
+            margin-bottom: clamp(0.15rem, 0.3vh, 0.3rem);
+        }
+
+        .contrarian-desc {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* ===========================================
+           TRUST EQUATION — custom for this deck
+           =========================================== */
+        .trust-eq {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 1.5vw, 1.5rem);
+            font-family: var(--font-mono);
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            font-weight: 700;
+            flex-wrap: wrap;
+        }
+
+        .trust-eq-var {
+            color: var(--text);
+        }
+
+        .trust-eq-op {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .trust-eq-highlight {
+            color: var(--accent);
+        }
+
+        /* ===========================================
+           NAVIGATION ELEMENTS
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.25s var(--ease-out-quart);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: clamp(0.75rem, 2vh, 1.5rem);
+            right: clamp(1rem, 2vw, 2rem);
+            font-family: var(--font-mono);
+            font-size: clamp(0.6rem, 0.8vw, 0.75rem);
+            color: var(--text-muted);
+            z-index: 100;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .slide-counter.inverted {
+            color: var(--text-inverse-secondary);
+        }
+
+        .nav-sections {
+            position: fixed;
+            right: clamp(0.75rem, 1.5vw, 1.5rem);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(6px, 1vh, 14px);
+            z-index: 100;
+        }
+
+        .nav-section-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: clamp(4px, 0.5vw, 8px);
+            cursor: pointer;
+            padding: 0;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-section-item:hover { opacity: 0.75; }
+        .nav-section-item.active { opacity: 1; }
+
+        .nav-section-label {
+            font-family: var(--font-mono);
+            font-size: clamp(0.5rem, 0.65vw, 0.6rem);
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 500;
+            max-width: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-width 0.3s var(--ease-out-expo), opacity 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-sections:hover .nav-section-label {
+            max-width: 8rem;
+            opacity: 1;
+        }
+
+        .nav-section-pip {
+            width: clamp(6px, 0.6vw, 8px);
+            height: clamp(6px, 0.6vw, 8px);
+            border-radius: 50%;
+            border: 1.5px solid currentColor;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .nav-section-item.active .nav-section-pip {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .nav-section-item.inverted { color: var(--text-inverse-secondary); }
+        .nav-section-item.inverted.active .nav-section-pip {
+            background: white;
+            border-color: white;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: fixed;
+            bottom: clamp(0.75rem, 2vh, 1.5rem);
+            left: clamp(1rem, 2vw, 2rem);
+            font-size: clamp(0.55rem, 0.7vw, 0.65rem);
+            color: var(--text-muted);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            opacity: 0.6;
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .keyboard-hint.inverted { color: var(--text-inverse-secondary); }
+
+        .keyboard-hint kbd {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.1em 0.4em;
+            border: 1px solid currentColor;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+        }
+
+        /* ===========================================
+           REVEAL ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger children */
+        .reveal:nth-child(1) { transition-delay: 0.05s; }
+        .reveal:nth-child(2) { transition-delay: 0.12s; }
+        .reveal:nth-child(3) { transition-delay: 0.19s; }
+        .reveal:nth-child(4) { transition-delay: 0.26s; }
+        .reveal:nth-child(5) { transition-delay: 0.33s; }
+        .reveal:nth-child(6) { transition-delay: 0.40s; }
+        .reveal:nth-child(7) { transition-delay: 0.47s; }
+        .reveal:nth-child(8) { transition-delay: 0.54s; }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal-left {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Individual card stagger — each card animates in sequence */
+        .card-grid .card,
+        .pipeline .pipeline-step {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo),
+                        border-color var(--duration-fast) ease,
+                        box-shadow var(--duration-fast) ease;
+        }
+
+        .slide.visible .card-grid .card,
+        .slide.visible .pipeline .pipeline-step {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide.visible .card-grid .card:nth-child(1),
+        .slide.visible .pipeline .pipeline-step:nth-child(1) { transition-delay: 0.1s; }
+        .slide.visible .card-grid .card:nth-child(2),
+        .slide.visible .pipeline .pipeline-step:nth-child(2) { transition-delay: 0.18s; }
+        .slide.visible .card-grid .card:nth-child(3),
+        .slide.visible .pipeline .pipeline-step:nth-child(3) { transition-delay: 0.26s; }
+        .slide.visible .card-grid .card:nth-child(4),
+        .slide.visible .pipeline .pipeline-step:nth-child(4) { transition-delay: 0.34s; }
+        .slide.visible .card-grid .card:nth-child(5) { transition-delay: 0.42s; }
+        .slide.visible .card-grid .card:nth-child(6) { transition-delay: 0.50s; }
+
+        /* Predictor list items stagger individually */
+        .predictor-list li {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.4s var(--ease-out-expo),
+                        transform 0.4s var(--ease-out-expo);
+        }
+
+        .slide.visible .predictor-list li { opacity: 1; transform: translateX(0); }
+        .slide.visible .predictor-list li:nth-child(1) { transition-delay: 0.1s; }
+        .slide.visible .predictor-list li:nth-child(2) { transition-delay: 0.15s; }
+        .slide.visible .predictor-list li:nth-child(3) { transition-delay: 0.2s; }
+        .slide.visible .predictor-list li:nth-child(4) { transition-delay: 0.25s; }
+        .slide.visible .predictor-list li:nth-child(5) { transition-delay: 0.3s; }
+        .slide.visible .predictor-list li:nth-child(6) { transition-delay: 0.35s; }
+
+        /* Data bars stagger */
+        .data-bar-row {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.4s var(--ease-out-expo),
+                        transform 0.4s var(--ease-out-expo);
+        }
+
+        .slide.visible .data-bar-row { opacity: 1; transform: translateX(0); }
+        .slide.visible .data-bar-row:nth-child(1) { transition-delay: 0.15s; }
+        .slide.visible .data-bar-row:nth-child(2) { transition-delay: 0.25s; }
+        .slide.visible .data-bar-row:nth-child(3) { transition-delay: 0.35s; }
+        .slide.visible .data-bar-row:nth-child(4) { transition-delay: 0.45s; }
+
+        /* ===========================================
+           RESPONSIVE — SHORT VIEWPORTS
+           =========================================== */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(1rem, 3.5vw, 3rem);
+                --slide-padding-top: clamp(1rem, 3vh, 2.5rem);
+                --content-gap: clamp(0.5rem, 1.5vw, 1.25rem);
+                --title-size: clamp(1.6rem, 5vw, 3rem);
+                --h2-size: clamp(1.2rem, 3vw, 2rem);
+                --hero-number: clamp(2rem, 7vw, 4.5rem);
+                --section-number: clamp(3rem, 12vw, 9rem);
+            }
+        }
+
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --slide-padding-top: clamp(0.75rem, 2vh, 1.5rem);
+                --content-gap: clamp(0.4rem, 1vw, 1rem);
+                --title-size: clamp(1.3rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1rem, 2.5vw, 1.6rem);
+                --body-size: clamp(0.65rem, 1.1vw, 0.9rem);
+                --hero-number: clamp(1.8rem, 6vw, 3.5rem);
+            }
+
+            .nav-sections, .keyboard-hint { display: none; }
+        }
+
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --h2-size: clamp(0.9rem, 2.2vw, 1.3rem);
+                --body-size: clamp(0.6rem, 1vw, 0.8rem);
+                --small-size: clamp(0.5rem, 0.8vw, 0.7rem);
+            }
+        }
+
+        /* RESPONSIVE — NARROW VIEWPORTS */
+        @media (max-width: 600px) {
+            :root {
+                --title-size: clamp(1.5rem, 8vw, 3rem);
+                --hero-number: clamp(2rem, 10vw, 4rem);
+            }
+
+            .card-grid { grid-template-columns: 1fr; }
+
+            .pipeline {
+                flex-direction: column;
+                gap: clamp(0.2rem, 0.5vh, 0.3rem);
+            }
+
+            .pipeline-step {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+            }
+
+            .data-bar-label { min-width: clamp(5rem, 25vw, 8rem); }
+        }
+
+        @media (max-width: 400px) {
+            .finding { flex-wrap: wrap; }
+            .finding-badge { margin-left: auto; }
+        }
+
+        /* ===========================================
+           REDUCED MOTION
+           =========================================== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.15s !important;
+            }
+            html { scroll-behavior: auto; }
+            .reveal, .reveal-left,
+            .card-grid .card, .pipeline .pipeline-step,
+            .predictor-list li, .data-bar-row {
+                opacity: 1;
+                transform: none;
+            }
+            .data-bar-fill { transition-duration: 0.01ms !important; }
+        }
+
+        /* ===========================================
+           PRINT STYLES
+           =========================================== */
+        @media print {
+            html { scroll-snap-type: none; }
+            .slide {
+                height: auto;
+                min-height: 100vh;
+                page-break-after: always;
+                overflow: visible;
+            }
+            .progress-bar, .nav-sections, .slide-counter, .keyboard-hint { display: none; }
+            .reveal, .reveal-left { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Redirect to landing page if not subscribed (gate lives there) -->
+    <script>
+        if (location.hostname === 'research.pathoslabs.co' && !localStorage.getItem('pathos_access')) {
+            window.location.replace('/');
+        }
+    </script>
+
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Slide counter -->
+    <div class="slide-counter" id="slideCounter">01 / 33</div>
+
+    <!-- Section nav (generated by JS) -->
+    <nav class="nav-sections" id="navSections" aria-label="Section navigation"></nav>
+
+    <!-- Keyboard hint -->
+    <div class="keyboard-hint" id="keyHint">
+        <kbd>&darr;</kbd> <kbd>&uarr;</kbd> to navigate
+    </div>
+
+
+    <!-- =========================================
+         SLIDE 1: TITLE (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-1">
+        <div class="slide-content" style="align-items: flex-start; max-width: 52ch;">
+            <span class="meta reveal">Pathos Labs &middot; Research</span>
+            <hr class="accent-line reveal">
+            <h1 class="reveal" style="margin-top: clamp(0.5rem, 1.5vh, 1rem);">Converting Networking Into Business</h1>
+            <p class="subtitle reveal">Evidence-Based Tactics for LinkedIn, Zoom &amp; In-Person</p>
+            <p class="meta reveal" style="margin-top: auto; padding-top: 1rem;">
+                Sam Millunchick &middot; 54 Sources &middot; February 2026
+            </p>
+        </div>
+        <span class="section-number reveal" style="opacity: 0.03;">PL</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 2: HERO STAT
+         ========================================= -->
+    <section class="slide" id="slide-2">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">The Bottom Line</span>
+            <hr class="accent-line reveal">
+            <div class="hero-stat reveal">45.8%</div>
+            <p class="hero-label reveal">
+                of professionals never follow up after networking events &mdash; despite 92% hoping for future collaboration. Following up within 48 hours puts you ahead of nearly half the room.
+            </p>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <a href="https://doi.org/10.1177/0001839214554990" target="_blank" rel="noopener">Casciaro et al. 2014</a> &middot; <a href="https://belkins.io/blog/linkedin-outreach-study" target="_blank" rel="noopener">Belkins/Expandi 2025</a> &middot; <a href="https://www.momencio.com/converting-event-leads-into-sales/" target="_blank" rel="noopener">Sales Hacker data</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 3: KEY FINDINGS 1-4 (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-3">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Key Findings</span>
+            <hr class="accent-line reveal">
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>Follow up is the highest-leverage behavior.</strong> All channels. 48-hour window = 50% higher response.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>Self-orientation kills trust faster than credentials build it.</strong> Trust Equation denominator &gt; numerator.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text"><strong>Network position beats network size.</strong> Bridging structural holes &gt; having 2,000 connections.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">04</span>
+                    <span class="finding-text"><strong>LinkedIn messages under 300 characters win.</strong> 19% more responses. Complete profile = 87% higher acceptance.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 4: KEY FINDINGS 5-7
+         ========================================= -->
+    <section class="slide" id="slide-4">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Key Findings</span>
+            <hr class="accent-line reveal">
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">05</span>
+                    <span class="finding-text"><strong>Trust forms comparably on video and in-person.</strong> <a href="https://doi.org/10.1038/s41586-022-04643-y" target="_blank" rel="noopener">Nature paper (2022)</a>: identical trust scores for 1:1 calls.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">06</span>
+                    <span class="finding-text"><strong>Networking triggers moral contamination.</strong> <a href="https://doi.org/10.1177/0001839214554990" target="_blank" rel="noopener">Casciaro et al.</a>: instrumental networking feels literally dirty. Reframe to promotion-focus.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">07</span>
+                    <span class="finding-text"><strong>The full conversion funnel is a black box.</strong> Reply rates are documented. The path from meeting to signed client is not.</span>
+                    <span class="finding-badge"><span class="badge badge-2"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 5: SECTION — FOUNDATIONS (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-5">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <div class="section-title reveal">Foundations</div>
+            <p class="section-subtitle reveal">7 principles that govern all channels</p>
+        </div>
+        <span class="section-number reveal">01</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 6: WEAK TIES & STRUCTURAL HOLES
+         ========================================= -->
+    <section class="slide" id="slide-6">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Principles 1&ndash;2</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Your Acquaintances Create Opportunities. Your Position Closes Them.</h2>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>Weak ties bridge clusters,</strong> provide novel information. The most valuable connections are the ones you see infrequently.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>Structural holes:</strong> people bridging disconnected groups earn more, promote faster, produce better ideas.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <blockquote class="reveal">
+                200 connections spanning 4 industries beats 2,000 in the same field.
+                <cite><a href="https://doi.org/10.1086/225469" target="_blank" rel="noopener">Granovetter 1973</a> &middot; <a href="https://doi.org/10.1086/421787" target="_blank" rel="noopener">Burt 2004</a></cite>
+            </blockquote>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 7: RECIPROCITY & GIVER'S PARADOX (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-7">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Principles 3&ndash;4</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Give First &mdash; But Give Smart</h2>
+            <div class="reveal" style="display: flex; flex-direction: column; gap: clamp(0.4rem, 0.8vh, 0.7rem); width: 100%;">
+                <div class="data-bar-row">
+                    <span class="data-bar-label">&ldquo;Otherish givers&rdquo;</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 90%;"></div></div>
+                    <span class="data-bar-value">Top</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Matchers</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 55%;"></div></div>
+                    <span class="data-bar-value">Middle</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Takers</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 45%;"></div></div>
+                    <span class="data-bar-value">Mixed</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Selfless givers</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 20%;"></div></div>
+                    <span class="data-bar-value">Bottom</span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary);">
+                <strong>~100 hours/year</strong> of strategic giving outperforms 500 hours of indiscriminate generosity. &mdash; <a href="https://books.google.com/books/about/Give_and_Take.html?id=6IFjl3V7ByoC" target="_blank" rel="noopener">Grant, 2013</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 8: THE TRUST EQUATION
+         ========================================= -->
+    <section class="slide" id="slide-8">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Principle 5</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Trust Has a Formula</h2>
+            <div class="reveal trust-eq">
+                <span class="trust-eq-var">T</span>
+                <span class="trust-eq-op">=</span>
+                <span class="trust-eq-op">(</span>
+                <span class="trust-eq-var">C</span>
+                <span class="trust-eq-op">+</span>
+                <span class="trust-eq-var">R</span>
+                <span class="trust-eq-op">+</span>
+                <span class="trust-eq-var">I</span>
+                <span class="trust-eq-op">)</span>
+                <span class="trust-eq-op">/</span>
+                <span class="trust-eq-highlight">S</span>
+            </div>
+            <div class="reveal" style="display: flex; flex-wrap: wrap; gap: clamp(0.3rem, 0.6vw, 0.5rem);">
+                <span class="card-meta-tag">Credibility</span>
+                <span class="card-meta-tag">Reliability</span>
+                <span class="card-meta-tag">Intimacy</span>
+                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">Self-Orientation</span>
+            </div>
+            <p class="reveal" style="color: var(--text-secondary);">
+                Reducing self-orientation is higher-return than adding credentials. The denominator divides everything.
+            </p>
+            <div class="reveal">
+                <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 9: PERSUASION PSYCHOLOGY (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-9">
+        <div class="slide-content" style="align-items: flex-start;">
+            <span class="meta reveal">Applied Cialdini</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Persuasion Works Best When Felt, Not Performed</h2>
+            <div class="card-grid reveal" style="width: 100%;">
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <div class="card-title">Pre-Suasion</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></div>
+                    <div class="card-desc">Give before the ask. A small gift at the door = 42% more purchases.</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <div class="card-title">Commitment</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></div>
+                    <div class="card-desc">Small agreements build momentum. Deepen the need before the solution.</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <div class="card-title">Social Proof</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></div>
+                    <div class="card-desc">Indirect beats direct. Being referenced by others &gt; claiming credentials.</div>
+                </div>
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 0.4rem;">
+                        <div class="card-title">Scarcity</div>
+                    </div>
+                    <div class="card-meta"><span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span></div>
+                    <div class="card-desc">Genuine only. Observed scarcity works; announced urgency backfires.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 10: SECTION — LINKEDIN (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-10">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <div class="section-title reveal">LinkedIn DMs</div>
+            <p class="section-subtitle reveal">From connection to conversation to client</p>
+        </div>
+        <span class="section-number reveal">02</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 11: COLD OUTREACH METRICS
+         ========================================= -->
+    <section class="slide" id="slide-11">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">What Gets Responses</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">The Numbers on Cold Outreach</h2>
+            <div class="reveal" style="display: flex; flex-direction: column; gap: clamp(0.4rem, 0.8vh, 0.7rem); width: 100%;">
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Messages &lt; 300 chars</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 80%;"></div></div>
+                    <span class="data-bar-value">+19%</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Personalized requests</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 72%;"></div></div>
+                    <span class="data-bar-value">9.36%</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Profile view before outreach</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 95%;"></div></div>
+                    <span class="data-bar-value">+143%</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Complete profile</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 87%;"></div></div>
+                    <span class="data-bar-value">+87%</span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <a href="https://belkins.io/blog/linkedin-outreach-study" target="_blank" rel="noopener">Belkins 20M+ outreach attempts</a> &middot; <a href="https://www.linkedin.com/business/sales/blog/prospecting/data-on-sending-inmails-higher-acceptance-rates" target="_blank" rel="noopener">LinkedIn Sales Solutions 2023</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 12: TRIGGERING EVENTS (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-12">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">When to Reach Out</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Timing Is the Multiplier</h2>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>New job (&lt; 90 days):</strong> 62% more likely to accept InMail.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>New role at same company (&lt; 90 days):</strong> 51% more likely.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text"><strong>Posted on LinkedIn (&lt; 3 months):</strong> 45% more likely.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">04</span>
+                    <span class="finding-text"><strong>Already follows your page:</strong> 270% more likely to accept.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <a href="https://www.linkedin.com/business/sales/blog/prospecting/data-on-sending-inmails-higher-acceptance-rates" target="_blank" rel="noopener">LinkedIn first-party data, every Sales Navigator InMail sent in 2022</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 13: VALUE-FIRST & FOLLOW-UP
+         ========================================= -->
+    <section class="slide" id="slide-13">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">The Sequence</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Value First, Then Follow Up</h2>
+            <div class="pipeline reveal">
+                <div class="pipeline-step">
+                    <span class="pipeline-num">1</span>
+                    <span class="pipeline-label">View Profile</span>
+                    <span class="pipeline-desc">Day 1</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">2</span>
+                    <span class="pipeline-label">Engage Content</span>
+                    <span class="pipeline-desc">Day 2&ndash;3</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">3</span>
+                    <span class="pipeline-label">Connect</span>
+                    <span class="pipeline-desc">Day 4&ndash;5</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">4</span>
+                    <span class="pipeline-label">Value Share</span>
+                    <span class="pipeline-desc">24 hrs</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">5</span>
+                    <span class="pipeline-label">2nd Touch</span>
+                    <span class="pipeline-desc">3&ndash;4 days</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">6</span>
+                    <span class="pipeline-label">Conversation</span>
+                    <span class="pipeline-desc">7&ndash;10 days</span>
+                </div>
+            </div>
+            <p class="reveal" style="color: var(--text-secondary);">
+                Multi-step sequences push response rates to <strong>20&ndash;30%</strong>, vs 5&ndash;10% for single messages.
+            </p>
+            <div class="reveal">
+                <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>3 follow-ups max. Stop after 3 unanswered.</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 14: LINKEDIN BENCHMARKS (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-14">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Honest Numbers</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">What to Actually Expect</h2>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>Connection acceptance:</strong> 26&ndash;30% realistic, 40&ndash;45% top performers.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>Cold DM reply rate:</strong> 5&ndash;10% realistic, 15&ndash;20% top performers.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text"><strong>1st-degree message reply:</strong> 12&ndash;17% realistic, 25&ndash;30% top performers.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">04</span>
+                    <span class="finding-text"><strong>InMail reply rate:</strong> 6&ndash;10% realistic, 18&ndash;25% top performers.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                Caveat: No peer-reviewed research exists. Entire evidence base is proprietary platform data.
+                <span class="badge badge-2"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 15: SECTION — ZOOM (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-15">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <div class="section-title reveal">Zoom Networking</div>
+            <p class="section-subtitle reveal">From intro call to opportunity</p>
+        </div>
+        <span class="section-number reveal">03</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 16: TRUST ON VIDEO
+         ========================================= -->
+    <section class="slide" id="slide-16">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">The Contrarian Finding</span>
+            <hr class="accent-line reveal">
+            <div class="hero-stat reveal">&asymp; Equal</div>
+            <p class="hero-label reveal">
+                Trust forms at comparable levels on video and in-person for 1-on-1 interactions. The bottleneck is structure and follow-through, not the medium.
+            </p>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <a href="https://doi.org/10.1038/s41586-022-04643-y" target="_blank" rel="noopener">Brucks &amp; Levav 2022</a> (Nature) &middot; <a href="https://doi.org/10.1098/rstb.2021.0484" target="_blank" rel="noopener">Diana et al. 2023</a> (Royal Society)
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 17: THE 30-MINUTE CALL (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-17">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Call Structure</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">The 30-Minute Networking Call</h2>
+            <div class="pipeline reveal">
+                <div class="pipeline-step">
+                    <span class="pipeline-num">1</span>
+                    <span class="pipeline-label">Warm Open</span>
+                    <span class="pipeline-desc">3 min &mdash; specific, researched comment</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">2</span>
+                    <span class="pipeline-label">Revealing Qs</span>
+                    <span class="pipeline-desc">12 min &mdash; &ldquo;What shifted this year?&rdquo;</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">3</span>
+                    <span class="pipeline-label">Give-First Move</span>
+                    <span class="pipeline-desc">10 min &mdash; connection, resource, insight</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">4</span>
+                    <span class="pipeline-label">Next Step</span>
+                    <span class="pipeline-desc">5 min &mdash; &ldquo;Can we find 30 min?&rdquo;</span>
+                </div>
+            </div>
+            <blockquote class="reveal">
+                &ldquo;Let&rsquo;s stay in touch&rdquo; means &ldquo;I have no plan for this relationship.&rdquo;
+            </blockquote>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 18: VIDEO DYNAMICS
+         ========================================= -->
+    <section class="slide" id="slide-18">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Camera &amp; Energy</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Video-Specific Rules</h2>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>Hide self-view.</strong> Constant self-view = &ldquo;staring at a mirror&rdquo; &mdash; kills authentic engagement. (<a href="https://doi.org/10.1037/tmb0000030" target="_blank" rel="noopener">Bailenson 2021</a>)</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>Eye-level camera.</strong> Downward angle = authority; below = weakness. Networking needs warmth + competence.</span>
+                    <span class="finding-badge"><span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text"><strong>+15&ndash;20% energy.</strong> Screen compresses affect. What feels normal in person reads flat on video.</span>
+                    <span class="finding-badge"><span class="badge badge-2"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">04</span>
+                    <span class="finding-text"><strong>Keep calls &lt; 44 minutes.</strong> Meetings under 44 min are actually less exhausting than other meetings. (<a href="https://doi.org/10.1037/ocp0000409" target="_blank" rel="noopener">Mainz 2025</a>)</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">05</span>
+                    <span class="finding-text"><strong>Don&rsquo;t stack &gt; 2&ndash;3 back-to-back.</strong> Fatigue makes you conformist and passive.</span>
+                    <span class="finding-badge"><span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 19: SECTION — IN-PERSON (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-19">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <div class="section-title reveal">In-Person Events</div>
+            <p class="section-subtitle reveal">From handshake to pipeline</p>
+        </div>
+        <span class="section-number reveal">04</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 20: PRE-EVENT
+         ========================================= -->
+    <section class="slide" id="slide-20">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Before You Arrive</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">The Work Before the Work</h2>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>Research the attendee list.</strong> Identify 2&ndash;3 specific people. Pre-event research may increase meaningful connections by 60%.</span>
+                    <span class="finding-badge"><span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>Set &ldquo;I&rsquo;m looking for&rdquo; goals.</strong> &ldquo;People who work with Series B founders&rdquo; &gt; &ldquo;get 3 new clients.&rdquo;</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text"><strong>Reframe as promotion-focused.</strong> Networking for business triggers moral contamination (<a href="https://doi.org/10.1177/0001839214554990" target="_blank" rel="noopener">Casciaro 2014</a>). &ldquo;What am I building?&rdquo; eliminates the effect.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 21: DURING THE EVENT (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-21">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Depth Over Coverage</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Three Deep &gt; Twenty Shallow</h2>
+            <div class="card-grid reveal">
+                <div class="card">
+                    <div class="card-title">Open with Curiosity</div>
+                    <div class="card-desc">7&ndash;9 second intro. Questions, not credentials. &ldquo;What brought you to this event?&rdquo;</div>
+                    <div class="card-meta"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Go Deep</div>
+                    <div class="card-desc">15 minutes minimum per conversation that matters. A 90-second card exchange creates nothing.</div>
+                    <div class="card-meta"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Exit Gracefully</div>
+                    <div class="card-desc">Introduction bridge, calendar close, or honest frame. &ldquo;I promised myself I&rsquo;d meet 3 new people tonight.&rdquo;</div>
+                    <div class="card-meta"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></div>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary);">
+                Connect on LinkedIn during the conversation. Voice memo after.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 22: THE 48-HOUR WINDOW
+         ========================================= -->
+    <section class="slide" id="slide-22">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Follow-Up</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">The 48-Hour Window</h2>
+            <div class="hero-stat reveal">50%</div>
+            <p class="hero-label reveal">
+                higher response rate when you follow up within 48 hours versus after a week
+            </p>
+            <div class="reveal" style="display: flex; flex-direction: column; gap: var(--element-gap);">
+                <p style="font-size: var(--body-size); color: var(--text-secondary);">
+                    Three components: <strong>(1)</strong> Specific reference <strong>(2)</strong> Concrete next step <strong>(3)</strong> Brevity &mdash; 3&ndash;5 sentences
+                </p>
+                <p style="font-size: var(--small-size); color: var(--text-secondary);">
+                    45.8% never follow up at all. The bar is on the ground.
+                </p>
+            </div>
+            <div class="reveal">
+                <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 23: INTROVERTS (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-23">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Energy Management</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Introverts Have the Advantage</h2>
+            <ul class="predictor-list reveal">
+                <li><span class="check">&#10003;</span> Deep listening produces higher-quality connections</li>
+                <li><span class="check">&#10003;</span> Arrive early &mdash; smaller crowd, more natural conversations</li>
+                <li><span class="check">&#10003;</span> Permission to leave after 90 minutes &mdash; ROI curve flattens</li>
+                <li><span class="check">&#10003;</span> Depth-over-breadth strategy matches their natural strengths</li>
+                <li><span class="cross">&#10007;</span> Working the room &mdash; extrovert game, not required</li>
+                <li><span class="cross">&#10007;</span> Stacking events &mdash; social energy is finite (<a href="https://doi.org/10.1016/0047-2484(92)90081-J" target="_blank" rel="noopener">Dunbar</a>: ~150 active, ~15 meaningful)</li>
+            </ul>
+            <div class="reveal">
+                <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 24: SECTION — CONTRARIAN (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-24">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <div class="section-title reveal">Contrarian Views</div>
+            <p class="section-subtitle reveal">Where the consensus is wrong</p>
+        </div>
+        <span class="section-number reveal">05</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 25: GIVE FIRST & NETWORK SIZE
+         ========================================= -->
+    <section class="slide" id="slide-25">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Stress Tests</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Common Advice, Uncommon Problems</h2>
+            <div class="reveal">
+                <div class="contrarian-point">
+                    <div class="contrarian-title">&ldquo;Always give before you ask&rdquo; <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span></div>
+                    <div class="contrarian-desc">Selfless givers end up at the bottom, not the top. Giving that feels like a funnel disgusts people. The fix: give genuinely to carefully selected people.</div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="contrarian-point">
+                    <div class="contrarian-title">&ldquo;Your network is your net worth&rdquo; <span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span></div>
+                    <div class="contrarian-desc">Distorts <a href="https://doi.org/10.1086/225469" target="_blank" rel="noopener">Granovetter</a>. Network position &gt; size. <a href="https://doi.org/10.1016/0047-2484(92)90081-J" target="_blank" rel="noopener">Dunbar&rsquo;s</a> ceiling (150) is ignored. A small, well-positioned network beats a large, undifferentiated one.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 26: CONFERENCE ROI & LINKEDIN VANITY (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-26">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Stress Tests</span>
+            <hr class="accent-line reveal">
+            <div class="reveal">
+                <div class="contrarian-point">
+                    <div class="contrarian-title">&ldquo;Conference networking has clear ROI&rdquo; <span class="badge badge-2"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span></div>
+                    <div class="contrarian-desc">No hard ROI data exists for professional services. 3&ndash;4 days = $7K&ndash;16K opportunity cost. <a href="https://hbr.org/2015/01/99-of-networking-is-a-waste-of-time" target="_blank" rel="noopener">McKeown</a>: 99% of events = waste of time. <a href="https://books.google.com/books/about/Never_Eat_Alone.html?id=OcPdAgAAQBAJ" target="_blank" rel="noopener">Ferrazzi</a>: host your own.</div>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="contrarian-point">
+                    <div class="contrarian-title">&ldquo;LinkedIn posting drives business&rdquo; <span class="badge badge-2"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span></div>
+                    <div class="contrarian-desc">No study measures direct revenue from content creation. 3&ndash;5 hrs/week = 15&ndash;25% of time. Comments &gt; posts for pipeline work (<a href="https://www.richardvanderblom.com/algorithm-insights-waitlist/" target="_blank" rel="noopener">van der Blom</a>).</div>
+                </div>
+            </div>
+            <blockquote class="reveal">
+                Don&rsquo;t conflate audience building with business development.
+            </blockquote>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 27: SECTION — SO WHAT? (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-27">
+        <div class="slide-content" style="align-items: flex-start; max-width: 40ch;">
+            <span class="meta reveal">Section</span>
+            <hr class="accent-line reveal">
+            <div class="section-title reveal">So What?</div>
+            <p class="section-subtitle reveal">Decision translation &mdash; what changes in behavior</p>
+        </div>
+        <span class="section-number reveal">06</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 28: UNIVERSAL PRINCIPLES
+         ========================================= -->
+    <section class="slide" id="slide-28">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">All Channels</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Four Rules That Apply Everywhere</h2>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;Self-orientation kills trust&rdquo;</strong> &rarr; Reduce your self-orientation signal before increasing credentials. Enter every interaction genuinely curious.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;Giving builds trust&rdquo;</strong> &rarr; Give first, but give smart. ~100 hrs/year. Screen for takers aggressively.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;Position &gt; size&rdquo;</strong> &rarr; Build for structure, not size. Bridge disconnected groups.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;Follow-up is the bar&rdquo;</strong> &rarr; Follow up within 48 hours. Multi-step sequences double response rates. The bar is on the ground.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 29: LINKEDIN CHEAT SHEET (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-29">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Channel Tactics</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">LinkedIn DMs</h2>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text">Profile first, outreach second. Complete profile = 87% higher acceptance.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text">View their profile before reaching out. 78% higher acceptance.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text">Messages &lt; 300 chars. One detail. One soft question.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">04</span>
+                    <span class="finding-text">Tuesday&ndash;Thursday mornings. InMail timing doesn&rsquo;t matter.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">05</span>
+                    <span class="finding-text">3 follow-ups max, 4&ndash;7 days apart. Connection requests &gt; InMail (16.86% vs 6.38%).</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="finding">
+                    <span class="finding-num">06</span>
+                    <span class="finding-text">Triggering events are your best opening. New job = 62% more likely.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 30: ZOOM & IN-PERSON CHEAT SHEET
+         ========================================= -->
+    <section class="slide" id="slide-30">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Channel Tactics</span>
+            <hr class="accent-line reveal">
+            <div class="reveal" style="display: flex; gap: clamp(1.5rem, 3vw, 3rem); flex-wrap: wrap; width: 100%;">
+                <div style="flex: 1; min-width: 14rem;">
+                    <h3 style="margin-bottom: var(--element-gap);">Zoom Calls</h3>
+                    <div class="finding">
+                        <span class="finding-num">&bull;</span>
+                        <span class="finding-text">Trust forms equally on video. Medium &#8800; bottleneck.</span>
+                    </div>
+                    <div class="finding">
+                        <span class="finding-num">&bull;</span>
+                        <span class="finding-text">30-min structure: open (3) &rarr; questions (12) &rarr; give (10) &rarr; next step (5)</span>
+                    </div>
+                    <div class="finding">
+                        <span class="finding-num">&bull;</span>
+                        <span class="finding-text">Hide self-view. Keep &lt; 44 min. Max 2&ndash;3 back-to-back.</span>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 14rem;">
+                    <h3 style="margin-bottom: var(--element-gap);">In-Person Events</h3>
+                    <div class="finding">
+                        <span class="finding-num">&bull;</span>
+                        <span class="finding-text">Research attendees. Set 2&ndash;3 &ldquo;I&rsquo;m looking for&rdquo; goals.</span>
+                    </div>
+                    <div class="finding">
+                        <span class="finding-num">&bull;</span>
+                        <span class="finding-text">Three deep conversations &gt; twenty shallow.</span>
+                    </div>
+                    <div class="finding">
+                        <span class="finding-num">&bull;</span>
+                        <span class="finding-text">Connect on LinkedIn during the conversation. Voice memo after.</span>
+                    </div>
+                    <div class="finding">
+                        <span class="finding-num">&bull;</span>
+                        <span class="finding-text">Follow up within 48 hours. Leave after 90 minutes.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 31: WHAT WOULD CHANGE YOUR MIND (alt)
+         ========================================= -->
+    <section class="slide alt" id="slide-31">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">Falsifiability</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">What Would Change Your Mind</h2>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;Give first builds trust&rdquo;</strong> &rarr; Changes if: controlled study shows direct-ask outperforms value-first.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;Weak ties for discovery&rdquo;</strong> &rarr; Changes if: large-sample study shows strong ties generate more novel opportunities.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;Profile view helps 78%&rdquo;</strong> &rarr; Changes if: LinkedIn changes notification system or tactic becomes too common.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;48-hour follow-up&rdquo;</strong> &rarr; Changes if: study shows equal conversion from delayed follow-up.</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="decision">
+                    <span class="decision-if">IF</span>
+                    <span class="decision-text"><strong>&ldquo;Trust equal on video&rdquo;</strong> &rarr; Changes if: replication with longer timeframes shows effect is temporary.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 32: KEY SOURCES
+         ========================================= -->
+    <section class="slide" id="slide-32">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">References</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Key Sources</h2>
+            <div class="reveal" style="display: flex; gap: clamp(1.5rem, 3vw, 3rem); flex-wrap: wrap; width: 100%;">
+                <div class="source-group" style="flex: 1; min-width: 16rem;">
+                    <div class="source-group-title">Foundations &amp; Psychology</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.1086/225469" target="_blank" rel="noopener">Granovetter (1973)</a></strong> &mdash; Strength of Weak Ties</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.1086/421787" target="_blank" rel="noopener">Burt (2004)</a></strong> &mdash; Structural Holes and Good Ideas</div>
+                    <div class="source-item"><strong><a href="https://books.google.com/books/about/Influence.html?id=5dfv0HJ1TEoC" target="_blank" rel="noopener">Cialdini (1984</a>, <a href="https://books.google.com/books/about/Pre_Suasion.html?id=GI7tDAAAQBAJ" target="_blank" rel="noopener">2016)</a></strong> &mdash; Influence &amp; Pre-Suasion</div>
+                    <div class="source-item"><strong><a href="https://books.google.com/books/about/Give_and_Take.html?id=6IFjl3V7ByoC" target="_blank" rel="noopener">Grant (2013)</a></strong> &mdash; Give and Take</div>
+                    <div class="source-item"><strong><a href="https://books.google.com/books/about/The_Trusted_Advisor.html?id=inyfxJpR6EgC" target="_blank" rel="noopener">Maister et al. (2000)</a></strong> &mdash; The Trusted Advisor</div>
+                </div>
+                <div class="source-group" style="flex: 1; min-width: 16rem;">
+                    <div class="source-group-title">Channel Research</div>
+                    <div class="source-item"><strong><a href="https://belkins.io/blog/linkedin-outreach-study" target="_blank" rel="noopener">Belkins/Expandi (2025)</a></strong> &mdash; 20M+ LinkedIn outreach attempts</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.1038/s41586-022-04643-y" target="_blank" rel="noopener">Brucks &amp; Levav (2022)</a></strong> &mdash; Nature: video vs F2F trust</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.1177/0001839214554990" target="_blank" rel="noopener">Casciaro et al. (2014)</a></strong> &mdash; Moral contamination of networking</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.1037/tmb0000030" target="_blank" rel="noopener">Bailenson (2021)</a></strong> &mdash; Zoom fatigue mechanisms</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.1037/a0013350" target="_blank" rel="noopener">Wolff &amp; Moser (2009)</a></strong> &mdash; Networking predicts salary growth</div>
+                </div>
+            </div>
+            <p class="reveal" style="font-size: var(--tag-size); color: var(--text-muted); margin-top: auto;">
+                Full source log with 54 references in the complete research document.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 33: END (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-33">
+        <div class="slide-content" style="align-items: flex-start; justify-content: center; max-width: 54ch;">
+            <span class="meta reveal">Pathos Labs</span>
+            <hr class="accent-line reveal">
+            <div class="reveal" style="display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 1.75rem); margin-top: clamp(0.3rem, 1vh, 0.5rem);">
+                <img src="sam-headshot.png" alt="Sam Millunchick" style="
+                    width: clamp(72px, 10vw, 110px);
+                    height: clamp(72px, 10vw, 110px);
+                    border-radius: 50%;
+                    object-fit: cover;
+                    object-position: center 15%;
+                    border: 2px solid rgba(255, 255, 255, 0.08);
+                    flex-shrink: 0;
+                ">
+                <div>
+                    <h1 style="font-size: clamp(1.6rem, 4.5vw, 3rem);">Sam Millunchick</h1>
+                    <p class="subtitle" style="color: var(--text-inverse-secondary); margin-top: clamp(0.15rem, 0.4vh, 0.3rem);">High-stakes communication coaching for founders and executives</p>
+                </div>
+            </div>
+            <div class="reveal" style="margin-top: clamp(1.5rem, 4vh, 3rem); display: flex; flex-direction: column; gap: clamp(0.4rem, 1vh, 0.75rem);">
+                <p style="font-size: var(--small-size); color: var(--text-inverse-secondary);">
+                    <strong style="color: var(--text-inverse);">Converting Networking Into Business</strong> &mdash; Evidence-Based Tactics for LinkedIn, Zoom &amp; In-Person
+                </p>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--conf-3);"></span>
+                    <span style="font-size: var(--small-size); color: var(--text-inverse-secondary);">Shelf-life: Monitor &mdash; active research area</span>
+                </div>
+                <p style="font-size: var(--tag-size); color: var(--text-inverse-secondary); opacity: 0.6;">
+                    February 2026 &middot; 54 Sources
+                </p>
+            </div>
+        </div>
+        <span class="section-number reveal" style="opacity: 0.03;">PL</span>
+    </section>
+
+
+    <!-- =========================================
+       JAVASCRIPT — Presentation Controller
+       ========================================= -->
+    <script>
+        /* ===========================================
+           SLIDE PRESENTATION CONTROLLER
+           Handles navigation, animations, progress,
+           keyboard/touch/scroll interaction
+           =========================================== */
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.totalSlides = this.slides.length;
+                this.progressBar = document.getElementById('progressBar');
+                this.slideCounter = document.getElementById('slideCounter');
+                this.navContainer = document.getElementById('navSections');
+                this.keyHint = document.getElementById('keyHint');
+                this.currentIndex = 0;
+
+                /* Sections: label + first slide index */
+                this.sections = [
+                    { label: 'Overview', start: 0 },
+                    { label: 'Foundations', start: 4 },
+                    { label: 'LinkedIn', start: 9 },
+                    { label: 'Zoom', start: 14 },
+                    { label: 'In-Person', start: 18 },
+                    { label: 'Contrarian', start: 23 },
+                    { label: 'So What?', start: 26 },
+                ];
+                this.sectionItems = [];
+
+                this.init();
+            }
+
+            init() {
+                this.createSectionNav();
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupScrollListener();
+                this.markInitialVisible();
+                this.updateUI(0);
+                this.setupAnimatedCounters();
+
+                /* Hide keyboard hint after first interaction */
+                const hideHint = () => {
+                    if (this.keyHint) {
+                        this.keyHint.style.opacity = '0';
+                        setTimeout(() => { this.keyHint.style.display = 'none'; }, 300);
+                    }
+                    window.removeEventListener('keydown', hideHint);
+                    window.removeEventListener('wheel', hideHint);
+                };
+                window.addEventListener('keydown', hideHint);
+                window.addEventListener('wheel', hideHint);
+            }
+
+            /* --- Mark slides already in viewport as visible on load --- */
+            markInitialVisible() {
+                const vh = window.innerHeight;
+                this.slides.forEach(slide => {
+                    const rect = slide.getBoundingClientRect();
+                    if (rect.top < vh && rect.bottom > 0) {
+                        slide.classList.add('visible');
+                    }
+                });
+            }
+
+            /* --- Section Navigation (7 items, labels on hover) --- */
+            createSectionNav() {
+                this.sections.forEach((section, i) => {
+                    const item = document.createElement('button');
+                    item.className = 'nav-section-item';
+                    item.setAttribute('aria-label', `Go to ${section.label}`);
+                    item.innerHTML = `<span class="nav-section-label">${section.label}</span><span class="nav-section-pip"></span>`;
+                    item.addEventListener('click', () => this.goToSlide(section.start));
+                    this.navContainer.appendChild(item);
+                    this.sectionItems.push(item);
+                });
+            }
+
+            /* --- Intersection Observer for scroll-triggered animations --- */
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const idx = Array.from(this.slides).indexOf(entry.target);
+                            if (idx !== -1) {
+                                this.currentIndex = idx;
+                                this.updateUI(idx);
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.15  /* Lower threshold — triggers earlier for faster response */
+                });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            /* --- Keyboard Navigation --- */
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    /* Use tracked index, not scroll position — scrollY is
+                       unreliable during smooth-scroll animations */
+                    switch (e.key) {
+                        case 'ArrowDown':
+                        case 'ArrowRight':
+                        case ' ':
+                        case 'PageDown':
+                            e.preventDefault();
+                            this.goToSlide(Math.min(this.currentIndex + 1, this.totalSlides - 1));
+                            break;
+                        case 'ArrowUp':
+                        case 'ArrowLeft':
+                        case 'PageUp':
+                            e.preventDefault();
+                            this.goToSlide(Math.max(this.currentIndex - 1, 0));
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToSlide(this.totalSlides - 1);
+                            break;
+                    }
+                });
+            }
+
+            /* --- Touch / Swipe Navigation --- */
+            setupTouchNav() {
+                let touchStartY = 0;
+                let touchStartX = 0;
+
+                document.addEventListener('touchstart', (e) => {
+                    touchStartY = e.touches[0].clientY;
+                    touchStartX = e.touches[0].clientX;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const deltaY = touchStartY - e.changedTouches[0].clientY;
+                    const deltaX = touchStartX - e.changedTouches[0].clientX;
+
+                    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) {
+                        if (deltaY > 0) {
+                            this.goToSlide(Math.min(this.currentIndex + 1, this.totalSlides - 1));
+                        } else {
+                            this.goToSlide(Math.max(this.currentIndex - 1, 0));
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            /* --- Scroll-based progress updates --- */
+            setupScrollListener() {
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(() => {
+                            const scrollTop = window.scrollY;
+                            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                            const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+                            this.progressBar.style.width = progress + '%';
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+
+            /* --- Animated counter for hero stat numbers --- */
+            setupAnimatedCounters() {
+                const heroStat = document.querySelector('.hero-stat');
+                if (!heroStat) return;
+
+                const finalText = heroStat.textContent;
+                heroStat.setAttribute('data-final', finalText);
+
+                /* Animate when slide 2 becomes visible */
+                const slide2 = document.getElementById('slide-2');
+                if (!slide2) return;
+
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !heroStat.dataset.animated) {
+                            heroStat.dataset.animated = 'true';
+                            this.animateCounter(heroStat, finalText);
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                counterObserver.observe(slide2);
+            }
+
+            animateCounter(el, finalText) {
+                /* Scramble effect: cycle through random digits before settling */
+                const chars = finalText.split('');
+                const duration = 800;
+                const start = performance.now();
+
+                const animate = (now) => {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+
+                    /* Ease out cubic */
+                    const ease = 1 - Math.pow(1 - progress, 3);
+
+                    const display = chars.map((char, i) => {
+                        if (!/[0-9]/.test(char)) return char; /* Keep non-digits */
+                        const charProgress = Math.min(1, ease * chars.length / (i + 1));
+                        if (charProgress >= 1) return char;
+                        return Math.floor(Math.random() * 10);
+                    }).join('');
+
+                    el.textContent = display;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        el.textContent = finalText;
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }
+
+            /* --- Navigate to specific slide --- */
+            goToSlide(index) {
+                if (index >= 0 && index < this.totalSlides) {
+                    /* Update tracked index eagerly so rapid key presses
+                       always advance from the correct position */
+                    this.currentIndex = index;
+                    this.updateUI(index);
+                    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            /* --- Update progress bar, counter, section nav --- */
+            updateUI(index) {
+                /* Counter */
+                const num = String(index + 1).padStart(2, '0');
+                const total = String(this.totalSlides).padStart(2, '0');
+                this.slideCounter.textContent = `${num} / ${total}`;
+
+                /* Determine active section */
+                let activeSection = 0;
+                for (let i = this.sections.length - 1; i >= 0; i--) {
+                    if (index >= this.sections[i].start) {
+                        activeSection = i;
+                        break;
+                    }
+                }
+
+                /* Invert on dark slides */
+                const isDark = this.slides[index].classList.contains('dark');
+                this.slideCounter.classList.toggle('inverted', isDark);
+                if (this.keyHint) this.keyHint.classList.toggle('inverted', isDark);
+
+                /* Section items */
+                this.sectionItems.forEach((item, i) => {
+                    item.classList.toggle('active', i === activeSection);
+                    item.classList.toggle('inverted', isDark);
+                });
+            }
+        }
+
+        /* Initialize on load */
+        document.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+    <script data-goatcounter="https://pathos-labs.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

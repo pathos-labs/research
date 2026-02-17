@@ -562,6 +562,19 @@
         }
 
         /* ===========================================
+           LINKS — subtle, only visible in source sections
+           =========================================== */
+        a { color: inherit; text-decoration: none; }
+        .source-item a, .finding-text a, .card-desc a, .contrarian-desc a, blockquote cite a {
+            color: var(--accent);
+            transition: opacity 0.2s ease;
+        }
+        .source-item a:hover, .finding-text a:hover, .card-desc a:hover, .contrarian-desc a:hover, blockquote cite a:hover {
+            text-decoration: underline;
+        }
+        .dark .source-item a { color: #93C5FD; }
+
+        /* ===========================================
            PREDICTOR LIST (checkmarks / x-marks)
            =========================================== */
         .predictor-list {
@@ -1031,7 +1044,7 @@
 <body>
     <!-- Redirect to landing page if not subscribed (gate lives there) -->
     <script>
-        if (!localStorage.getItem('pathos_access')) {
+        if (location.hostname === 'research.pathoslabs.co' && !localStorage.getItem('pathos_access')) {
             window.location.replace('/');
         }
     </script>
@@ -1080,7 +1093,7 @@
                 Moderate positive effect size across three independent meta-analyses of randomized controlled trials. Comparable to psychotherapy effect sizes.
             </p>
             <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
-                De Haan &amp; Nilsson 2023 &middot; Nicolau et al. 2023 &middot; Cannon-Bowers et al. 2023
+                <a href="https://doi.org/10.5465/amle.2022.0107" target="_blank" rel="noopener">De Haan &amp; Nilsson 2023</a> &middot; <a href="https://doi.org/10.3389/fpsyg.2023.1089797" target="_blank" rel="noopener">Nicolau et al. 2023</a> &middot; <a href="https://doi.org/10.3389/fpsyg.2023.1204166" target="_blank" rel="noopener">Cannon-Bowers et al. 2023</a>
             </p>
         </div>
     </section>
@@ -1098,20 +1111,20 @@
                 Executive coaching sits at the intersection of organizational psychology, leadership development, and adult development theory. The first Coaching Psychology Unit was established in 2000. Rigorous research has accumulated meaningfully only in the last 15 years.
             </p>
             <div class="reveal" style="display: flex; flex-wrap: wrap; gap: clamp(0.3rem, 0.6vw, 0.5rem); margin-top: var(--element-gap);">
-                <span class="card-meta-tag">De Haan</span>
-                <span class="card-meta-tag">Grant</span>
-                <span class="card-meta-tag">Peterson</span>
-                <span class="card-meta-tag">Goldsmith</span>
-                <span class="card-meta-tag">Kegan</span>
-                <span class="card-meta-tag">Bachkirova</span>
-                <span class="card-meta-tag">Passmore</span>
+                <a href="https://scholar.google.com/citations?user=nfcCerkAAAAJ&amp;hl=en" target="_blank" rel="noopener"><span class="card-meta-tag">De Haan</span></a>
+                <a href="https://scholar.google.com/citations?user=rMlTlzIAAAAJ&amp;hl=en" target="_blank" rel="noopener"><span class="card-meta-tag">Grant</span></a>
+                <a href="https://instituteofcoaching.org/author/peterson-david" target="_blank" rel="noopener"><span class="card-meta-tag">Peterson</span></a>
+                <a href="https://www.marshallgoldsmith.com/" target="_blank" rel="noopener"><span class="card-meta-tag">Goldsmith</span></a>
+                <a href="https://www.gse.harvard.edu/directory/faculty/robert-kegan" target="_blank" rel="noopener"><span class="card-meta-tag">Kegan</span></a>
+                <a href="https://scholar.google.com/citations?user=8A7nxVgAAAAJ&amp;hl=en" target="_blank" rel="noopener"><span class="card-meta-tag">Bachkirova</span></a>
+                <a href="https://scholar.google.com/citations?user=ORlOICUAAAAJ&amp;hl=en" target="_blank" rel="noopener"><span class="card-meta-tag">Passmore</span></a>
             </div>
             <div class="reveal" style="display: flex; flex-wrap: wrap; gap: clamp(0.3rem, 0.6vw, 0.5rem);">
-                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">Harvard/McLean</span>
-                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">ICF</span>
-                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">Ashridge/Hult</span>
-                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">U. Sydney</span>
-                <span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">CCL</span>
+                <a href="https://instituteofcoaching.org/" target="_blank" rel="noopener"><span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">Harvard/McLean</span></a>
+                <a href="https://coachingfederation.org/" target="_blank" rel="noopener"><span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">ICF</span></a>
+                <a href="https://www.hult.edu/coaching/about/center-for-executive-coaching/" target="_blank" rel="noopener"><span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">Ashridge/Hult</span></a>
+                <a href="https://www.sydney.edu.au/science/our-research/research-areas/psychology/coaching-psychology-unit.html" target="_blank" rel="noopener"><span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">U. Sydney</span></a>
+                <a href="https://www.ccl.org/" target="_blank" rel="noopener"><span class="card-meta-tag" style="background: var(--accent-light); color: var(--accent);">CCL</span></a>
             </div>
         </div>
     </section>
@@ -1222,11 +1235,11 @@
             </p>
             <div class="reveal" style="display: flex; flex-direction: column; gap: var(--element-gap); padding: clamp(0.5rem, 1vh, 0.8rem) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem;">
-                    <span style="font-size: var(--small-size);"><strong>Graßmann et al. 2020</strong> — 27 samples, N = 3,563</span>
+                    <span style="font-size: var(--small-size);"><strong><a href="https://doi.org/10.1177/0018726718819725" target="_blank" rel="noopener">Graßmann et al. 2020</a></strong> — 27 samples, N = 3,563</span>
                     <span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span>Established</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem;">
-                    <span style="font-size: var(--small-size);"><strong>De Haan et al. 2019</strong> — 180 coachees, effect sizes up to d = 1.1</span>
+                    <span style="font-size: var(--small-size);"><strong><a href="https://doi.org/10.5465/amle.2018.0158" target="_blank" rel="noopener">De Haan et al. 2019</a></strong> — 180 coachees, effect sizes up to d = 1.1</span>
                     <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span>
                 </div>
             </div>
@@ -1268,7 +1281,7 @@
                 </div>
             </div>
             <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); max-width: 50ch;">
-                Source: Nicolau et al. 2023. Behavioral wins create momentum, build self-efficacy, and often pull attitudes along behind them.
+                Source: <a href="https://doi.org/10.3389/fpsyg.2023.1089797" target="_blank" rel="noopener">Nicolau et al. 2023</a>. Behavioral wins create momentum, build self-efficacy, and often pull attitudes along behind them.
             </p>
             <blockquote class="reveal" style="border-color: var(--accent); font-size: var(--body-size);">
                 "What will you do differently in the next meeting?" is more powerful than "How do you need to think differently about leadership?"
@@ -1290,11 +1303,11 @@
             </p>
             <div class="reveal" style="display: flex; flex-direction: column; gap: var(--element-gap); padding: clamp(0.5rem, 1vh, 0.8rem) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem;">
-                    <span style="font-size: var(--small-size);">Self-efficacy predicts outcomes independently (De Haan 2013)</span>
+                    <span style="font-size: var(--small-size);">Self-efficacy predicts outcomes independently (<a href="https://doi.org/10.1037/a0031635" target="_blank" rel="noopener">De Haan 2013</a>)</span>
                     <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.3rem;">
-                    <span style="font-size: var(--small-size);">Readiness + core self-evaluations predict outcomes (MacKie 2015)</span>
+                    <span style="font-size: var(--small-size);">Readiness + core self-evaluations predict outcomes (<a href="https://doi.org/10.1080/17521882.2015.1019532" target="_blank" rel="noopener">MacKie 2015</a>)</span>
                     <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span>
                 </div>
             </div>
@@ -1332,7 +1345,7 @@
             </div>
             <blockquote class="reveal">
                 "Commit yourself heart and soul to your approach, even if you know that it doesn't matter which professional approach you choose."
-                <cite>Erik de Haan — Relational Coaching</cite>
+                <cite><a href="https://www.amazon.com/Relational-Coaching-Mastering-One-One/dp/0470724285" target="_blank" rel="noopener">Erik de Haan — Relational Coaching</a></cite>
             </blockquote>
         </div>
     </section>
@@ -1364,7 +1377,7 @@
                 <span class="card-meta-tag" style="background: var(--accent); color: white; font-size: var(--small-size);">Self-Transforming Mind</span>
             </div>
             <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); max-width: 50ch;">
-                Kegan &amp; Lahey's framework (2009). Strong theoretical base, but limited RCT evidence specific to coaching applications. <span class="badge badge-2" style="vertical-align: middle;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span>
+                <a href="https://www.amazon.com/Immunity-Change-Potential-Organization-Leadership/dp/1422117367" target="_blank" rel="noopener">Kegan &amp; Lahey's framework (2009)</a>. Strong theoretical base, but limited RCT evidence specific to coaching applications. <span class="badge badge-2" style="vertical-align: middle;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Emerging</span>
             </p>
         </div>
     </section>
@@ -1394,7 +1407,7 @@
             <div class="card-grid reveal" style="width: 100%;">
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div class="card-title">De Haan &amp; Nilsson</div>
+                        <div class="card-title"><a href="https://doi.org/10.5465/amle.2022.0107" target="_blank" rel="noopener">De Haan &amp; Nilsson</a></div>
                         <span class="badge badge-5" style="flex-shrink: 0;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span>
                     </div>
                     <div class="card-meta">
@@ -1406,7 +1419,7 @@
                 </div>
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div class="card-title">Nicolau et al.</div>
+                        <div class="card-title"><a href="https://doi.org/10.3389/fpsyg.2023.1089797" target="_blank" rel="noopener">Nicolau et al.</a></div>
                         <span class="badge badge-4" style="flex-shrink: 0;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span>
                     </div>
                     <div class="card-meta">
@@ -1418,7 +1431,7 @@
                 </div>
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div class="card-title">Cannon-Bowers et al.</div>
+                        <div class="card-title"><a href="https://doi.org/10.3389/fpsyg.2023.1204166" target="_blank" rel="noopener">Cannon-Bowers et al.</a></div>
                         <span class="badge badge-4" style="flex-shrink: 0;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span>
                     </div>
                     <div class="card-meta">
@@ -1430,7 +1443,7 @@
                 </div>
             </div>
             <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted);">
-                ⚠ De Haan &amp; Nilsson flag "indications of significant publication bias." True effect size may be smaller. Trim-and-fill adjusted: g = 0.27.
+                ⚠ <a href="https://doi.org/10.5465/amle.2022.0107" target="_blank" rel="noopener">De Haan &amp; Nilsson</a> flag "indications of significant publication bias." True effect size may be smaller. Trim-and-fill adjusted: g = 0.27.
             </p>
         </div>
     </section>
@@ -1481,7 +1494,7 @@
                 <div>
                     <h3 style="margin-bottom: 0.2em;">Virtual coaching works just as well</h3>
                     <p style="font-size: var(--small-size); color: var(--text-secondary);">
-                        <span class="mono" style="font-weight: 600;">g = 0.48</span> face-to-face vs <span class="mono" style="font-weight: 600;">g = 0.35</span> virtual — not statistically different (Cannon-Bowers 2023).
+                        <span class="mono" style="font-weight: 600;">g = 0.48</span> face-to-face vs <span class="mono" style="font-weight: 600;">g = 0.35</span> virtual — not statistically different (<a href="https://doi.org/10.3389/fpsyg.2023.1204166" target="_blank" rel="noopener">Cannon-Bowers 2023</a>).
                     </p>
                 </div>
                 <div>
@@ -1536,7 +1549,7 @@
                 <div class="card">
                     <div style="display: flex; align-items: center; gap: 0.4rem;">
                         <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">03</span>
-                        <div class="card-title">Peterson's Pipeline</div>
+                        <div class="card-title"><a href="https://instituteofcoaching.org/author/peterson-david" target="_blank" rel="noopener">Peterson's Pipeline</a></div>
                     </div>
                     <div class="card-meta"><span class="badge badge-3" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">Low difficulty</span><span class="card-meta-tag">Med-High impact</span></div>
                     <div class="card-desc">Diagnose which of 5 conditions is blocked: Insight, Motivation, Capabilities, Practice, or Accountability.</div>
@@ -1573,15 +1586,15 @@
                 <div class="card">
                     <div style="display: flex; align-items: center; gap: 0.4rem;">
                         <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">06</span>
-                        <div class="card-title">Immunity to Change</div>
+                        <div class="card-title"><a href="https://www.amazon.com/Immunity-Change-Potential-Organization-Leadership/dp/1422117367" target="_blank" rel="noopener">Immunity to Change</a></div>
                     </div>
                     <div class="card-meta"><span class="badge badge-3" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">High difficulty</span><span class="card-meta-tag">High impact</span></div>
-                    <div class="card-desc">Surface hidden competing commitments when executives can't change despite genuine motivation. Kegan's 5-step mapping process.</div>
+                    <div class="card-desc">Surface hidden competing commitments when executives can't change despite genuine motivation. <a href="https://www.gse.harvard.edu/directory/faculty/robert-kegan" target="_blank" rel="noopener">Kegan's</a> 5-step mapping process.</div>
                 </div>
                 <div class="card">
                     <div style="display: flex; align-items: center; gap: 0.4rem;">
                         <span class="mono" style="font-size: var(--tag-size); font-weight: 700; color: var(--accent);">07</span>
-                        <div class="card-title">Stakeholder Feedback</div>
+                        <div class="card-title"><a href="https://www.marshallgoldsmith.com/post/stakeholder-centered-coaching" target="_blank" rel="noopener">Stakeholder Feedback</a></div>
                     </div>
                     <div class="card-meta"><span class="badge badge-3" style="font-size: clamp(0.5rem, 0.7vw, 0.65rem);"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span><span class="card-meta-tag">Medium difficulty</span><span class="card-meta-tag">High impact</span></div>
                     <div class="card-desc">Build in feedback from 3-5 key stakeholders. Makes results visible (sustains organizational support) and provides real-world accountability.</div>
@@ -1598,7 +1611,7 @@
         <div class="slide-content" style="align-items: flex-start; max-width: 62ch;">
             <span class="meta reveal">Deep Dive</span>
             <hr class="accent-line reveal">
-            <h2 class="reveal">Peterson's Development Pipeline</h2>
+            <h2 class="reveal"><a href="https://instituteofcoaching.org/author/peterson-david" target="_blank" rel="noopener">Peterson's</a> Development Pipeline</h2>
             <p class="reveal subtitle" style="font-size: var(--small-size); max-width: 50ch;">Where is the coachee stuck? Most coaching failures happen because coaches apply "more of the same" instead of diagnosing which condition is missing.</p>
             <div class="pipeline reveal" style="width: 100%;">
                 <div class="pipeline-step">
@@ -1628,7 +1641,7 @@
                 </div>
             </div>
             <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary);">
-                From David Peterson (Google). A coachee with insight and motivation but lacking capabilities needs <strong>teaching</strong>, not more reflective questions. <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span>
+                From <a href="https://instituteofcoaching.org/author/peterson-david" target="_blank" rel="noopener">David Peterson</a> (Google). A coachee with insight and motivation but lacking capabilities needs <strong>teaching</strong>, not more reflective questions. <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span>
             </p>
         </div>
     </section>
@@ -1641,7 +1654,7 @@
         <div class="slide-content" style="align-items: flex-start; max-width: 58ch;">
             <span class="meta reveal">Deep Dive</span>
             <hr class="accent-line reveal">
-            <h2 class="reveal">Immunity to Change</h2>
+            <h2 class="reveal"><a href="https://www.amazon.com/Immunity-Change-Potential-Organization-Leadership/dp/1422117367" target="_blank" rel="noopener">Immunity to Change</a></h2>
             <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); max-width: 48ch;">
                 For executives who <em>know</em> what to do but <em>can't seem to do it</em>. The closest coaching gets to therapeutic depth without crossing the therapy line.
             </p>
@@ -1668,7 +1681,7 @@
                 </div>
             </div>
             <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted);">
-                Kegan &amp; Lahey (2009). <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span>
+                <a href="https://www.amazon.com/Immunity-Change-Potential-Organization-Leadership/dp/1422117367" target="_blank" rel="noopener">Kegan &amp; Lahey (2009)</a>. <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span>Moderate</span>
             </p>
         </div>
     </section>
@@ -1698,14 +1711,14 @@
             <div class="contrarian-point reveal">
                 <div class="contrarian-title">"The evidence is weaker than the industry claims"</div>
                 <div class="contrarian-desc">
-                    Total RCT pool across all 3 meta-analyses: just 37 + 20 + 11 studies. De Haan flags "significant publication bias." Most studies use self-report. Much research is by practitioners with financial interests.
+                    Total RCT pool across all 3 meta-analyses: just 37 + 20 + 11 studies. <a href="https://doi.org/10.5465/amle.2022.0107" target="_blank" rel="noopener">De Haan</a> flags "significant publication bias." Most studies use self-report. Much research is by practitioners with financial interests.
                     <span class="badge badge-4" style="vertical-align: middle; margin-left: 0.3rem;"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span>Strong critique</span>
                 </div>
             </div>
             <div class="contrarian-point reveal">
                 <div class="contrarian-title">"ROI claims are marketing, not science"</div>
                 <div class="contrarian-desc">
-                    The widely cited "788% ROI" is from a single MetrixGlobal industry-funded study. ICF's "7x return" traces to similar sources. The honest answer: "Reliable moderate positive effects on behavior. Specific dollar returns are not credibly established."
+                    The widely cited "788% ROI" is from a single <a href="https://researchportal.coachingfederation.org/Document/Pdf/681.pdf" target="_blank" rel="noopener">MetrixGlobal</a> industry-funded study. <a href="https://coachingfederation.org/resources/research/" target="_blank" rel="noopener">ICF's</a> "7x return" traces to similar sources. The honest answer: "Reliable moderate positive effects on behavior. Specific dollar returns are not credibly established."
                 </div>
             </div>
             <div class="contrarian-point reveal">
@@ -1729,18 +1742,18 @@
             <div class="contrarian-point reveal">
                 <div class="contrarian-title">"The unregulated industry problem is real"</div>
                 <div class="contrarian-desc">
-                    100,000+ practitioners globally with wildly varying quality. ICF's ACC credential requires just 60 hours of training — roughly 7 working days. The barrier to entry is lower than almost any other profession working intimately with people's psychology.
+                    100,000+ practitioners globally with wildly varying quality. <a href="https://coachingfederation.org/" target="_blank" rel="noopener">ICF's</a> ACC credential requires just 60 hours of training — roughly 7 working days. The barrier to entry is lower than almost any other profession working intimately with people's psychology.
                 </div>
             </div>
             <div class="contrarian-point reveal">
                 <div class="contrarian-title">"Coaches without psychological training are dangerous"</div>
                 <div class="contrarian-desc">
-                    Berglas (HBR, 2002): coaches who lack psychological training "make a bad situation worse" by treating narcissistic personality traits or clinical depression as "leadership challenges."
+                    <a href="https://hbr.org/2002/06/the-very-real-dangers-of-executive-coaching" target="_blank" rel="noopener">Berglas (HBR, 2002)</a>: coaches who lack psychological training "make a bad situation worse" by treating narcissistic personality traits or clinical depression as "leadership challenges."
                 </div>
             </div>
             <blockquote class="reveal" style="font-size: var(--body-size);">
                 Negative effects are real but uncommon: dependency on coach, worsening supervisor relationships when the coachee changes but the system doesn't, reduced job satisfaction when coaching reveals values-job misfit.
-                <cite>Schermuly &amp; Graßmann, 2019</cite>
+                <cite><a href="https://doi.org/10.1080/17521882.2018.1528621" target="_blank" rel="noopener">Schermuly &amp; Graßmann, 2019</a></cite>
             </blockquote>
         </div>
     </section>
@@ -1836,18 +1849,18 @@
             <div class="reveal" style="display: flex; gap: clamp(1.5rem, 3vw, 3rem); flex-wrap: wrap; width: 100%;">
                 <div class="source-group" style="flex: 1; min-width: 16rem;">
                     <div class="source-group-title">Meta-Analyses</div>
-                    <div class="source-item"><strong>De Haan &amp; Nilsson (2023)</strong> — AMLE. 37 RCTs, N = 2,528, g = 0.59</div>
-                    <div class="source-item"><strong>Nicolau et al. (2023)</strong> — Frontiers Psych. 20 RCTs, g = 0.43</div>
-                    <div class="source-item"><strong>Cannon-Bowers et al. (2023)</strong> — Frontiers Psych. 11 studies</div>
-                    <div class="source-item"><strong>Graßmann et al. (2020)</strong> — Human Relations. 27 samples, N = 3,563</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.5465/amle.2022.0107" target="_blank" rel="noopener">De Haan &amp; Nilsson (2023)</a></strong> — AMLE. 37 RCTs, N = 2,528, g = 0.59</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.3389/fpsyg.2023.1089797" target="_blank" rel="noopener">Nicolau et al. (2023)</a></strong> — Frontiers Psych. 20 RCTs, g = 0.43</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.3389/fpsyg.2023.1204166" target="_blank" rel="noopener">Cannon-Bowers et al. (2023)</a></strong> — Frontiers Psych. 11 studies</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.1177/0018726718819725" target="_blank" rel="noopener">Graßmann et al. (2020)</a></strong> — Human Relations. 27 samples, N = 3,563</div>
                 </div>
                 <div class="source-group" style="flex: 1; min-width: 16rem;">
                     <div class="source-group-title">Key Studies &amp; Texts</div>
-                    <div class="source-item"><strong>De Haan et al. (2019)</strong> — AMLE. 180 coachees, 66 coaches</div>
-                    <div class="source-item"><strong>Kegan &amp; Lahey (2009)</strong> — Immunity to Change</div>
-                    <div class="source-item"><strong>Peterson (2006)</strong> — The Development Pipeline</div>
-                    <div class="source-item"><strong>Goldsmith</strong> — Stakeholder Centered Coaching</div>
-                    <div class="source-item"><strong>Berglas (2002)</strong> — HBR: Dangers of Executive Coaching</div>
+                    <div class="source-item"><strong><a href="https://doi.org/10.5465/amle.2018.0158" target="_blank" rel="noopener">De Haan et al. (2019)</a></strong> — AMLE. 180 coachees, 66 coaches</div>
+                    <div class="source-item"><strong><a href="https://www.amazon.com/Immunity-Change-Potential-Organization-Leadership/dp/1422117367" target="_blank" rel="noopener">Kegan &amp; Lahey (2009)</a></strong> — Immunity to Change</div>
+                    <div class="source-item"><strong><a href="https://instituteofcoaching.org/author/peterson-david" target="_blank" rel="noopener">Peterson (2006)</a></strong> — The Development Pipeline</div>
+                    <div class="source-item"><strong><a href="https://www.amazon.com/Stakeholder-Centered-Coaching-Maximizing-Impact/dp/1616992360" target="_blank" rel="noopener">Goldsmith</a></strong> — Stakeholder Centered Coaching</div>
+                    <div class="source-item"><strong><a href="https://hbr.org/2002/06/the-very-real-dangers-of-executive-coaching" target="_blank" rel="noopener">Berglas (2002)</a></strong> — HBR: Dangers of Executive Coaching</div>
                 </div>
             </div>
             <p class="reveal" style="font-size: var(--tag-size); color: var(--text-muted); margin-top: auto;">
