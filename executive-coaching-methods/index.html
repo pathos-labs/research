@@ -1184,7 +1184,7 @@
                     <div class="gate-meta">Pathos Labs · Research</div>
                     <h2 class="gate-heading">Unlock this research</h2>
                     <p class="gate-subtext">Enter your email to get free access to all our research presentations.</p>
-                    <form id="gateForm" novalidate>
+                    <form id="gateForm">
                         <input type="email" class="gate-input" placeholder="you@example.com" required autocomplete="email" />
                         <button type="submit" class="gate-button">Get Access</button>
                         <div class="gate-error" id="gateError">Something went wrong — try again.</div>
@@ -1209,6 +1209,7 @@
 
                 error.classList.remove('visible');
                 button.disabled = true;
+                input.disabled = true;
                 button.textContent = '\u2026';
 
                 try {
@@ -1231,6 +1232,7 @@
                 } catch (err) {
                     error.classList.add('visible');
                     button.disabled = false;
+                    input.disabled = false;
                     button.textContent = 'Get Access';
                 }
             });
