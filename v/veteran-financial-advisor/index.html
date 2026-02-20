@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Veteran-to-Financial Advisor — The Evidence Base</title>
+
+    <!-- Fonts: General Sans (headings) + Satoshi (body) from Fontshare -->
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,500,700&display=swap">
+
+    <style>
+        /* ===========================================
+           CUSTOM PROPERTIES — SWISS MODERN THEME
+           Amber accent for veteran/financial services
+           =========================================== */
+        :root {
+            /* Surfaces */
+            --bg: #FAFBFC;
+            --bg-alt: #F1F5F9;
+            --bg-dark: #0F172A;
+            --bg-dark-subtle: #1E293B;
+
+            /* Typography */
+            --text: #0F172A;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --text-inverse: #F8FAFC;
+            --text-inverse-secondary: #94A3B8;
+
+            /* Accent — Warm Amber */
+            --accent: #B45309;
+            --accent-light: #FEF3C7;
+            --accent-dark: #92400E;
+
+            /* Confidence rating colors */
+            --conf-5: #059669;
+            --conf-5-bg: #D1FAE5;
+            --conf-4: #2563EB;
+            --conf-4-bg: #DBEAFE;
+            --conf-3: #D97706;
+            --conf-3-bg: #FEF3C7;
+            --conf-2: #DC2626;
+            --conf-2-bg: #FEE2E2;
+            --conf-1: #6B7280;
+            --conf-1-bg: #F3F4F6;
+
+            /* Borders */
+            --border: #E2E8F0;
+            --border-dark: #334155;
+
+            /* Fonts */
+            --font-display: 'General Sans', system-ui, sans-serif;
+            --font-body: 'Satoshi', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+
+            /* Responsive typography */
+            --title-size: clamp(2rem, 6vw, 4.5rem);
+            --h2-size: clamp(1.4rem, 3.5vw, 2.5rem);
+            --h3-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            --body-size: clamp(0.75rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.65rem, 1vw, 0.85rem);
+            --tag-size: clamp(0.6rem, 0.8vw, 0.75rem);
+            --hero-number: clamp(2.5rem, 6vw, 4.5rem);
+            --section-number: clamp(4rem, 15vw, 12rem);
+
+            /* Spacing */
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --slide-padding-top: clamp(1.5rem, 4vh, 4rem);
+            --content-gap: clamp(0.75rem, 2vw, 2rem);
+            --element-gap: clamp(0.3rem, 0.8vw, 0.75rem);
+
+            /* Animation */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+            --duration: 0.5s;
+            --duration-fast: 0.3s;
+        }
+
+        /* ===========================================
+           RESET & BASE
+           =========================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            height: 100%;
+            overflow-x: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        html::-webkit-scrollbar { display: none; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            height: 100%;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===========================================
+           SLIDE CONTAINER
+           Each slide = exactly one viewport height
+           =========================================== */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding: var(--slide-padding-top) var(--slide-padding) var(--slide-padding);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            gap: var(--content-gap);
+        }
+
+        /* Subtle grid on light slides */
+        .slide:not(.dark) {
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.018) 1px, transparent 1px);
+            background-size: clamp(30px, 4vw, 50px) clamp(30px, 4vw, 50px);
+        }
+
+        .slide.alt {
+            background-color: var(--bg-alt);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.015) 1px, transparent 1px);
+            background-size: clamp(30px, 4vw, 50px) clamp(30px, 4vw, 50px);
+        }
+
+        /* Dark section divider slides — glow position varies per section */
+        .slide.dark {
+            background: var(--bg-dark);
+            background-image: radial-gradient(ellipse at var(--glow-x, 70%) var(--glow-y, 30%), rgba(180, 83, 9, 0.08) 0%, transparent 60%);
+            color: var(--text-inverse);
+        }
+
+        /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+        h1 {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        p, li {
+            font-size: var(--body-size);
+            line-height: 1.55;
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .dark .subtitle {
+            color: var(--text-inverse-secondary);
+        }
+
+        .meta {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .dark .meta {
+            color: var(--text-inverse-secondary);
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+        }
+
+        .accent-line {
+            width: clamp(2rem, 4vw, 3.5rem);
+            height: 3px;
+            background: var(--accent);
+            border: none;
+            margin: 0;
+        }
+
+        .dark .accent-line {
+            background: var(--accent);
+            opacity: 0.8;
+        }
+
+        /* ===========================================
+           SECTION DIVIDER ELEMENTS
+           =========================================== */
+        .section-number {
+            font-family: var(--font-display);
+            font-size: var(--section-number);
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.04);
+            position: absolute;
+            right: var(--slide-padding);
+            bottom: clamp(0.5rem, 3vh, 2rem);
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: clamp(0.85rem, 1.5vw, 1.15rem);
+            color: var(--text-inverse-secondary);
+            font-weight: 400;
+            margin-top: var(--element-gap);
+        }
+
+        /* ===========================================
+           HERO NUMBER
+           =========================================== */
+        .hero-stat {
+            font-family: var(--font-mono);
+            font-size: var(--hero-number);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .hero-label {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 42ch;
+            line-height: 1.4;
+        }
+
+        /* ===========================================
+           CONFIDENCE BADGES
+           =========================================== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(0.2rem, 0.4vw, 0.35rem);
+            padding: clamp(0.15rem, 0.3vw, 0.25rem) clamp(0.4rem, 0.8vw, 0.65rem);
+            border-radius: 100px;
+            font-size: var(--tag-size);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-5 { background: var(--conf-5-bg); color: var(--conf-5); }
+        .badge-4 { background: var(--conf-4-bg); color: var(--conf-4); }
+        .badge-3 { background: var(--conf-3-bg); color: var(--conf-3); }
+        .badge-2 { background: var(--conf-2-bg); color: var(--conf-2); }
+        .badge-1 { background: #E5E7EB; color: #4B5563; }
+
+        .badge-dots {
+            display: inline-flex;
+            gap: 2px;
+        }
+
+        .badge-dot {
+            width: clamp(4px, 0.4vw, 6px);
+            height: clamp(4px, 0.4vw, 6px);
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .badge-dot.empty {
+            opacity: 0.25;
+        }
+
+        /* On dark backgrounds */
+        .dark .badge-5 { background: rgba(5, 150, 105, 0.2); color: #6EE7B7; }
+        .dark .badge-4 { background: rgba(37, 99, 235, 0.2); color: #93C5FD; }
+        .dark .badge-3 { background: rgba(217, 119, 6, 0.2); color: #FCD34D; }
+
+        /* ===========================================
+           DATA BARS
+           =========================================== */
+        .data-bar-row {
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 1vw, 1rem);
+        }
+
+        .data-bar-label {
+            font-size: var(--small-size);
+            font-weight: 500;
+            min-width: clamp(8rem, 14vw, 14rem);
+            text-align: right;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .data-bar-track {
+            flex: 1;
+            height: clamp(6px, 1vh, 10px);
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+            max-width: clamp(10rem, 30vw, 24rem);
+        }
+
+        .data-bar-fill {
+            height: 100%;
+            border-radius: 100px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 1s var(--ease-out-expo) 0.3s;
+        }
+
+        .visible .data-bar-fill { width: var(--bar-width); }
+
+        .data-bar-value {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            font-weight: 600;
+            color: var(--text);
+            min-width: clamp(2.5rem, 4vw, 4rem);
+            flex-shrink: 0;
+        }
+
+        /* ===========================================
+           FINDING ROWS
+           =========================================== */
+        .finding {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.5rem, 1.2vw, 1.25rem);
+            padding: clamp(0.5rem, 1vh, 0.85rem) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .finding:last-child { border-bottom: none; }
+
+        .finding-num {
+            font-family: var(--font-mono);
+            font-size: var(--small-size);
+            font-weight: 600;
+            color: var(--accent);
+            min-width: clamp(1.2rem, 2vw, 1.8rem);
+            flex-shrink: 0;
+            padding-top: 0.1em;
+        }
+
+        .finding-text {
+            font-size: var(--body-size);
+            line-height: 1.45;
+            flex: 1;
+        }
+
+        .finding-text strong {
+            font-weight: 600;
+        }
+
+        .finding-badge {
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        /* ===========================================
+           CARDS
+           =========================================== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, clamp(14rem, 22vw, 20rem)), 1fr));
+            gap: clamp(0.5rem, 1.2vw, 1rem);
+        }
+
+        .card-grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, clamp(12rem, 18vw, 18rem)), 1fr));
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: clamp(6px, 0.6vw, 10px);
+            padding: clamp(0.75rem, 1.5vw, 1.25rem);
+            display: flex;
+            flex-direction: column;
+            gap: var(--element-gap);
+            transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+        }
+
+        .alt .card { background: white; }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 12px rgba(180, 83, 9, 0.08);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(0.25rem, 0.5vw, 0.4rem);
+            font-size: var(--tag-size);
+        }
+
+        .card-meta-tag {
+            padding: clamp(0.1rem, 0.2vw, 0.15rem) clamp(0.3rem, 0.5vw, 0.5rem);
+            background: var(--bg-alt);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .card-desc {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .card-icon {
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            line-height: 1;
+        }
+
+        /* ===========================================
+           PIPELINE
+           =========================================== */
+        .pipeline {
+            display: flex;
+            align-items: stretch;
+            gap: clamp(0.2rem, 0.5vw, 0.4rem);
+            width: 100%;
+        }
+
+        .pipeline-step {
+            flex: 1;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: clamp(4px, 0.4vw, 8px);
+            padding: clamp(0.5rem, 1vw, 1rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: clamp(0.15rem, 0.4vh, 0.4rem);
+            transition: border-color var(--duration-fast) ease, background var(--duration-fast) ease;
+        }
+
+        .pipeline-step:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .pipeline-num {
+            font-family: var(--font-mono);
+            font-size: var(--tag-size);
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .pipeline-label {
+            font-family: var(--font-display);
+            font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .pipeline-desc {
+            font-size: clamp(0.55rem, 0.8vw, 0.72rem);
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        /* ===========================================
+           QUOTE
+           =========================================== */
+        blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: clamp(0.75rem, 1.5vw, 1.5rem);
+            font-size: clamp(0.9rem, 1.6vw, 1.2rem);
+            line-height: 1.5;
+            color: var(--text);
+            font-style: italic;
+            max-width: 50ch;
+        }
+
+        blockquote cite {
+            display: block;
+            margin-top: clamp(0.3rem, 0.6vh, 0.6rem);
+            font-size: var(--small-size);
+            font-style: normal;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ===========================================
+           TRANSLATION TABLE
+           =========================================== */
+        .translation-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: clamp(0.5rem, 1.2vw, 1.5rem);
+            align-items: center;
+            padding: clamp(0.4rem, 0.8vh, 0.7rem) 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .translation-row:last-child { border-bottom: none; }
+
+        .translation-before {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            line-height: 1.4;
+        }
+
+        .translation-arrow {
+            font-size: clamp(0.8rem, 1.2vw, 1.2rem);
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .translation-after {
+            font-size: var(--small-size);
+            color: var(--text);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* ===========================================
+           STRENGTH/WEAKNESS COLUMNS
+           =========================================== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1rem, 3vw, 3rem);
+        }
+
+        .col-heading {
+            font-family: var(--font-display);
+            font-size: var(--small-size);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: clamp(0.3rem, 0.6vh, 0.5rem);
+        }
+
+        .col-heading.strength { color: var(--conf-5); }
+        .col-heading.weakness { color: var(--conf-2); }
+
+        .col-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.3rem, 0.6vh, 0.5rem);
+        }
+
+        .col-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.3rem, 0.5vw, 0.5rem);
+            font-size: var(--body-size);
+            line-height: 1.4;
+        }
+
+        .col-list .icon {
+            flex-shrink: 0;
+            font-weight: 700;
+            padding-top: 0.1em;
+        }
+
+        .col-list .icon.green { color: var(--conf-5); }
+        .col-list .icon.red { color: var(--conf-2); }
+
+        /* ===========================================
+           SOURCE LIST
+           =========================================== */
+        .source-group {
+            margin-bottom: clamp(0.5rem, 1vh, 1rem);
+        }
+
+        .source-group-title {
+            font-family: var(--font-display);
+            font-size: var(--small-size);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: clamp(0.2rem, 0.5vh, 0.5rem);
+        }
+
+        .source-item {
+            font-size: clamp(0.6rem, 0.9vw, 0.78rem);
+            color: var(--text-secondary);
+            line-height: 1.45;
+            padding: clamp(0.1rem, 0.2vh, 0.2rem) 0;
+        }
+
+        .source-item strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Links */
+        a { color: inherit; text-decoration: none; }
+        .source-item a, .finding-text a, .card-desc a, cite a {
+            color: var(--accent);
+            transition: opacity 0.2s ease;
+        }
+        .source-item a:hover, .finding-text a:hover, .card-desc a:hover, cite a:hover {
+            text-decoration: underline;
+        }
+        .dark .source-item a { color: #FDE68A; }
+
+        /* ===========================================
+           FAILURE MODE LIST
+           =========================================== */
+        .failure-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.3rem, 0.6vh, 0.5rem);
+        }
+
+        .failure-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.3rem, 0.6vw, 0.6rem);
+            font-size: var(--body-size);
+        }
+
+        .failure-list .marker {
+            color: var(--conf-3);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ===========================================
+           NAVIGATION ELEMENTS
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.25s var(--ease-out-quart);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: clamp(0.75rem, 2vh, 1.5rem);
+            right: clamp(1rem, 2vw, 2rem);
+            font-family: var(--font-mono);
+            font-size: clamp(0.6rem, 0.8vw, 0.75rem);
+            color: var(--text-muted);
+            z-index: 100;
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .slide-counter.inverted {
+            color: var(--text-inverse-secondary);
+        }
+
+        .nav-sections {
+            position: fixed;
+            right: clamp(0.75rem, 1.5vw, 1.5rem);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(6px, 1vh, 14px);
+            z-index: 100;
+        }
+
+        .nav-section-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: clamp(4px, 0.5vw, 8px);
+            cursor: pointer;
+            padding: 0;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-section-item:hover { opacity: 0.75; }
+        .nav-section-item.active { opacity: 1; }
+
+        .nav-section-label {
+            font-family: var(--font-mono);
+            font-size: clamp(0.5rem, 0.65vw, 0.6rem);
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 500;
+            max-width: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-width 0.3s var(--ease-out-expo), opacity 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-sections:hover .nav-section-label {
+            max-width: 8rem;
+            opacity: 1;
+        }
+
+        .nav-section-pip {
+            width: clamp(6px, 0.6vw, 8px);
+            height: clamp(6px, 0.6vw, 8px);
+            border-radius: 50%;
+            border: 1.5px solid currentColor;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .nav-section-item.active .nav-section-pip {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .nav-section-item.inverted { color: var(--text-inverse-secondary); }
+        .nav-section-item.inverted.active .nav-section-pip {
+            background: white;
+            border-color: white;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: fixed;
+            bottom: clamp(0.75rem, 2vh, 1.5rem);
+            left: clamp(1rem, 2vw, 2rem);
+            font-size: clamp(0.55rem, 0.7vw, 0.65rem);
+            color: var(--text-muted);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            opacity: 0.6;
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .keyboard-hint.inverted { color: var(--text-inverse-secondary); }
+
+        .keyboard-hint kbd {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.1em 0.4em;
+            border: 1px solid currentColor;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+        }
+
+        /* ===========================================
+           REVEAL ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.05s; }
+        .reveal:nth-child(2) { transition-delay: 0.12s; }
+        .reveal:nth-child(3) { transition-delay: 0.19s; }
+        .reveal:nth-child(4) { transition-delay: 0.26s; }
+        .reveal:nth-child(5) { transition-delay: 0.33s; }
+        .reveal:nth-child(6) { transition-delay: 0.40s; }
+        .reveal:nth-child(7) { transition-delay: 0.47s; }
+        .reveal:nth-child(8) { transition-delay: 0.54s; }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal-left {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Card/pipeline stagger */
+        .card-grid .card,
+        .pipeline .pipeline-step {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo),
+                        border-color var(--duration-fast) ease,
+                        box-shadow var(--duration-fast) ease;
+        }
+
+        .slide.visible .card-grid .card,
+        .slide.visible .pipeline .pipeline-step {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide.visible .card-grid .card:nth-child(1),
+        .slide.visible .pipeline .pipeline-step:nth-child(1) { transition-delay: 0.1s; }
+        .slide.visible .card-grid .card:nth-child(2),
+        .slide.visible .pipeline .pipeline-step:nth-child(2) { transition-delay: 0.18s; }
+        .slide.visible .card-grid .card:nth-child(3),
+        .slide.visible .pipeline .pipeline-step:nth-child(3) { transition-delay: 0.26s; }
+        .slide.visible .card-grid .card:nth-child(4),
+        .slide.visible .pipeline .pipeline-step:nth-child(4) { transition-delay: 0.34s; }
+        .slide.visible .card-grid .card:nth-child(5) { transition-delay: 0.42s; }
+        .slide.visible .card-grid .card:nth-child(6) { transition-delay: 0.50s; }
+
+        /* List item stagger */
+        .failure-list li, .col-list li {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.4s var(--ease-out-expo),
+                        transform 0.4s var(--ease-out-expo);
+        }
+
+        .slide.visible .failure-list li,
+        .slide.visible .col-list li { opacity: 1; transform: translateX(0); }
+        .slide.visible .failure-list li:nth-child(1),
+        .slide.visible .col-list li:nth-child(1) { transition-delay: 0.1s; }
+        .slide.visible .failure-list li:nth-child(2),
+        .slide.visible .col-list li:nth-child(2) { transition-delay: 0.15s; }
+        .slide.visible .failure-list li:nth-child(3),
+        .slide.visible .col-list li:nth-child(3) { transition-delay: 0.2s; }
+        .slide.visible .failure-list li:nth-child(4),
+        .slide.visible .col-list li:nth-child(4) { transition-delay: 0.25s; }
+        .slide.visible .failure-list li:nth-child(5),
+        .slide.visible .col-list li:nth-child(5) { transition-delay: 0.3s; }
+
+        /* Data bar stagger */
+        .data-bar-row {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.4s var(--ease-out-expo),
+                        transform 0.4s var(--ease-out-expo);
+        }
+
+        .slide.visible .data-bar-row { opacity: 1; transform: translateX(0); }
+        .slide.visible .data-bar-row:nth-child(1) { transition-delay: 0.15s; }
+        .slide.visible .data-bar-row:nth-child(2) { transition-delay: 0.25s; }
+        .slide.visible .data-bar-row:nth-child(3) { transition-delay: 0.35s; }
+        .slide.visible .data-bar-row:nth-child(4) { transition-delay: 0.45s; }
+
+        /* Translation row stagger */
+        .translation-row {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s var(--ease-out-expo),
+                        transform 0.4s var(--ease-out-expo);
+        }
+
+        .slide.visible .translation-row { opacity: 1; transform: translateY(0); }
+        .slide.visible .translation-row:nth-child(1) { transition-delay: 0.1s; }
+        .slide.visible .translation-row:nth-child(2) { transition-delay: 0.2s; }
+        .slide.visible .translation-row:nth-child(3) { transition-delay: 0.3s; }
+        .slide.visible .translation-row:nth-child(4) { transition-delay: 0.4s; }
+
+        /* ===========================================
+           RESPONSIVE — SHORT VIEWPORTS
+           =========================================== */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(1rem, 3.5vw, 3rem);
+                --slide-padding-top: clamp(1rem, 3vh, 2.5rem);
+                --content-gap: clamp(0.5rem, 1.5vw, 1.25rem);
+                --title-size: clamp(1.6rem, 5vw, 3rem);
+                --h2-size: clamp(1.2rem, 3vw, 2rem);
+                --hero-number: clamp(2rem, 7vw, 4.5rem);
+                --section-number: clamp(3rem, 12vw, 9rem);
+            }
+        }
+
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --slide-padding-top: clamp(0.75rem, 2vh, 1.5rem);
+                --content-gap: clamp(0.4rem, 1vw, 1rem);
+                --title-size: clamp(1.3rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1rem, 2.5vw, 1.6rem);
+                --body-size: clamp(0.65rem, 1.1vw, 0.9rem);
+                --hero-number: clamp(1.8rem, 6vw, 3.5rem);
+            }
+
+            .nav-sections, .keyboard-hint { display: none; }
+        }
+
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --h2-size: clamp(0.9rem, 2.2vw, 1.3rem);
+                --body-size: clamp(0.6rem, 1vw, 0.8rem);
+                --small-size: clamp(0.5rem, 0.8vw, 0.7rem);
+            }
+        }
+
+        /* RESPONSIVE — NARROW VIEWPORTS */
+        @media (max-width: 600px) {
+            :root {
+                --title-size: clamp(1.5rem, 8vw, 3rem);
+                --hero-number: clamp(2rem, 10vw, 4rem);
+            }
+
+            .card-grid { grid-template-columns: 1fr; }
+
+            .pipeline {
+                flex-direction: column;
+                gap: clamp(0.2rem, 0.5vh, 0.3rem);
+            }
+
+            .pipeline-step {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+            }
+
+            .data-bar-label { min-width: clamp(5rem, 25vw, 8rem); }
+
+            .two-col { grid-template-columns: 1fr; gap: clamp(0.5rem, 1.5vw, 1rem); }
+
+            .translation-row { grid-template-columns: 1fr; gap: clamp(0.15rem, 0.3vw, 0.25rem); }
+            .translation-arrow { display: none; }
+            .translation-before { border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; }
+        }
+
+        @media (max-width: 400px) {
+            .finding { flex-wrap: wrap; }
+            .finding-badge { margin-left: auto; }
+        }
+
+        /* ===========================================
+           REDUCED MOTION
+           =========================================== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.15s !important;
+            }
+            html { scroll-behavior: auto; }
+            .reveal, .reveal-left,
+            .card-grid .card, .pipeline .pipeline-step,
+            .failure-list li, .col-list li,
+            .data-bar-row, .translation-row {
+                opacity: 1;
+                transform: none;
+            }
+            .data-bar-fill { transition-duration: 0.01ms !important; }
+        }
+
+        /* ===========================================
+           PRINT STYLES
+           =========================================== */
+        @media print {
+            html { scroll-snap-type: none; }
+            .slide {
+                height: auto;
+                min-height: 100vh;
+                page-break-after: always;
+                overflow: visible;
+            }
+            .progress-bar, .nav-sections, .slide-counter, .keyboard-hint { display: none; }
+            .reveal, .reveal-left { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Slide counter -->
+    <div class="slide-counter" id="slideCounter">01 / 25</div>
+
+    <!-- Section nav -->
+    <nav class="nav-sections" id="navSections" aria-label="Section navigation"></nav>
+
+    <!-- Keyboard hint -->
+    <div class="keyboard-hint" id="keyHint">
+        <kbd>&darr;</kbd> <kbd>&uarr;</kbd> to navigate
+    </div>
+
+
+    <!-- =========================================
+         SLIDE 1: TITLE (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-1" style="--glow-x: 75%; --glow-y: 25%;">
+        <div class="slide-content" style="align-items: flex-start; max-width: 52ch;">
+            <span class="meta reveal">Pathos Labs &middot; Research</span>
+            <hr class="accent-line reveal">
+            <h1 class="reveal" style="margin-top: clamp(0.5rem, 1.5vh, 1rem);">Veteran-to-Financial Advisor</h1>
+            <p class="subtitle reveal">Deep Research Brief &mdash; 29 Sources, February 2026</p>
+            <p class="meta reveal" style="margin-top: auto; padding-top: 1rem;">
+                Sam Millunchick &middot; 29 Sources &middot; February 2026
+            </p>
+        </div>
+        <span class="section-number reveal" style="opacity: 0.03;">PL</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 2: HERO STAT
+         ========================================= -->
+    <section class="slide" id="slide-2">
+        <div class="slide-content" style="align-items: flex-start; max-width: 56ch;">
+            <span class="meta reveal">The Talent Crisis</span>
+            <hr class="accent-line reveal">
+            <div class="hero-stat reveal">72%</div>
+            <p class="hero-label reveal">
+                of rookie financial advisors wash out, most within 3 years. The primary cause: inability to endure the prospecting phase. Veterans are trained for exactly this kind of sustained discomfort.
+            </p>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <a href="https://insurancenewsnet.com/innarticle/as-retirement-exodus-looms-rookie-advisor-failure-rate-at-72-study-finds" target="_blank" rel="noopener">Cerulli Associates 2023</a> &middot;
+                <a href="https://www.institutionalinvestor.com/article/2bujzkg6xea9hjpl5jshs/ria-intel/wealth-managements-double-attrition-problem" target="_blank" rel="noopener">Institutional Investor 2023</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 3: FIVE KEY FINDINGS
+         ========================================= -->
+    <section class="slide alt" id="slide-3">
+        <div class="slide-content" style="align-items: flex-start; max-width: 62ch;">
+            <span class="meta reveal">Executive Summary</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Five Key Findings</h2>
+
+            <div class="reveal" style="display: flex; flex-direction: column;">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>Veterans are uniquely positioned</strong> to solve the industry&rsquo;s retention crisis. Their tolerance for sustained discomfort directly combats the #1 reason rookies wash out.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span></span>
+                </div>
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>Interview weaknesses are documented and fixable.</strong> Translation gap, jargon, nervousness &mdash; behavioral, not competency-based.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span></span>
+                </div>
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text"><strong>Multiple firms have veteran pipelines</strong> but none publish comparative retention or AUM data. The programs exist; the proof is anecdotal.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span></span>
+                </div>
+                <div class="finding">
+                    <span class="finding-num">04</span>
+                    <span class="finding-text"><strong>The American College</strong> is the most important institutional player &mdash; full scholarships for CFP&reg;, ChFC&reg;, CLU&reg; + mentorship.</span>
+                    <span class="finding-badge"><span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span></span>
+                </div>
+                <div class="finding">
+                    <span class="finding-num">05</span>
+                    <span class="finding-text"><strong>SkillBridge is underutilized.</strong> 70%+ interest but only 32% participation. 58% of installations lack sufficient partnerships.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 4: SECTION — WHY VETERANS? (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-4" style="--glow-x: 20%; --glow-y: 60%;">
+        <div class="slide-content" style="align-items: flex-start; max-width: 44ch;">
+            <span class="meta reveal">Section 01</span>
+            <hr class="accent-line reveal">
+            <h1 class="section-title reveal">Why Veterans?</h1>
+            <p class="section-subtitle reveal">What investors actually value &mdash; and why military backgrounds deliver it</p>
+        </div>
+        <span class="section-number reveal">01</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 5: INVESTOR PERCEPTION — DATA BARS
+         ========================================= -->
+    <section class="slide" id="slide-5">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Edward Jones Consumer Research</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Why Investors Choose Veteran Advisors</h2>
+            <p class="reveal subtitle" style="max-width: 48ch;">Individual investors are drawn to advisors with military experience for specific, measurable reasons:</p>
+
+            <div class="reveal" style="display: flex; flex-direction: column; gap: clamp(0.6rem, 1.2vh, 1rem); width: 100%;">
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Discipline</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 77%;"></div></div>
+                    <span class="data-bar-value">77%</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Goal-Orientation</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 73%;"></div></div>
+                    <span class="data-bar-value">73%</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Integrity</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 72%;"></div></div>
+                    <span class="data-bar-value">72%</span>
+                </div>
+            </div>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <a href="https://www.prnewswire.com/news-releases/edward-jones-hires-336-military-veterans-as-financial-advisors-230810571.html" target="_blank" rel="noopener">Edward Jones press release, Nov 2013</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 6: SIX MECHANISMS — CARD GRID
+         ========================================= -->
+    <section class="slide alt" id="slide-6">
+        <div class="slide-content" style="align-items: flex-start;">
+            <span class="meta reveal">Specific Mechanisms</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Why Military Backgrounds Predict Success</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-title"><span style="color: var(--accent); font-family: var(--font-mono); font-weight: 700; margin-right: 0.4em;">01</span> Prospecting Tolerance</span>
+                    <span class="card-desc">Trained tolerance for sustained discomfort pursuing long-term objectives. The #1 reason rookies fail is the cold prospecting grind.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title"><span style="color: var(--accent); font-family: var(--font-mono); font-weight: 700; margin-right: 0.4em;">02</span> OODA Loop Decisions</span>
+                    <span class="card-desc">Observe-Orient-Decide-Act under uncertainty. Advising requires confident recommendations with incomplete information.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title"><span style="color: var(--accent); font-family: var(--font-mono); font-weight: 700; margin-right: 0.4em;">03</span> Contingency Planning</span>
+                    <span class="card-desc">Military planning always includes &ldquo;what if&rdquo; scenarios. Financial planning is fundamentally the same discipline.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title"><span style="color: var(--accent); font-family: var(--font-mono); font-weight: 700; margin-right: 0.4em;">04</span> Trust-Building</span>
+                    <span class="card-desc">Service record signals trustworthiness. 72% of investors associate military experience with integrity.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title"><span style="color: var(--accent); font-family: var(--font-mono); font-weight: 700; margin-right: 0.4em;">05</span> Structured Risk Assessment</span>
+                    <span class="card-desc">&ldquo;Trained in structured approaches to risk management where people and technology work together.&rdquo; &mdash; Brad Genser, ex-Goldman Sachs</span>
+                </div>
+                <div class="card">
+                    <span class="card-title"><span style="color: var(--accent); font-family: var(--font-mono); font-weight: 700; margin-right: 0.4em;">06</span> Accountability Culture</span>
+                    <span class="card-desc">Military consequences are real. This translates to fiduciary mindset &mdash; personal responsibility for client outcomes.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 7: FIRM PROGRAMS
+         ========================================= -->
+    <section class="slide" id="slide-7">
+        <div class="slide-content" style="align-items: flex-start;">
+            <span class="meta reveal">Who&rsquo;s Hiring</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Firms With Veteran Pipelines</h2>
+
+            <div class="card-grid card-grid-3">
+                <div class="card">
+                    <span class="card-title">Edward Jones &mdash; FORCES</span>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">Since 2012</span>
+                        <span class="card-meta-tag">1,500+ hired</span>
+                    </div>
+                    <span class="card-desc">GI Bill compatible. Tailored training + compensation. 11% of all EJ advisors have military experience. 473 hired in first year alone.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title">Northwestern Mutual</span>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">SkillBridge Partner</span>
+                        <span class="card-meta-tag">Military Friendly</span>
+                    </div>
+                    <span class="card-desc">180-day pre-separation program. Earn certifications while on active duty. 70% of new advisors are career changers.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title">First Command</span>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">Since 1958</span>
+                        <span class="card-meta-tag">$46.48B AUM</span>
+                    </div>
+                    <span class="card-desc">75% of 600+ advisors are veterans or military spouses. 34,000 complimentary financial plans per year for active duty.</span>
+                </div>
+            </div>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                Morgan Stanley, JPMorgan Chase, and Raymond James also maintain veteran hiring programs with less published data.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 8: SECTION — TRANSLATION GAP (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-8" style="--glow-x: 80%; --glow-y: 70%;">
+        <div class="slide-content" style="align-items: flex-start; max-width: 44ch;">
+            <span class="meta reveal">Section 02</span>
+            <hr class="accent-line reveal">
+            <h1 class="section-title reveal">The Translation Gap</h1>
+            <p class="section-subtitle reveal">Veterans&rsquo; weaknesses are behavioral, not competency-based &mdash; which means they&rsquo;re fixable</p>
+        </div>
+        <span class="section-number reveal">02</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 9: FIMT-RC STUDY
+         ========================================= -->
+    <section class="slide" id="slide-9">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">FIMT-RC, 2024 &middot; Peer-Reviewed</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Known Gaps, Documented Fixes</h2>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); max-width: 48ch;">14 HR professionals + 93 veterans surveyed. Both groups converge on the same strengths and weaknesses.</p>
+
+            <div class="two-col reveal">
+                <div>
+                    <p class="col-heading strength">Strengths</p>
+                    <ul class="col-list">
+                        <li><span class="icon green">&#x2713;</span> Communication of soft skills</li>
+                        <li><span class="icon green">&#x2713;</span> Confidence</li>
+                        <li><span class="icon green">&#x2713;</span> Professionalism</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="col-heading weakness">Weaknesses</p>
+                    <ul class="col-list">
+                        <li><span class="icon red">&#x2717;</span> Translating military skills to civilian language</li>
+                        <li><span class="icon red">&#x2717;</span> Use of military jargon</li>
+                        <li><span class="icon red">&#x2717;</span> Nervousness</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                Veterans who completed interview training were more likely to find jobs (Perkins 2022) and leave for better jobs (Morgan 2022).
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 10: JARGON TRANSLATIONS
+         ========================================= -->
+    <section class="slide alt" id="slide-10">
+        <div class="slide-content" style="align-items: flex-start; max-width: 66ch;">
+            <span class="meta reveal">The Jargon Problem</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">From Military to Civilian Language</h2>
+
+            <div class="reveal" style="display: flex; flex-direction: column;">
+                <div class="translation-row">
+                    <span class="translation-before">&ldquo;I commanded a company of 120 personnel&rdquo;</span>
+                    <span class="translation-arrow">&rarr;</span>
+                    <span class="translation-after">&ldquo;I led a team of 120 people through complex operations&rdquo;</span>
+                </div>
+                <div class="translation-row">
+                    <span class="translation-before">&ldquo;Managed a $15M MTOE&rdquo;</span>
+                    <span class="translation-arrow">&rarr;</span>
+                    <span class="translation-after">&ldquo;I was responsible for a $15 million equipment and logistics portfolio&rdquo;</span>
+                </div>
+                <div class="translation-row">
+                    <span class="translation-before">&ldquo;Served as S-3 in a BCT&rdquo;</span>
+                    <span class="translation-arrow">&rarr;</span>
+                    <span class="translation-after">&ldquo;I was the chief operations officer for a 4,000-person organization&rdquo;</span>
+                </div>
+                <div class="translation-row">
+                    <span class="translation-before">&ldquo;Executed FRAGOs under time constraints&rdquo;</span>
+                    <span class="translation-arrow">&rarr;</span>
+                    <span class="translation-after">&ldquo;I developed and communicated revised action plans under tight deadlines&rdquo;</span>
+                </div>
+            </div>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); margin-top: auto;">
+                <strong style="color: var(--text);">The fix:</strong> Lead with the result, then provide context only if asked. Veterans brief bottom-up; interviews want the conclusion first.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 11: SECTION — ARCHETYPES (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-11" style="--glow-x: 30%; --glow-y: 40%;">
+        <div class="slide-content" style="align-items: flex-start; max-width: 44ch;">
+            <span class="meta reveal">Section 03</span>
+            <hr class="accent-line reveal">
+            <h1 class="section-title reveal">Military Archetypes</h1>
+            <p class="section-subtitle reveal">Which backgrounds map to which advisory strengths &mdash; and where the gaps are</p>
+        </div>
+        <span class="section-number reveal">03</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 12: ARCHETYPE MAP — 4 CARDS
+         ========================================= -->
+    <section class="slide" id="slide-12">
+        <div class="slide-content" style="align-items: flex-start;">
+            <span class="meta reveal">Skills Mapping</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Background &rarr; Advisory Fit</h2>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-title">Combat Arms</span>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">Best fit: Prospecting-heavy</span>
+                    </div>
+                    <span class="card-desc">Extreme resilience. Mission focus. Best for building a practice from scratch. Gap: &ldquo;soft sell&rdquo; relationship skills.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title">Intelligence</span>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">Best fit: Complex planning</span>
+                    </div>
+                    <span class="card-desc">Pattern recognition. Data synthesis. Best for research-heavy and complex case work. Gap: may prefer analysis over client interaction.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title">Medical / Chaplain</span>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">Best fit: Relationship mgmt</span>
+                    </div>
+                    <span class="card-desc">Empathy. Active listening. Best for goals-based planning and emotional money conversations. Gap: financial technical knowledge.</span>
+                </div>
+                <div class="card">
+                    <span class="card-title">Logistics / Finance</span>
+                    <div class="card-meta">
+                        <span class="card-meta-tag">Best fit: Operations</span>
+                    </div>
+                    <span class="card-desc">Quantitative analysis. Systems thinking. Direct fit for compliance and planning processes. Gap: may lack &ldquo;sales warrior&rdquo; mentality.</span>
+                </div>
+            </div>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span>
+                &ensp;Analytical mapping &mdash; no published data on which MOS backgrounds succeed best
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 13: WHAT ADVISORS DO DAILY
+         ========================================= -->
+    <section class="slide alt" id="slide-13">
+        <div class="slide-content" style="align-items: flex-start; max-width: 64ch;">
+            <span class="meta reveal">Daily Reality</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">What Financial Advisors Actually Do</h2>
+
+            <div class="reveal" style="display: flex; flex-direction: column; gap: clamp(0.3rem, 0.6vh, 0.5rem); width: 100%;">
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Client Relationships</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 80%;"></div></div>
+                    <span class="data-bar-value">30&ndash;40%</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Prospecting (early career)</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 60%; background: #DC2626;"></div></div>
+                    <span class="data-bar-value">20&ndash;30%</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Financial Planning</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 50%;"></div></div>
+                    <span class="data-bar-value">15&ndash;25%</span>
+                </div>
+                <div class="data-bar-row">
+                    <span class="data-bar-label">Admin / Compliance</span>
+                    <div class="data-bar-track"><div class="data-bar-fill" style="--bar-width: 40%;"></div></div>
+                    <span class="data-bar-value">10&ndash;20%</span>
+                </div>
+            </div>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary); max-width: 50ch;">
+                <strong style="color: var(--text);">Key insight for recruiting:</strong> A veteran who expects to &ldquo;do financial planning&rdquo; may find themselves spending 80% of early-career time prospecting. Clear expectations are critical.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 14: SECTION — INFRASTRUCTURE (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-14" style="--glow-x: 65%; --glow-y: 80%;">
+        <div class="slide-content" style="align-items: flex-start; max-width: 44ch;">
+            <span class="meta reveal">Section 04</span>
+            <hr class="accent-line reveal">
+            <h1 class="section-title reveal">The Transition Ecosystem</h1>
+            <p class="section-subtitle reveal">Programs, credentials, and pathways that already exist</p>
+        </div>
+        <span class="section-number reveal">04</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 15: CAREER PATHWAY — PIPELINE
+         ========================================= -->
+    <section class="slide" id="slide-15">
+        <div class="slide-content" style="align-items: flex-start;">
+            <span class="meta reveal">Veteran Pathway</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">From Service to Practice</h2>
+
+            <div class="pipeline reveal">
+                <div class="pipeline-step">
+                    <span class="pipeline-num">01</span>
+                    <span class="pipeline-label">SkillBridge</span>
+                    <span class="pipeline-desc">Last 180 days of active duty. Keep pay + benefits.</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">02</span>
+                    <span class="pipeline-label">SIE Exam</span>
+                    <span class="pipeline-desc">No sponsorship required. First licensing step.</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">03</span>
+                    <span class="pipeline-label">Series 7 + 66</span>
+                    <span class="pipeline-desc">71% pass rate. $572 total. Firm sponsorship needed.</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">04</span>
+                    <span class="pipeline-label">WMCP&reg; &rarr; CFP&reg;</span>
+                    <span class="pipeline-desc">American College scholarships. Mentorship included.</span>
+                </div>
+                <div class="pipeline-step">
+                    <span class="pipeline-num">05</span>
+                    <span class="pipeline-label">Build Your Book</span>
+                    <span class="pipeline-desc">Client base from scratch. 2-3 year ramp. GI Bill compatible at EJ.</span>
+                </div>
+            </div>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span>
+                &ensp;50,000+ SkillBridge completions to date, but only 32% of eligible members participate &mdash;
+                <a href="https://milkeninstitute.org/sites/default/files/2025-06/report-impact-skillbridge-veteran-employment-outcomes.pdf" target="_blank" rel="noopener">Milken Institute 2025</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 16: AMERICAN COLLEGE
+         ========================================= -->
+    <section class="slide alt" id="slide-16">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Key Institution</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">The American College of Financial Services</h2>
+            <p class="reveal subtitle" style="max-width: 48ch;">Center for Military and Veterans Affairs &mdash; the single most important institutional resource for veterans entering financial services.</p>
+
+            <ul class="failure-list reveal">
+                <li><span class="marker" style="color: var(--accent);">&#x25B8;</span> <strong>Full scholarships</strong> for CLU&reg;, ChFC&reg;, CFP&reg;, WMCP&reg;, plus master&rsquo;s degrees</li>
+                <li><span class="marker" style="color: var(--accent);">&#x25B8;</span> <strong>Structured pathway:</strong> WMCP&reg; &rarr; mentorship &rarr; CFP&reg; upon completion</li>
+                <li><span class="marker" style="color: var(--accent);">&#x25B8;</span> <strong>Career placement</strong> integrated with credential programs</li>
+                <li><span class="marker" style="color: var(--accent);">&#x25B8;</span> <strong>Founded Sept 11, 2012</strong> in partnership with Penn Mutual</li>
+                <li><span class="marker" style="color: var(--accent);">&#x25B8;</span> <strong>No bachelor&rsquo;s required</strong> for ChFC&reg; (only high school diploma to start)</li>
+            </ul>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <a href="https://www.theamericancollege.edu/centers-of-excellence/center-for-military-veterans-affairs" target="_blank" rel="noopener">American College CMVA</a> &middot;
+                <a href="https://www.kaplanfinancial.com/wealth-management/resources/scholarships/freedom-scholarships" target="_blank" rel="noopener">Kaplan Freedom Scholarships also available</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 17: SECTION — WHAT WORKS (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-17" style="--glow-x: 15%; --glow-y: 25%;">
+        <div class="slide-content" style="align-items: flex-start; max-width: 44ch;">
+            <span class="meta reveal">Section 05</span>
+            <hr class="accent-line reveal">
+            <h1 class="section-title reveal">What Actually Works</h1>
+            <p class="section-subtitle reveal">Success stories, hiring manager quotes, and first-year failure modes</p>
+        </div>
+        <span class="section-number reveal">05</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 18: SUCCESS STORIES
+         ========================================= -->
+    <section class="slide" id="slide-18">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">Veteran Advisors</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Transition Stories</h2>
+
+            <div class="reveal" style="display: flex; flex-direction: column; gap: clamp(0.6rem, 1.2vh, 1rem);">
+                <blockquote>
+                    &ldquo;Building my own business after two tours in Iraq took some real adjustment, but the leadership and resiliency I found in the Marines allowed me to build what we have today.&rdquo;
+                    <cite>&mdash; <strong>Tim Thornberry</strong>, Marine Corps &rarr; Prudential Advisors, 20+ years &middot; <a href="https://www.financial-planning.com/news/the-skills-that-give-military-veterans-an-edge" target="_blank" rel="noopener">Financial Planning, Nov 2025</a></cite>
+                </blockquote>
+
+                <blockquote>
+                    &ldquo;I still struggle with having patience when continuing to grow the business doesn&rsquo;t happen as quickly as I&rsquo;d like.&rdquo;
+                    <cite>&mdash; <strong>Mike Hunsberger</strong>, Air Force 20 yrs &rarr; Next Mission Financial Planning (fee-only RIA). American College scholarship for ChFC&reg;/CFP&reg;. &middot; <a href="https://rethinking65.com/career-changer-military-to-financial-advisor-business-owner/" target="_blank" rel="noopener">Rethinking65, Jul 2025</a></cite>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 19: HIRING MANAGER QUOTES
+         ========================================= -->
+    <section class="slide alt" id="slide-19">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">What Hiring Managers Say</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">From the Other Side of the Table</h2>
+
+            <div class="reveal" style="display: flex; flex-direction: column; gap: clamp(0.8rem, 1.5vh, 1.2rem);">
+                <blockquote>
+                    &ldquo;There were no challenges. They are easier hires. On average, they follow directions and do their work better than nonmilitary employees. That reliability and discipline always translate well.&rdquo;
+                    <cite>&mdash; <strong>Jacob Gamble</strong>, Cowen Partners Executive Search &middot; <a href="https://www.financial-planning.com/news/the-skills-that-give-military-veterans-an-edge" target="_blank" rel="noopener">Financial Planning, Nov 2025</a></cite>
+                </blockquote>
+
+                <blockquote>
+                    &ldquo;Military people are self-disciplined, driven, and naturally passionate about helping other people. Those skills are what it takes to be a successful financial representative.&rdquo;
+                    <cite>&mdash; <strong>Kevin Kaveney</strong>, Army Ranger &rarr; NW Mutual Managing Partner, Colorado Springs</cite>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 20: COMMON FAILURE MODES
+         ========================================= -->
+    <section class="slide" id="slide-20">
+        <div class="slide-content" style="align-items: flex-start; max-width: 60ch;">
+            <span class="meta reveal">First-Year Risks</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Where Veterans Struggle</h2>
+
+            <ul class="failure-list reveal">
+                <li><span class="marker">&#x25B8;</span> <strong>The Prospecting Wall</strong> &mdash; 75% of all rookies fail within 3 years. Veterans who expect structure rather than self-generated business hit this hardest.</li>
+                <li><span class="marker">&#x25B8;</span> <strong>Income Shock</strong> &mdash; Commission-based early compensation vs. steady military pay + benefits. Younger veterans lack the pension cushion.</li>
+                <li><span class="marker">&#x25B8;</span> <strong>Role Misalignment</strong> &mdash; A veteran expecting &ldquo;financial planning&rdquo; may spend 80% of time prospecting. Clear expectations setting is critical.</li>
+                <li><span class="marker">&#x25B8;</span> <strong>Cultural Translation</strong> &mdash; Rigid posture, brief answers, &ldquo;Sir/Ma&rsquo;am&rdquo; can create distance with some client demographics.</li>
+                <li><span class="marker">&#x25B8;</span> <strong>Isolation</strong> &mdash; Military life is communal. Solo-advisor models feel isolating. Mentorship and veteran ERGs &ldquo;significantly reduce first-year attrition.&rdquo;</li>
+            </ul>
+
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: auto;">
+                <a href="https://www.hireheroesusa.org/improving-retention-rates-among-veteran-employees/" target="_blank" rel="noopener">Hire Heroes USA</a> &middot;
+                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12413033/" target="_blank" rel="noopener">FIMT-RC 2024</a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 21: SECTION — HONEST GAPS (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-21" style="--glow-x: 85%; --glow-y: 50%;">
+        <div class="slide-content" style="align-items: flex-start; max-width: 44ch;">
+            <span class="meta reveal">Section 06</span>
+            <hr class="accent-line reveal">
+            <h1 class="section-title reveal">What We Don&rsquo;t Know</h1>
+            <p class="section-subtitle reveal">Research gaps, counter-arguments, and the limits of the evidence</p>
+        </div>
+        <span class="section-number reveal">06</span>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 22: RESEARCH GAPS
+         ========================================= -->
+    <section class="slide" id="slide-22">
+        <div class="slide-content" style="align-items: flex-start; max-width: 62ch;">
+            <span class="meta reveal">Intellectual Honesty</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Critical Research Gaps</h2>
+
+            <div class="reveal" style="display: flex; flex-direction: column;">
+                <div class="finding">
+                    <span class="finding-num">01</span>
+                    <span class="finding-text"><strong>No comparative performance data</strong> &mdash; No published study compares veteran vs. non-veteran advisor AUM, retention, or satisfaction.</span>
+                    <span class="finding-badge"><span class="badge badge-2"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span></span>
+                </div>
+                <div class="finding">
+                    <span class="finding-num">02</span>
+                    <span class="finding-text"><strong>No veteran-specific FINRA exam pass rates.</strong> Military study habits likely help, but we have zero data.</span>
+                    <span class="finding-badge"><span class="badge badge-1"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span></span>
+                </div>
+                <div class="finding">
+                    <span class="finding-num">03</span>
+                    <span class="finding-text"><strong>Firm programs may be partly performative.</strong> Many &ldquo;veteran programs&rdquo; are marketing tools without published outcomes data.</span>
+                    <span class="finding-badge"><span class="badge badge-3"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span><span class="badge-dot empty"></span></span></span></span>
+                </div>
+                <div class="finding">
+                    <span class="finding-num">04</span>
+                    <span class="finding-text"><strong>Veterans face financial literacy challenges themselves</strong> &mdash; only 20% of military test-takers passed a financial knowledge quiz vs. 41% of civilians.</span>
+                    <span class="finding-badge"><span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 23: KEY SOURCES
+         ========================================= -->
+    <section class="slide alt" id="slide-23">
+        <div class="slide-content" style="align-items: flex-start; max-width: 64ch;">
+            <span class="meta reveal">Source Map</span>
+            <hr class="accent-line reveal">
+            <h2 class="reveal">Key Sources</h2>
+
+            <div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.75rem, 2vw, 2rem);">
+                <div class="source-group">
+                    <p class="source-group-title">Academic</p>
+                    <p class="source-item"><strong>FIMT-RC (2024)</strong> &mdash; veteran interview strengths/weaknesses, peer-reviewed. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12413033/" target="_blank" rel="noopener">PMC</a></p>
+                    <p class="source-item"><strong>Milken Institute (2025)</strong> &mdash; SkillBridge participation and outcomes. <a href="https://milkeninstitute.org/sites/default/files/2025-06/report-impact-skillbridge-veteran-employment-outcomes.pdf" target="_blank" rel="noopener">PDF</a></p>
+                    <p class="source-item"><strong>Cerulli Associates (2023)</strong> &mdash; 72% rookie failure rate, advisor metrics.</p>
+                </div>
+                <div class="source-group">
+                    <p class="source-group-title">Industry</p>
+                    <p class="source-item"><strong>Financial Planning (Nov 2025)</strong> &mdash; veteran advisor profiles, hiring manager quotes. <a href="https://www.financial-planning.com/news/the-skills-that-give-military-veterans-an-edge" target="_blank" rel="noopener">Link</a></p>
+                    <p class="source-item"><strong>Fort Worth Report (Oct 2025)</strong> &mdash; First Command model. <a href="https://fortworthreport.org/2025/10/30/first-command-financial-services-battle-tested-advice-how-veteran-financial-advisors-empower-military-families/" target="_blank" rel="noopener">Link</a></p>
+                    <p class="source-item"><strong>Edward Jones (2013)</strong> &mdash; FORCES program, consumer research. <a href="https://www.prnewswire.com/news-releases/edward-jones-hires-336-military-veterans-as-financial-advisors-230810571.html" target="_blank" rel="noopener">PR</a></p>
+                </div>
+            </div>
+
+            <p class="reveal" style="font-size: var(--tag-size); color: var(--text-muted); margin-top: auto;">
+                Full 29-source bibliography with URLs available in companion research document &middot; All sources verified February 2026
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 24: SOFT CTA (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-24" style="--glow-x: 40%; --glow-y: 55%;">
+        <div class="slide-content" style="align-items: flex-start; max-width: 50ch;">
+            <span class="meta reveal">Next Steps</span>
+            <hr class="accent-line reveal">
+            <h2 class="section-title reveal" style="font-size: clamp(1.6rem, 4vw, 2.8rem);">This research was built<br>with your work in mind.</h2>
+            <p class="reveal" style="font-size: clamp(0.85rem, 1.5vw, 1.15rem); color: var(--text-inverse-secondary); line-height: 1.55; margin-top: clamp(0.5rem, 1.5vh, 1rem);">
+                If any of these findings are useful for how you&rsquo;re thinking about veteran recruiting, I&rsquo;d be happy to walk through them &mdash; or dig deeper into any section that matters most for your strategy.
+            </p>
+            <p class="reveal" style="font-size: clamp(0.85rem, 1.5vw, 1.15rem); color: var(--text-inverse-secondary); line-height: 1.55; margin-top: clamp(0.3rem, 0.8vh, 0.5rem);">
+                No pitch. Just a conversation between two people who care about getting this transition right.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         SLIDE 25: CLOSING (dark)
+         ========================================= -->
+    <section class="slide dark" id="slide-25" style="--glow-x: 50%; --glow-y: 45%;">
+        <div class="slide-content" style="align-items: flex-start; justify-content: center; max-width: 54ch;">
+            <span class="meta reveal">Pathos Labs</span>
+            <hr class="accent-line reveal">
+            <div class="reveal" style="display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 1.75rem); margin-top: clamp(0.3rem, 1vh, 0.5rem);">
+                <img src="sam-headshot.png" alt="Sam Millunchick" style="
+                    width: clamp(72px, 10vw, 110px);
+                    height: clamp(72px, 10vw, 110px);
+                    border-radius: 50%;
+                    object-fit: cover;
+                    object-position: center 15%;
+                    border: 2px solid rgba(255, 255, 255, 0.08);
+                    flex-shrink: 0;
+                ">
+                <div>
+                    <h1 style="font-size: clamp(1.6rem, 4.5vw, 3rem);">Sam Millunchick</h1>
+                    <p class="subtitle" style="color: var(--text-inverse-secondary); margin-top: clamp(0.15rem, 0.4vh, 0.3rem);">High-stakes communication coaching for founders and executives</p>
+                </div>
+            </div>
+            <div class="reveal" style="margin-top: clamp(1.5rem, 4vh, 3rem); display: flex; flex-direction: column; gap: clamp(0.4rem, 1vh, 0.75rem);">
+                <p style="font-size: var(--small-size); color: var(--text-inverse-secondary);">
+                    <strong style="color: var(--text-inverse);">Veteran-to-Financial Advisor</strong> &mdash; The Evidence Base
+                </p>
+                <p style="font-size: var(--small-size); color: var(--text-inverse-secondary);">
+                    20+ searches across academic databases, industry sources, and primary reporting
+                </p>
+                <p style="font-size: var(--tag-size); color: var(--text-inverse-secondary); opacity: 0.6;">
+                    February 2026 &middot; 29 Sources
+                </p>
+            </div>
+        </div>
+        <span class="section-number reveal" style="opacity: 0.03;">PL</span>
+    </section>
+
+
+    <!-- =========================================
+       JAVASCRIPT — Presentation Controller
+       ========================================= -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.totalSlides = this.slides.length;
+                this.progressBar = document.getElementById('progressBar');
+                this.slideCounter = document.getElementById('slideCounter');
+                this.navContainer = document.getElementById('navSections');
+                this.keyHint = document.getElementById('keyHint');
+                this.currentIndex = 0;
+
+                /* Sections: label + first slide index */
+                this.sections = [
+                    { label: 'Overview', start: 0 },
+                    { label: 'The Case', start: 3 },
+                    { label: 'Translation', start: 7 },
+                    { label: 'Archetypes', start: 10 },
+                    { label: 'Infrastructure', start: 13 },
+                    { label: 'Evidence', start: 16 },
+                    { label: 'Gaps', start: 20 },
+                ];
+                this.sectionItems = [];
+
+                this.init();
+            }
+
+            init() {
+                this.createSectionNav();
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupScrollListener();
+                this.markInitialVisible();
+                this.updateUI(0);
+                this.setupAnimatedCounters();
+
+                /* Hide keyboard hint after first interaction */
+                const hideHint = () => {
+                    if (this.keyHint) {
+                        this.keyHint.style.opacity = '0';
+                        setTimeout(() => { this.keyHint.style.display = 'none'; }, 300);
+                    }
+                    window.removeEventListener('keydown', hideHint);
+                    window.removeEventListener('wheel', hideHint);
+                };
+                window.addEventListener('keydown', hideHint);
+                window.addEventListener('wheel', hideHint);
+            }
+
+            /* Mark slides already in viewport on load */
+            markInitialVisible() {
+                const vh = window.innerHeight;
+                this.slides.forEach(slide => {
+                    const rect = slide.getBoundingClientRect();
+                    if (rect.top < vh && rect.bottom > 0) {
+                        slide.classList.add('visible');
+                    }
+                });
+            }
+
+            /* Section Navigation */
+            createSectionNav() {
+                this.sections.forEach((section, i) => {
+                    const item = document.createElement('button');
+                    item.className = 'nav-section-item';
+                    item.setAttribute('aria-label', `Go to ${section.label}`);
+                    item.innerHTML = `<span class="nav-section-label">${section.label}</span><span class="nav-section-pip"></span>`;
+                    item.addEventListener('click', () => this.goToSlide(section.start));
+                    this.navContainer.appendChild(item);
+                    this.sectionItems.push(item);
+                });
+            }
+
+            /* Intersection Observer for scroll-triggered animations */
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const idx = Array.from(this.slides).indexOf(entry.target);
+                            if (idx !== -1) {
+                                this.currentIndex = idx;
+                                this.updateUI(idx);
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.15
+                });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            /* Keyboard Navigation */
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    switch (e.key) {
+                        case 'ArrowDown':
+                        case 'ArrowRight':
+                        case ' ':
+                        case 'PageDown':
+                            e.preventDefault();
+                            this.goToSlide(Math.min(this.currentIndex + 1, this.totalSlides - 1));
+                            break;
+                        case 'ArrowUp':
+                        case 'ArrowLeft':
+                        case 'PageUp':
+                            e.preventDefault();
+                            this.goToSlide(Math.max(this.currentIndex - 1, 0));
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToSlide(this.totalSlides - 1);
+                            break;
+                    }
+                });
+            }
+
+            /* Touch / Swipe Navigation */
+            setupTouchNav() {
+                let touchStartY = 0;
+                let touchStartX = 0;
+
+                document.addEventListener('touchstart', (e) => {
+                    touchStartY = e.touches[0].clientY;
+                    touchStartX = e.touches[0].clientX;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const deltaY = touchStartY - e.changedTouches[0].clientY;
+                    const deltaX = touchStartX - e.changedTouches[0].clientX;
+
+                    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) {
+                        if (deltaY > 0) {
+                            this.goToSlide(Math.min(this.currentIndex + 1, this.totalSlides - 1));
+                        } else {
+                            this.goToSlide(Math.max(this.currentIndex - 1, 0));
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            /* Scroll-based progress updates */
+            setupScrollListener() {
+                let ticking = false;
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(() => {
+                            const scrollTop = window.scrollY;
+                            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                            const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+                            this.progressBar.style.width = progress + '%';
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                }, { passive: true });
+            }
+
+            /* Animated counter for hero stat */
+            setupAnimatedCounters() {
+                const heroStat = document.querySelector('.hero-stat');
+                if (!heroStat) return;
+
+                const finalText = heroStat.textContent;
+                heroStat.setAttribute('data-final', finalText);
+
+                const slide2 = document.getElementById('slide-2');
+                if (!slide2) return;
+
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !heroStat.dataset.animated) {
+                            heroStat.dataset.animated = 'true';
+                            this.animateCounter(heroStat, finalText);
+                        }
+                    });
+                }, { threshold: 0.3 });
+
+                counterObserver.observe(slide2);
+            }
+
+            animateCounter(el, finalText) {
+                const chars = finalText.split('');
+                const duration = 800;
+                const start = performance.now();
+
+                const animate = (now) => {
+                    const elapsed = now - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const ease = 1 - Math.pow(1 - progress, 3);
+
+                    const display = chars.map((char, i) => {
+                        if (!/[0-9]/.test(char)) return char;
+                        const charProgress = Math.min(1, ease * chars.length / (i + 1));
+                        if (charProgress >= 1) return char;
+                        return Math.floor(Math.random() * 10);
+                    }).join('');
+
+                    el.textContent = display;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        el.textContent = finalText;
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }
+
+            /* Navigate to specific slide */
+            goToSlide(index) {
+                if (index >= 0 && index < this.totalSlides) {
+                    this.currentIndex = index;
+                    this.updateUI(index);
+                    this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            /* Update progress bar, counter, section nav */
+            updateUI(index) {
+                const num = String(index + 1).padStart(2, '0');
+                const total = String(this.totalSlides).padStart(2, '0');
+                this.slideCounter.textContent = `${num} / ${total}`;
+
+                let activeSection = 0;
+                for (let i = this.sections.length - 1; i >= 0; i--) {
+                    if (index >= this.sections[i].start) {
+                        activeSection = i;
+                        break;
+                    }
+                }
+
+                const isDark = this.slides[index].classList.contains('dark');
+                this.slideCounter.classList.toggle('inverted', isDark);
+                if (this.keyHint) this.keyHint.classList.toggle('inverted', isDark);
+
+                this.sectionItems.forEach((item, i) => {
+                    item.classList.toggle('active', i === activeSection);
+                    item.classList.toggle('inverted', isDark);
+                });
+            }
+        }
+
+        /* Initialize on load */
+        document.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+</body>
+</html>

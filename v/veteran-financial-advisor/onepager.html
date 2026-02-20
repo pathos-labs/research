@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Veteran-to-Financial Advisor — Research Brief</title>
+
+    <!-- Fonts: General Sans (headings) + Satoshi (body) from Fontshare -->
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,500,700&display=swap">
+
+    <style>
+        /* ===========================================
+           CUSTOM PROPERTIES — SWISS MODERN THEME
+           Amber accent, matching the companion deck
+           =========================================== */
+        :root {
+            --bg: #FAFBFC;
+            --bg-alt: #F1F5F9;
+            --bg-dark: #0F172A;
+            --text: #0F172A;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --text-inverse: #F8FAFC;
+            --accent: #B45309;
+            --accent-light: #FEF3C7;
+            --accent-dark: #92400E;
+            --conf-5: #059669;
+            --conf-5-bg: #D1FAE5;
+            --conf-4: #2563EB;
+            --conf-4-bg: #DBEAFE;
+            --conf-3: #D97706;
+            --conf-3-bg: #FEF3C7;
+            --conf-2: #DC2626;
+            --conf-2-bg: #FEE2E2;
+            --border: #E2E8F0;
+            --font-display: 'General Sans', system-ui, sans-serif;
+            --font-body: 'Satoshi', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+        }
+
+        /* ===========================================
+           RESET & BASE
+           =========================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100%;
+        }
+
+        a { color: var(--accent); text-decoration: none; transition: opacity 0.15s ease; }
+        a:hover { text-decoration: underline; opacity: 0.8; }
+
+        /* ===========================================
+           PAGE LAYOUT — optimized for screen + print
+           =========================================== */
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem;
+        }
+
+        /* ===========================================
+           HEADER
+           =========================================== */
+        .header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent);
+            margin-bottom: 1.75rem;
+        }
+
+        .header-brand {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .header-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-top: 0.35rem;
+        }
+
+        .header-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+
+        .header-meta {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .header-date {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.03em;
+        }
+
+        .header-sources {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 0.2rem;
+        }
+
+        /* ===========================================
+           HERO STATS ROW
+           =========================================== */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .stat-card {
+            background: var(--bg-dark);
+            color: var(--text-inverse);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.25);
+        }
+
+        .stat-number {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 700;
+            color: #F59E0B;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+            line-height: 1.35;
+        }
+
+        /* ===========================================
+           TWO-COLUMN LAYOUT
+           =========================================== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===========================================
+           SECTION HEADINGS
+           =========================================== */
+        .section-heading {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-heading::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ===========================================
+           FINDINGS LIST
+           =========================================== */
+        .finding {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.4rem 0.25rem;
+            border-bottom: 1px solid var(--border);
+            border-radius: 4px;
+            transition: background 0.15s ease;
+        }
+
+        .finding:hover {
+            background: rgba(180, 83, 9, 0.04);
+        }
+
+        .finding:last-child { border-bottom: none; }
+
+        .finding-num {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 1.2rem;
+            flex-shrink: 0;
+            padding-top: 0.15em;
+        }
+
+        .finding-text {
+            font-size: 0.78rem;
+            line-height: 1.45;
+            flex: 1;
+        }
+
+        .finding-text strong {
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            padding: 0.12rem 0.4rem;
+            border-radius: 100px;
+            font-size: 0.55rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .badge-5 { background: var(--conf-5-bg); color: var(--conf-5); }
+        .badge-4 { background: var(--conf-4-bg); color: var(--conf-4); }
+        .badge-3 { background: var(--conf-3-bg); color: var(--conf-3); }
+
+        .badge-dots { display: inline-flex; gap: 1.5px; }
+        .badge-dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+        .badge-dot.empty { opacity: 0.25; }
+
+        /* ===========================================
+           ARCHETYPE CARDS
+           =========================================== */
+        .archetype-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .archetype-card {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.6rem 0.75rem;
+            background: white;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .archetype-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(180, 83, 9, 0.08);
+        }
+
+        .archetype-name {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+
+        .archetype-fit {
+            font-size: 0.62rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.2rem;
+        }
+
+        .archetype-desc {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* ===========================================
+           DATA BARS (investor perception)
+           =========================================== */
+        .data-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .data-label {
+            font-size: 0.68rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            min-width: 6.5rem;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .data-track {
+            flex: 1;
+            height: 6px;
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .data-fill {
+            height: 100%;
+            border-radius: 100px;
+            background: var(--accent);
+        }
+
+        .data-value {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 600;
+            min-width: 2rem;
+            flex-shrink: 0;
+        }
+
+        /* ===========================================
+           QUOTE
+           =========================================== */
+        .quote {
+            border-left: 2px solid var(--accent);
+            padding-left: 0.75rem;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            font-style: italic;
+            color: var(--text);
+            margin: 0.5rem 0;
+        }
+
+        .quote cite {
+            display: block;
+            font-style: normal;
+            font-size: 0.62rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 0.2rem;
+        }
+
+        /* ===========================================
+           FAILURE MODES
+           =========================================== */
+        .risk-list {
+            list-style: none;
+        }
+
+        .risk-list li {
+            font-size: 0.72rem;
+            line-height: 1.4;
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.35rem;
+        }
+
+        .risk-list .marker {
+            color: var(--conf-3);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .risk-list strong {
+            font-weight: 600;
+        }
+
+        /* ===========================================
+           FOOTER
+           =========================================== */
+        .footer {
+            margin-top: 1.75rem;
+            padding-top: 1.25rem;
+            border-top: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center 15%;
+            border: 2px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .footer-name {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .footer-tagline {
+            font-size: 0.68rem;
+            color: var(--text-secondary);
+            margin-top: 0.1rem;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-note {
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        /* ===========================================
+           GAPS CALLOUT
+           =========================================== */
+        .callout {
+            background: var(--bg-alt);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            padding: 0.65rem 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .callout-title {
+            font-family: var(--font-display);
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .callout-text {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-width: 700px) {
+            .page { padding: 1.5rem 1.25rem; }
+            .stats-row { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; }
+            .archetype-grid { grid-template-columns: 1fr; }
+            .header { flex-direction: column; gap: 0.5rem; }
+            .header-meta { text-align: left; }
+        }
+
+        /* ===========================================
+           PRINT STYLES
+           =========================================== */
+        @media print {
+            body { background: white; }
+            .page {
+                max-width: 100%;
+                padding: 0;
+            }
+            .stat-card {
+                border: 1px solid var(--border);
+                background: white;
+                color: var(--text);
+            }
+            .stat-number { color: var(--accent); }
+            .stat-label { color: var(--text-secondary); }
+            a { color: var(--text); }
+
+            @page {
+                margin: 1.5cm;
+                size: A4;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <!-- ====== HEADER ====== -->
+    <header class="header">
+        <div>
+            <p class="header-brand">Pathos Labs &middot; Research Brief</p>
+            <h1 class="header-title">Veteran-to-Financial Advisor:<br>The Evidence Base</h1>
+            <p class="header-subtitle">What the research actually shows about military transitions into financial services</p>
+        </div>
+        <div class="header-meta">
+            <p class="header-date">February 2026</p>
+            <p class="header-sources">29 Sources</p>
+        </div>
+    </header>
+
+    <!-- ====== HERO STATS ====== -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-number">72%</div>
+            <div class="stat-label">Rookie advisor failure rate<br><span style="font-size: 0.58rem; opacity: 0.6;">Cerulli Associates 2023</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">109K+</div>
+            <div class="stat-label">Advisors planning to retire<br><span style="font-size: 0.58rem; opacity: 0.6;">within the next decade</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">32%</div>
+            <div class="stat-label">SkillBridge participation<br><span style="font-size: 0.58rem; opacity: 0.6;">despite 70%+ interest &mdash; Milken 2025</span></div>
+        </div>
+    </div>
+
+    <!-- ====== MAIN CONTENT: TWO COLUMNS ====== -->
+    <div class="two-col">
+        <!-- LEFT COLUMN -->
+        <div>
+            <!-- Key Findings -->
+            <p class="section-heading">Key Findings</p>
+            <div class="finding">
+                <span class="finding-num">01</span>
+                <span class="finding-text"><strong>Veterans solve the retention crisis.</strong> Trained tolerance for sustained discomfort combats the #1 washout cause.</span>
+                <span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span>
+            </div>
+            <div class="finding">
+                <span class="finding-num">02</span>
+                <span class="finding-text"><strong>Interview weaknesses are fixable.</strong> Jargon, translation gap, nervousness &mdash; behavioral, not competency problems.</span>
+                <span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span>
+            </div>
+            <div class="finding">
+                <span class="finding-num">03</span>
+                <span class="finding-text"><strong>Firm programs exist but lack proof.</strong> Edward Jones, NW Mutual, First Command all have pipelines &mdash; none publish comparative data.</span>
+                <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span>
+            </div>
+            <div class="finding">
+                <span class="finding-num">04</span>
+                <span class="finding-text"><strong>American College = key institution.</strong> Full scholarships for CFP&reg;, ChFC&reg;, CLU&reg; + mentorship + placement.</span>
+                <span class="badge badge-5"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span></span></span>
+            </div>
+            <div class="finding">
+                <span class="finding-num">05</span>
+                <span class="finding-text"><strong>SkillBridge is underutilized.</strong> 70%+ interest but only 32% participation. 58% of installations lack partnerships.</span>
+                <span class="badge badge-4"><span class="badge-dots"><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot"></span><span class="badge-dot empty"></span></span></span>
+            </div>
+
+            <!-- Hiring Manager Quote -->
+            <div class="quote" style="margin-top: 0.75rem;">
+                &ldquo;There were no challenges. They are easier hires. On average, they follow directions and do their work better than nonmilitary employees.&rdquo;
+                <cite>&mdash; Jacob Gamble, Cowen Partners Executive Search</cite>
+            </div>
+
+            <!-- Why Investors Choose Vets -->
+            <p class="section-heading" style="margin-top: 0.75rem;">Investor Perception</p>
+            <div class="data-row">
+                <span class="data-label">Discipline</span>
+                <div class="data-track"><div class="data-fill" style="width: 77%;"></div></div>
+                <span class="data-value">77%</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Goal-Orientation</span>
+                <div class="data-track"><div class="data-fill" style="width: 73%;"></div></div>
+                <span class="data-value">73%</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Integrity</span>
+                <div class="data-track"><div class="data-fill" style="width: 72%;"></div></div>
+                <span class="data-value">72%</span>
+            </div>
+            <p style="font-size: 0.58rem; color: var(--text-muted); margin-top: 0.2rem;">Edward Jones consumer research, 2013</p>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div>
+            <!-- Archetypes -->
+            <p class="section-heading">Military Archetype &rarr; Advisor Fit</p>
+            <div class="archetype-grid">
+                <div class="archetype-card">
+                    <p class="archetype-name">Combat Arms</p>
+                    <p class="archetype-fit">Prospecting-heavy roles</p>
+                    <p class="archetype-desc">Extreme resilience, mission focus. Gap: &ldquo;soft sell&rdquo; skills.</p>
+                </div>
+                <div class="archetype-card">
+                    <p class="archetype-name">Intelligence</p>
+                    <p class="archetype-fit">Complex case work</p>
+                    <p class="archetype-desc">Pattern recognition, data synthesis. Gap: may prefer analysis.</p>
+                </div>
+                <div class="archetype-card">
+                    <p class="archetype-name">Medical / Chaplain</p>
+                    <p class="archetype-fit">Relationship management</p>
+                    <p class="archetype-desc">Empathy, active listening. Gap: financial technical knowledge.</p>
+                </div>
+                <div class="archetype-card">
+                    <p class="archetype-name">Logistics / Finance</p>
+                    <p class="archetype-fit">Operations &amp; compliance</p>
+                    <p class="archetype-desc">Systems thinking, quant analysis. Gap: prospecting grit.</p>
+                </div>
+            </div>
+
+            <!-- Failure Modes -->
+            <p class="section-heading" style="margin-top: 1rem;">First-Year Risks</p>
+            <ul class="risk-list">
+                <li><span class="marker">&#x25B8;</span> <strong>Prospecting Wall</strong> &mdash; 75% of rookies fail within 3 years from inability to build a client base</li>
+                <li><span class="marker">&#x25B8;</span> <strong>Income Shock</strong> &mdash; Commission-based pay vs. steady military salary + benefits</li>
+                <li><span class="marker">&#x25B8;</span> <strong>Role Misalignment</strong> &mdash; Expecting planning, spending 80% of time prospecting</li>
+                <li><span class="marker">&#x25B8;</span> <strong>Isolation</strong> &mdash; Military is communal; solo-advisor models feel isolating</li>
+            </ul>
+
+            <!-- Gaps callout -->
+            <div class="callout">
+                <p class="callout-title">What We Don&rsquo;t Know</p>
+                <p class="callout-text">No published study compares veteran vs. non-veteran advisor performance on any metric. No veteran-specific FINRA pass rates. Some firm programs may be partly performative marketing. This is the most valuable study that could be conducted.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-left">
+            <img src="sam-headshot.png" alt="Sam Millunchick" class="footer-avatar">
+            <div>
+                <p class="footer-name">Sam Millunchick</p>
+                <p class="footer-tagline">Pathos Labs &middot; High-stakes communication coaching</p>
+            </div>
+        </div>
+        <div class="footer-right">
+            <p class="footer-note">29 sources &middot; 20+ searches across academic databases,<br>industry sources, and primary reporting &middot; Feb 2026</p>
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>
