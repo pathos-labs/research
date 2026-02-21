@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Content Paradox — Linda Wales</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,400i,500,700&display=swap" rel="stylesheet">
+<style>
+/* === Design System === */
+:root {
+    --font-display: 'General Sans', system-ui, sans-serif;
+    --font-body: 'Satoshi', system-ui, sans-serif;
+    font-optical-sizing: auto;
+    --text-xs: clamp(0.7rem, 0.65rem + 0.2vw, 0.8rem);
+    --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
+    --text-base: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1rem + 0.4vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    --text-2xl: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
+    --text-3xl: clamp(1.75rem, 1.2rem + 1.8vw, 3rem);
+    --leading-tight: 1.2;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.7;
+    --measure: 65ch;
+    font-variant-ligatures: common-ligatures;
+    color-scheme: light dark;
+    --bg: light-dark(#fafbfc, #0f172a);
+    --bg-raised: light-dark(#ffffff, #1e293b);
+    --bg-inset: light-dark(#f1f5f9, #0b1120);
+    --fg: light-dark(#1a1a2e, #e2e8f0);
+    --fg-muted: light-dark(#64748b, #94a3b8);
+    --fg-faint: light-dark(#94a3b8, #475569);
+    --accent: light-dark(#0f766e, #2dd4bf);
+    --accent-muted: light-dark(rgba(15,118,110,0.08), rgba(45,212,191,0.1));
+    --success: light-dark(#16a34a, #4ade80);
+    --caution: light-dark(#d97706, #fbbf24);
+    --danger: light-dark(#dc2626, #f87171);
+    --border: light-dark(#e2e8f0, #1e293b);
+    --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+    --space-4: 1rem; --space-6: 1.5rem; --space-8: 2rem;
+    --space-12: 3rem; --space-16: 4rem; --space-24: 6rem;
+}
+table, .data, [data-numeric] { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.15s !important;
+        scroll-behavior: auto !important;
+    }
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* === Reading Progress Bar === */
+.progress-bar {
+    position: fixed; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent); transform-origin: left; transform: scaleX(0); z-index: 100;
+}
+@supports (animation-timeline: scroll()) {
+    .progress-bar {
+        animation: grow linear;
+        animation-timeline: scroll();
+    }
+    @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+
+/* === Document Layout === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: var(--font-body); font-size: var(--text-base);
+    line-height: var(--leading-relaxed); color: var(--fg);
+    background: var(--bg); text-align: left;
+}
+.doc-grid {
+    display: grid;
+    grid-template-columns: 1fr min(var(--measure), calc(100% - 2rem)) 1fr;
+    padding: var(--space-8) var(--space-4);
+}
+.doc-grid > * { grid-column: 2; }
+.margin-note {
+    grid-column: 3;
+    font-size: var(--text-sm);
+    color: var(--fg-muted);
+    padding-left: var(--space-6);
+    align-self: start;
+    line-height: var(--leading-normal);
+}
+
+/* === Section Nav === */
+.section-nav {
+    position: fixed; left: var(--space-6); top: 50%;
+    transform: translateY(-50%);
+    width: 170px; font-size: var(--text-sm); font-family: var(--font-display);
+    z-index: 50;
+}
+.section-nav a {
+    display: block; padding: var(--space-1) var(--space-3);
+    color: var(--fg-faint); text-decoration: none;
+    border-left: 2px solid transparent; transition: all 0.15s;
+    font-size: var(--text-xs); line-height: var(--leading-normal);
+    margin-bottom: var(--space-1);
+}
+.section-nav a.active, .section-nav a:hover {
+    color: var(--accent); border-left-color: var(--accent);
+}
+.nav-mobile {
+    display: none;
+}
+
+/* === Typography === */
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: var(--leading-tight); }
+h1 { font-size: var(--text-3xl); margin-bottom: var(--space-3); }
+h2 { font-size: var(--text-xl); font-weight: 700; margin-top: var(--space-16); margin-bottom: var(--space-6); }
+h3 { font-size: var(--text-lg); font-weight: 600; margin-top: var(--space-8); margin-bottom: var(--space-3); }
+p { margin-bottom: var(--space-4); }
+strong { color: var(--fg); }
+em { font-style: italic; }
+
+.executive-summary {
+    font-size: var(--text-lg);
+    color: var(--fg-muted);
+    border-left: 3px solid var(--accent);
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-12);
+    line-height: var(--leading-relaxed);
+}
+
+.header-meta {
+    display: flex; flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    font-size: var(--text-sm); color: var(--fg-faint);
+    font-family: var(--font-display);
+    margin-bottom: var(--space-8);
+}
+
+/* === Citation Tooltips === */
+.cite {
+    cursor: help; font-size: var(--text-xs); vertical-align: super;
+    color: var(--accent); position: relative;
+    font-family: var(--font-display); font-weight: 600;
+}
+.cite:hover .cite-detail, .cite:focus .cite-detail {
+    display: block;
+}
+.cite-detail {
+    display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    background: var(--bg-raised); border: 1px solid var(--border);
+    padding: var(--space-3) var(--space-4); border-radius: 6px;
+    font-size: var(--text-sm); font-weight: 400; width: max-content; max-width: 340px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 10;
+    line-height: var(--leading-normal); text-align: left;
+    color: var(--fg);
+}
+
+/* === Insight Callout === */
+.insight-box {
+    border-left: 3px solid var(--accent);
+    padding: var(--space-4) var(--space-6);
+    margin: var(--space-6) 0;
+    background: var(--accent-muted);
+    border-radius: 0 6px 6px 0;
+}
+.insight-box p { margin-bottom: 0; }
+.insight-box strong { color: var(--accent); }
+
+/* === Summary Stats === */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0;
+}
+.stat-card {
+    padding: var(--space-4) var(--space-3);
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-align: center;
+}
+.stat-number {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: var(--space-1);
+}
+.stat-number.accent { color: var(--accent); }
+.stat-number.muted { color: var(--fg-muted); }
+.stat-label {
+    font-size: var(--text-xs);
+    color: var(--fg-muted);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: var(--leading-normal);
+}
+
+/* === Data Table === */
+.audit-table-wrapper {
+    overflow-x: auto; margin: var(--space-6) 0;
+    -webkit-overflow-scrolling: touch;
+}
+.audit-table {
+    width: 100%; border-collapse: collapse;
+    font-size: var(--text-sm);
+}
+.audit-table thead { font-family: var(--font-display); font-weight: 600; }
+.audit-table th {
+    text-align: left; padding: var(--space-3);
+    border-bottom: 2px solid var(--border);
+    color: var(--fg-muted); font-size: var(--text-xs);
+    text-transform: uppercase; letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+.audit-table td {
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+.audit-table tr:last-child td { border-bottom: none; }
+.audit-table .num-col {
+    text-align: right; font-variant-numeric: tabular-nums;
+    font-weight: 600; white-space: nowrap;
+}
+/* Alternating row emphasis */
+.audit-table tbody tr.row-personal { background: var(--accent-muted); }
+
+/* Tags */
+.tag {
+    display: inline-block; font-size: var(--text-xs);
+    font-family: var(--font-display); font-weight: 600;
+    padding: 2px 8px; border-radius: 3px; white-space: nowrap;
+}
+.tag-you { background: light-dark(rgba(15,118,110,0.12), rgba(45,212,191,0.15)); color: var(--accent); }
+.tag-corp { background: light-dark(rgba(100,116,139,0.1), rgba(148,163,184,0.1)); color: var(--fg-muted); }
+.tag-mixed { background: light-dark(rgba(217,119,6,0.1), rgba(251,191,36,0.1)); color: var(--caution); }
+
+/* Inline bar chart */
+.bar-container {
+    display: flex; align-items: center; gap: var(--space-2); min-width: 100px;
+}
+.bar-bg {
+    flex: 1; height: 6px; background: var(--bg-inset);
+    border-radius: 3px; overflow: hidden; max-width: 80px;
+}
+.bar-fill { height: 100%; border-radius: 3px; }
+.bar-fill-high { background: var(--accent); }
+.bar-fill-low { background: var(--fg-faint); }
+
+/* === Details / Progressive Disclosure === */
+details {
+    margin: var(--space-4) 0; border: 1px solid var(--border);
+    border-radius: 6px; overflow: hidden;
+}
+details summary {
+    padding: var(--space-3) var(--space-4); cursor: pointer;
+    font-weight: 500; font-family: var(--font-display);
+    background: var(--bg-inset); list-style: none;
+    font-size: var(--text-sm); color: var(--fg-muted);
+    transition: color 0.15s;
+}
+details summary:hover { color: var(--accent); }
+details summary::before { content: '▸ '; }
+details[open] summary::before { content: '▾ '; }
+details[open] summary { color: var(--fg); }
+details > div, details > p { padding: var(--space-4); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+
+/* === Filter Framework === */
+.filter-card {
+    background: var(--bg-raised); border: 1px solid var(--border);
+    border-radius: 8px; padding: var(--space-6); margin: var(--space-6) 0;
+}
+.filter-list { list-style: none; }
+.filter-item {
+    display: grid; grid-template-columns: 2.5rem 1fr;
+    gap: var(--space-3); padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--border); align-items: start;
+}
+.filter-item:last-child { border-bottom: none; padding-bottom: 0; }
+.filter-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 2rem; height: 2rem; border-radius: 50%;
+    background: var(--accent-muted); color: var(--accent);
+    font-family: var(--font-display); font-weight: 700; font-size: var(--text-sm);
+    flex-shrink: 0;
+}
+.filter-item .question {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: var(--text-base); margin-bottom: var(--space-2); color: var(--fg);
+}
+.filter-item .explanation {
+    font-size: var(--text-sm); color: var(--fg-muted); line-height: var(--leading-relaxed);
+}
+
+/* === Section Divider === */
+.section-divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: var(--space-16) 0;
+}
+
+/* === Evidence Footer === */
+.evidence-footer {
+    font-size: var(--text-sm); color: var(--fg-muted);
+    margin-top: var(--space-12); padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    line-height: var(--leading-relaxed);
+}
+.evidence-footer h3 {
+    font-size: var(--text-sm); margin-top: 0;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--fg-faint); margin-bottom: var(--space-4);
+}
+.source-list { list-style: none; }
+.source-list li {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--border);
+    font-size: var(--text-xs);
+    line-height: var(--leading-normal);
+}
+.source-list li:last-child { border-bottom: none; }
+.source-tier {
+    display: inline-block; width: 1.5rem; text-align: center;
+    font-family: var(--font-display); font-weight: 700;
+    color: var(--fg-faint); margin-right: var(--space-2);
+}
+
+/* === Section Performance === */
+.doc-section:not(:first-of-type) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+}
+
+/* === Print Styles === */
+@media print {
+    body { font-size: 10.5pt; line-height: 1.5; color: #1a1a2e; background: white; }
+    .doc-grid { display: block; max-width: 100%; padding: 1rem; }
+    .section-nav, .nav-mobile, .progress-bar { display: none; }
+    .margin-note { display: none; }
+    .filter-card, .stat-card, table, .insight-box { break-inside: avoid; }
+    .section-divider { border-color: #ccc; }
+    .tag { border: 1px solid #999; }
+    .bar-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    details { border: none; }
+    details summary { display: none; }
+    details > div, details > p { padding: 0; display: block; }
+    h1 { font-size: 20pt; }
+    h2 { font-size: 15pt; margin-top: 2rem; }
+    h3 { font-size: 12pt; }
+    .cite-detail { display: none !important; }
+}
+
+/* === Responsive === */
+@media (max-width: 1200px) {
+    .section-nav { display: none; }
+    .nav-mobile {
+        display: block; position: sticky; top: 3px; z-index: 50;
+        background: var(--bg); border-bottom: 1px solid var(--border);
+        padding: var(--space-2) var(--space-4);
+        overflow-x: auto; white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    .nav-mobile a {
+        display: inline-block; padding: var(--space-1) var(--space-3);
+        font-size: var(--text-xs); color: var(--fg-faint); text-decoration: none;
+        font-family: var(--font-display); transition: color 0.15s;
+    }
+    .nav-mobile a.active, .nav-mobile a:hover { color: var(--accent); }
+    .margin-note { display: none; }
+}
+@media (max-width: 640px) {
+    .audit-table thead { display: none; }
+    .audit-table, .audit-table tbody, .audit-table tr, .audit-table td { display: block; }
+    .audit-table tr {
+        padding: var(--space-3) 0;
+        border-bottom: 1px solid var(--border);
+    }
+    .audit-table td {
+        padding: var(--space-1) 0; border-bottom: none; text-align: left;
+    }
+    .audit-table td::before {
+        content: attr(data-label); display: block;
+        font-size: var(--text-xs); color: var(--fg-faint);
+        font-family: var(--font-display); text-transform: uppercase;
+        letter-spacing: 0.04em; margin-bottom: 2px;
+    }
+    .audit-table tr.row-personal { background: none; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" role="progressbar" aria-label="Reading progress"></div>
+
+<!-- Mobile nav -->
+<nav class="nav-mobile" aria-label="Sections">
+    <a href="#data">The Data</a>
+    <a href="#algorithm">Algorithm</a>
+    <a href="#trust">Trust</a>
+    <a href="#dark-social">Dark Social</a>
+    <a href="#filter">The Filter</a>
+    <a href="#practice">In Practice</a>
+    <a href="#sources">Sources</a>
+</nav>
+
+<!-- Desktop nav -->
+<nav class="section-nav" aria-label="Sections">
+    <a href="#data">The Data</a>
+    <a href="#algorithm">Algorithm</a>
+    <a href="#trust">Trust</a>
+    <a href="#dark-social">Dark Social</a>
+    <a href="#filter">The Filter</a>
+    <a href="#practice">In Practice</a>
+    <a href="#sources">Sources</a>
+</nav>
+
+<main class="doc-grid">
+
+    <!-- HEADER -->
+    <header>
+        <h1>The Content Paradox</h1>
+        <div class="header-meta">
+            <span>Prepared for Linda Wales</span>
+            <span>&middot;</span>
+            <span>February 2026</span>
+        </div>
+        <p class="executive-summary">Your personal posts outperform your corporate reposts by 10 to 40 times in engagement. Your audience has self-selected for <em>you</em> &mdash; your domain expertise in justice and emergency services, your civic leadership, your perspective from Penrith to Parliament. They did not sign up for Splunk's Q3 messaging. The data below makes this visible, explains why it matters for your pipeline (not just your vanity metrics), and gives you a three-question filter for every post from here.</p>
+    </header>
+
+    <!-- SUMMARY STATS -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-number accent">10-40x</div>
+            <div class="stat-label">Personal vs. corporate engagement</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number muted">1-5</div>
+            <div class="stat-label">Avg. reactions on corporate reposts</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number accent">54</div>
+            <div class="stat-label">Peak reactions (personal post)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number muted">58%</div>
+            <div class="stat-label">Posts serving Splunk, not you</div>
+        </div>
+    </div>
+
+    <!-- SECTION 1: THE DATA -->
+    <section class="doc-section" id="data">
+        <h2>Your engagement data tells a clear story</h2>
+        <p>Each of your last 12 posts, classified by a single question: <em>who does this serve &mdash; Linda or Splunk?</em></p>
+
+        <div class="audit-table-wrapper">
+            <table class="audit-table">
+                <thead>
+                    <tr>
+                        <th>Post</th>
+                        <th>Topic</th>
+                        <th style="text-align:right">Reactions</th>
+                        <th>Engagement</th>
+                        <th>Serves</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row-personal">
+                        <td data-label="Post">#5</td>
+                        <td data-label="Topic">CiscoLive EMEA reshare</td>
+                        <td data-label="Reactions" class="num-col">88</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-high" style="width:100%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-mixed">Mixed</span></td>
+                    </tr>
+                    <tr class="row-personal">
+                        <td data-label="Post">#1</td>
+                        <td data-label="Topic">Husband on TV &mdash; personal warmth</td>
+                        <td data-label="Reactions" class="num-col">54</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-high" style="width:61%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-you">Linda</span></td>
+                    </tr>
+                    <tr class="row-personal">
+                        <td data-label="Post">#8</td>
+                        <td data-label="Topic">techUK JES Council meeting</td>
+                        <td data-label="Reactions" class="num-col">42</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-high" style="width:48%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-you">Linda</span></td>
+                    </tr>
+                    <tr class="row-personal">
+                        <td data-label="Post">#11</td>
+                        <td data-label="Topic">Digital Policing Summit &mdash; domain passion</td>
+                        <td data-label="Reactions" class="num-col">32</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-high" style="width:36%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-you">Linda</span></td>
+                    </tr>
+                    <tr class="row-personal">
+                        <td data-label="Post">#6</td>
+                        <td data-label="Topic">Highland cow walk &mdash; #outdoorsfirst</td>
+                        <td data-label="Reactions" class="num-col">14</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-high" style="width:16%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-you">Linda</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Post">#2</td>
+                        <td data-label="Topic">Splunk/Cisco &mdash; agentic AI</td>
+                        <td data-label="Reactions" class="num-col">~3</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-low" style="width:3%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-corp">Splunk</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Post">#3</td>
+                        <td data-label="Topic">Splunk &mdash; observability</td>
+                        <td data-label="Reactions" class="num-col">~3</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-low" style="width:3%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-corp">Splunk</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Post">#4</td>
+                        <td data-label="Topic">Cisco &mdash; zero-trust</td>
+                        <td data-label="Reactions" class="num-col">~3</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-low" style="width:3%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-corp">Splunk</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Post">#7</td>
+                        <td data-label="Topic">Splunk &mdash; database monitoring</td>
+                        <td data-label="Reactions" class="num-col">~2</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-low" style="width:2%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-corp">Splunk</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Post">#9</td>
+                        <td data-label="Topic">Cisco &mdash; digital resilience</td>
+                        <td data-label="Reactions" class="num-col">~2</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-low" style="width:2%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-corp">Splunk</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Post">#10</td>
+                        <td data-label="Topic">Splunk &mdash; AI enterprise</td>
+                        <td data-label="Reactions" class="num-col">~2</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-low" style="width:2%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-corp">Splunk</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Post">#12</td>
+                        <td data-label="Topic">Splunk/Cisco &mdash; product content</td>
+                        <td data-label="Reactions" class="num-col">~1</td>
+                        <td data-label="Engagement"><div class="bar-container"><div class="bar-bg"><div class="bar-fill bar-fill-low" style="width:1%"></div></div></div></td>
+                        <td data-label="Serves"><span class="tag tag-corp">Splunk</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insight-box">
+            <p>Your audience responds to <strong>you</strong> &mdash; your personality, your domain passion, your life outside the office. They scroll past Splunk's marketing content delivered through your account. The 88-reaction CiscoLive reshare is an outlier driven by polished event visuals, not original corporate messaging.</p>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- SECTION 2: THE ALGORITHM -->
+    <section class="doc-section" id="algorithm">
+        <h2>LinkedIn's algorithm is structurally working against corporate content</h2>
+
+        <p>This is not a content quality problem. LinkedIn's platform architecture has shifted decisively toward amplifying individuals over brands. Three data points make this concrete:</p>
+
+        <p><strong>Company pages now reach only 1.6% of their followers.</strong> That is a 15% drop from late 2023, and it is getting worse. Company content now occupies just 2% of the total LinkedIn feed, down from 7% in 2021.<span class="cite" tabindex="0">[1]<span class="cite-detail">Richard van der Blom (2025). <em>Algorithm InSights Report 2025.</em> Just Connecting. Analysis of 1.8M posts.</span></span></p>
+
+        <p><strong>Personal profiles receive 561% more reach than company pages sharing identical content.</strong> In a normalised study, employee profiles generated 2.75x more impressions and 5x more engagement per 1,000 followers than the company page. The top-performing employee generated 72 times the normalised impressions of the brand page.<span class="cite" tabindex="0">[2]<span class="cite-detail">Refine Labs (2025). "Personal LinkedIn Engagement vs Company Page." Multi-quarter study normalised per 1,000 followers.</span></span></p>
+
+        <p><strong>Reposts are actively suppressed.</strong> When you hit "repost" on corporate content, the algorithm recognises it as duplicate and gives it 4 to 10 times less reach than an original post on the same topic. Employee reposts of company content lose approximately 30% of their impact versus original posts.<span class="cite" tabindex="0">[1]<span class="cite-detail">Richard van der Blom (2025). <em>Algorithm InSights Report 2025.</em> Cited by ThinkLikeAPublisher. The 30% figure is from van der Blom's dataset.</span></span></p>
+
+        <details>
+            <summary>What the algorithm now rewards instead</summary>
+            <div>
+                <p>LinkedIn deployed a single 150-billion-parameter AI model called "360Brew" in 2025, replacing thousands of specialised models. The key shifts: <strong>expertise over virality</strong> (substantial, industry-relevant content gets 124% more distribution; content-empty viral posts lose 76% of reach), <strong>saves as the key metric</strong> (bookmarkable content gets disproportionately boosted), and <strong>AI-generated content penalised</strong> (30% less reach, 55% less engagement versus human-written posts). Comments over 15 words boost reach 2x versus short comments. The algorithm increasingly rewards "expertise signals" &mdash; comments using industry-specific terminology, shares from people with relevant job titles, and dwell time correlated with content depth.</p>
+            </div>
+        </details>
+
+        <aside class="margin-note">The algorithm changes frequently. These mechanics may shift within 6-12 months. But the structural preference for individuals over company pages has been consistent for 5+ years and shows no sign of reversing.</aside>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- SECTION 3: TRUST -->
+    <section class="doc-section" id="trust">
+        <h2>Your buyers trust people, not logos &mdash; and they decide before they call you</h2>
+
+        <p>76% of people trust content shared by individuals more than by brands.<span class="cite" tabindex="0">[3]<span class="cite-detail">Edelman Trust Barometer (2025). ~33,000 respondents across 28 markets.</span></span> In B2B specifically, 73% of decision-makers say thought leadership from individuals is more trustworthy than marketing materials for assessing capabilities.<span class="cite" tabindex="0">[4]<span class="cite-detail">Edelman-LinkedIn (2024). <em>B2B Thought Leadership Impact Report.</em> n=3,484 decision-makers across 7 countries.</span></span></p>
+
+        <p>This matters for your pipeline, not just your engagement numbers. The Edelman-LinkedIn research found that <strong>90% of decision-makers are more receptive to sales outreach from people who consistently produce quality thought leadership.</strong> 75% researched products they had not previously considered because of a piece of thought leadership. 60% said good thought leadership makes them willing to pay a premium.<span class="cite" tabindex="0">[4]<span class="cite-detail">Edelman-LinkedIn (2024). <em>B2B Thought Leadership Impact Report.</em> n=3,484.</span></span></p>
+
+        <p>And perhaps most relevantly for your accounts: 70% of C-suite leaders said a piece of thought leadership led them to question whether they should continue working with an existing supplier.<span class="cite" tabindex="0">[4]<span class="cite-detail">Edelman-LinkedIn (2024). 25% said it led them to ending or significantly reducing that relationship.</span></span></p>
+
+        <details>
+            <summary>The "hidden buyers" who evaluate you through content</summary>
+            <div>
+                <p>The 2025 Edelman-LinkedIn report specifically studied "hidden buyers" &mdash; internal stakeholders who influence purchases but are not the primary user. These are the people inside the Home Office and Parliament who shape buying decisions behind the scenes. <strong>79% said they are more likely to support proposals from vendors whose employees publish strong thought leadership.</strong> 53% said when thought leadership is strong, brand recognition matters less. These hidden buyers are <em>less likely</em> to take sales meetings &mdash; they evaluate through content. If your content is corporate reposts, they see nothing. If your content is genuine JES domain expertise, they see someone worth backing internally.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>The peer-reviewed evidence: personal content drives revenue, promotional content does not</summary>
+            <div>
+                <p>The only peer-reviewed study directly measuring LinkedIn content's impact on sales revenue &mdash; Mora Cortez, Johnston &amp; Ghosh Dastidar (2023) in the <em>Journal of Business Research</em>, using a vector autoregression model on 106 weeks of data &mdash; found that "social" posts (relationship-building, non-promotional) positively affect sales revenue, while sales-oriented posts drive follower growth but not revenue. A companion study (2022, 68 citations) found that "sincerity" and "excitement" personality dimensions drive B2B engagement, while "competence" &mdash; the default register of corporate content &mdash; does not.</p>
+            </div>
+        </details>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- SECTION 4: DARK SOCIAL -->
+    <section class="doc-section" id="dark-social">
+        <h2>The deals forming around you are invisible &mdash; and corporate content never enters the room</h2>
+
+        <p>70% of B2B purchasing decisions are substantially complete before a buyer contacts a seller.<span class="cite" tabindex="0">[5]<span class="cite-detail">6sense (2024). <em>Buyer Experience Report.</em> Consistent with Gartner and Forrester research.</span></span> 80% of vendor shortlists are finalised before direct sales contact. But where are those opinions forming?</p>
+
+        <p><strong>In private channels you cannot see.</strong> 77 to 84% of content sharing happens through DMs, email, Slack, WhatsApp, and Teams &mdash; channels that are invisible to any analytics dashboard.<span class="cite" tabindex="0">[6]<span class="cite-detail">Multiple sources: Cognism, StrategicABM, Intent Amplify. Consistent with the RadiumOne dark social study. Exact percentages vary by study.</span></span> Your government accounts involve 14 to 23 stakeholders building consensus, sharing content through exactly these private channels.</p>
+
+        <p>The content that gets forwarded in private channels has specific characteristics: a strong point of view, specific data or frameworks, honesty about limitations, applicability to the reader's situation. Corporate marketing content does not get forwarded. Nobody DMs a colleague a Splunk observability blog post. They <em>do</em> DM a post where a named expert &mdash; someone with genuine credentials in their space &mdash; shares an insight they had not considered.</p>
+
+        <div class="insight-box">
+            <p>Your Digital Policing Summit post &mdash; where you wrote <strong>"as a consumer of these services"</strong> &mdash; is the kind of content that gets forwarded in a Home Office Slack channel. Your Splunk AI reshare is not. The engagement numbers you can see are the tip of the iceberg. The sharing you cannot see is where the pipeline forms.</p>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- SECTION 5: THE FILTER -->
+    <section class="doc-section" id="filter">
+        <h2>Three questions to ask before every post</h2>
+
+        <p>If the answer to any of these is wrong, do not post it from your personal profile.</p>
+
+        <div class="filter-card">
+            <ol class="filter-list">
+                <li class="filter-item">
+                    <div class="filter-number">1</div>
+                    <div>
+                        <div class="question">Does this build the reputation I want in five years, or someone else's pipeline?</div>
+                        <div class="explanation">Your techUK JES Council role, your Digital Policing Summit posts, your Parish Council work &mdash; these build toward a future where you are known as one of the most credible voices in justice and emergency services technology. A Splunk observability repost builds toward nothing. Ask where this post is taking you.</div>
+                    </div>
+                </li>
+                <li class="filter-item">
+                    <div class="filter-number">2</div>
+                    <div>
+                        <div class="question">Would someone read this if they didn't know my employer?</div>
+                        <div class="explanation">Your post about the Digital Policing Summit would be interesting regardless of where you work. It reflects genuine domain knowledge and honest enthusiasm. A Splunk product update is interesting only to people already in your employer's sales funnel &mdash; and they are getting it from Splunk's own channels already. If the content has no value without the corporate context, it is marketing, not thought leadership.</div>
+                    </div>
+                </li>
+                <li class="filter-item">
+                    <div class="filter-number">3</div>
+                    <div>
+                        <div class="question">Could only I share this insight, or could anyone at my company?</div>
+                        <div class="explanation">You have two years on the techUK JES Management Committee, accounts covering Law Enforcement and Parliament, a Parish Council seat, and a genuine passion for policing outcomes that shows in your writing. Nobody else at Splunk has that combination. When you post from that intersection &mdash; technology and justice, from someone who understands both the policy and the product &mdash; you are differentiated. When you share generic product content, you are interchangeable.</div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <p>If all three answers point to <em>you</em> &mdash; your reputation, your standalone value, your unique perspective &mdash; post it. If any answer points to your employer, consider whether you can write your own commentary on the underlying topic instead. Fifteen minutes of original writing will outperform a repost by an order of magnitude, because the algorithm, the audience, and the trust dynamics are all aligned in favour of your voice.</p>
+
+        <details>
+            <summary>The evidence behind these three questions</summary>
+            <div>
+                <p>Question 1 draws on Dorie Clark's "Long Game" framework (2021, Harvard Business Review contributor, Duke Fuqua) &mdash; the principle that real thought leadership requires treating personal brand as a multi-year investment. Question 2 adapts the "Helpful vs. Promotional" test from practitioner Matt Homewood (Jam7, 2026), originally grounded in the Edelman-LinkedIn research showing buyers can tell the difference. Question 3 draws on Chris Latham's Expertise Audit (2025): "Look at your last 20 posts. If fewer than 15 demonstrate specific expertise only you could share, you have found the problem." The underlying principle &mdash; original, expertise-driven content outperforms corporate amplification &mdash; is confirmed by all five data sources in the evidence section below.</p>
+            </div>
+        </details>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- SECTION 6: IN PRACTICE -->
+    <section class="doc-section" id="practice">
+        <h2>What this looks like: two posts a week, written as yourself</h2>
+
+        <p>This is not about posting more. It is about posting differently. Two to three original posts per week &mdash; drawing on your genuine expertise in justice technology, your experience at the Digital Policing Summit, your perspective from the JES Council, your view from Penrith on how government works at every level &mdash; will outperform seven corporate reposts.</p>
+
+        <p>Only 15% of decision-makers rate available thought leadership as "very good or excellent."<span class="cite" tabindex="0">[4]<span class="cite-detail">Edelman-LinkedIn (2024). Less than half (48%) rate it as "good."</span></span> The quality bar is low. You clear it every time you write as yourself about policing transformation or digital justice. The competitive moat is not volume &mdash; it is substance.</p>
+
+        <p>The corporate reposts do not need to be confrontational. You do not need to stop engaging with Splunk's content entirely. But the next time you are about to hit "repost," try this instead: take the underlying topic &mdash; observability in government, resilience in critical infrastructure, AI in policing &mdash; and write three to five sentences of your own take. What have you seen in your accounts that confirms or contradicts the marketing claim? What do your clients actually care about? That is the post your audience is waiting for.</p>
+
+        <details>
+            <summary>The timeline: what to expect and when</summary>
+            <div>
+                <p>Thought leadership does not produce pipeline overnight. The practitioner evidence converges on a consistent timeline: <strong>Months 1-2:</strong> engagement metrics only (views, shares, comments). <strong>Months 3-6:</strong> early pipeline signals, peers start engaging, you begin to be seen as a voice in your space. <strong>Months 6-9:</strong> steady inbound enquiries directly traced to content. <strong>Month 12+:</strong> compounding returns, speaking and collaboration opportunities, recognition as a domain authority. The Edelman data adds a concrete milestone: 86% of decision-makers say they are somewhat or very likely to invite consistent, quality thought leadership producers to participate in RFPs. This is the long game. Two posts a week for six months. That is the investment.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>One more thing: honesty is your sharpest edge</summary>
+            <div>
+                <p>The Pratfall Effect (Aronson, 1966, well-replicated in social psychology) shows that admitting minor limitations makes competent people <em>more</em> credible, not less. Applied to B2B content: "When you are transparent about where your solution is not ideal, competent buyers trust your claims about where it excels." Most thought leadership fails because it sounds like marketing &mdash; all upside, no honesty. When you write about what digital policing still gets wrong, or what government tech procurement misunderstands about resilience, you are doing something almost nobody in enterprise sales does. That is the content that earns trust, gets forwarded in private channels, and eventually earns the meeting.</p>
+            </div>
+        </details>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- EVIDENCE FOOTER -->
+    <footer class="evidence-footer doc-section" id="sources">
+        <h3>Sources</h3>
+        <p>The engagement figures in the table above are from your public LinkedIn profile. The platform and trust data draws on the following research:</p>
+        <ol class="source-list">
+            <li><span class="source-tier">B</span>Richard van der Blom (2025). <em>Algorithm InSights Report 2025.</em> Just Connecting. 1.8 million posts analysed. Core algorithm data: 1.6% company page reach, 561% personal profile advantage, 46% vs 2% feed allocation, ~30% repost penalty.</li>
+            <li><span class="source-tier">B</span>Refine Labs (2025). "Personal LinkedIn Engagement vs Company Page." Multi-quarter study normalised per 1,000 followers. 2.75x impressions, 5x engagement, 72:1 ratio for top performer.</li>
+            <li><span class="source-tier">A</span>Edelman Trust Barometer (2025). ~33,000 respondents across 28 markets. 76% trust individuals over brands.</li>
+            <li><span class="source-tier">B</span>Edelman-LinkedIn (2024). <em>B2B Thought Leadership Impact Report.</em> n=3,484 decision-makers, 7 countries. 73% trust TL over marketing materials, 90% more receptive to sales, 60% pay premium, 75% research new products, 70% questioned existing supplier.</li>
+            <li><span class="source-tier">B</span>Edelman-LinkedIn (2025). <em>B2B Thought Leadership Impact Report.</em> n=~2,000. Hidden buyers: 79% support TL-producing vendors, 53% say TL &gt; brand recognition.</li>
+            <li><span class="source-tier">A</span>Mora Cortez, Johnston &amp; Ghosh Dastidar (2023). "Managing the content of LinkedIn posts." <em>J. Business Research</em> 155(A). DOI: 10.1016/j.jbusres.2022.113388. Social posts drive revenue; promotional posts drive vanity metrics.</li>
+            <li><span class="source-tier">A</span>Mora Cortez &amp; Ghosh Dastidar (2022). "B2B customer engagement in LinkedIn." <em>J. Business Research</em> 145: 92-105. 68 citations. Sincerity/excitement drive engagement; competence (corporate default) does not.</li>
+            <li><span class="source-tier">B</span>6sense (2024). <em>Buyer Experience Report.</em> 70% of B2B purchasing completes before seller engagement.</li>
+            <li><span class="source-tier">B</span>Vulse (2026). LinkedIn algorithm employee advocacy study. 400M impressions, 150,800 posts. 14x engagement rate for employee advocacy vs company pages.</li>
+        </ol>
+        <p style="margin-top: var(--space-4);">Tier key: <strong>A</strong> = peer-reviewed / major survey research. <strong>B</strong> = large-scale practitioner research or authoritative industry reports. Full methodology and source log available on request.</p>
+    </footer>
+
+</main>
+
+<script>
+// Reading progress fallback
+if (!CSS.supports('animation-timeline', 'scroll()')) {
+    const bar = document.querySelector('.progress-bar');
+    window.addEventListener('scroll', () => {
+        const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+        bar.style.transform = `scaleX(${Math.min(pct, 1)})`;
+    }, { passive: true });
+}
+
+// Section nav active state
+const sections = document.querySelectorAll('.doc-section');
+const navLinks = document.querySelectorAll('.section-nav a, .nav-mobile a');
+const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+        }
+    });
+}, { rootMargin: '-20% 0px -60% 0px' });
+sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
