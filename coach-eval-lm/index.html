@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finding the Right Mindset Coach — An Evaluation Framework</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=satoshi@400,400i,500,700&f[]=jet-brains-mono@400&display=swap" rel="stylesheet">
+<style>
+/* === Design System === */
+:root {
+    --font-display: 'General Sans', system-ui, sans-serif;
+    --font-body: 'Satoshi', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    font-optical-sizing: auto;
+    --text-xs: clamp(0.7rem, 0.65rem + 0.2vw, 0.8rem);
+    --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
+    --text-base: clamp(1rem, 0.9rem + 0.3vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1rem + 0.4vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 1rem + 0.8vw, 1.75rem);
+    --text-2xl: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
+    --text-3xl: clamp(1.75rem, 1.2rem + 1.8vw, 3rem);
+    --leading-tight: 1.2;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.7;
+    --measure: 65ch;
+    font-variant-ligatures: common-ligatures;
+    color-scheme: light dark;
+    --bg: light-dark(#fafbfc, #0f172a);
+    --bg-raised: light-dark(#ffffff, #1e293b);
+    --bg-inset: light-dark(#f1f5f9, #0b1120);
+    --fg: light-dark(#1a1a2e, #e2e8f0);
+    --fg-muted: light-dark(#64748b, #94a3b8);
+    --fg-faint: light-dark(#94a3b8, #475569);
+    --accent: light-dark(#0f766e, #2dd4bf);
+    --accent-muted: light-dark(rgba(15,118,110,0.08), rgba(45,212,191,0.12));
+    --accent-strong: light-dark(#0d6560, #5eead4);
+    --success: light-dark(#16a34a, #4ade80);
+    --caution: light-dark(#d97706, #fbbf24);
+    --danger: light-dark(#dc2626, #f87171);
+    --border: light-dark(#e2e8f0, #1e293b);
+    --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+    --space-4: 1rem; --space-6: 1.5rem; --space-8: 2rem;
+    --space-12: 3rem; --space-16: 4rem; --space-24: 6rem;
+}
+table, .data, [data-numeric] { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.15s !important;
+        scroll-behavior: auto !important;
+    }
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* === Reading Progress Bar === */
+.progress-bar {
+    position: fixed; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent); transform-origin: left; transform: scaleX(0); z-index: 100;
+}
+@supports (animation-timeline: scroll()) {
+    .progress-bar { animation: grow linear; animation-timeline: scroll(); }
+    @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+
+/* === Base === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: var(--font-body); font-size: var(--text-base);
+    line-height: var(--leading-relaxed); color: var(--fg);
+    background: var(--bg); text-align: left;
+}
+.doc-grid {
+    display: grid; grid-template-columns: 1fr min(var(--measure), calc(100% - 2rem)) 1fr;
+    padding: var(--space-8) var(--space-4) var(--space-24);
+}
+.doc-grid > * { grid-column: 2; }
+
+/* === Section Nav === */
+.section-nav {
+    position: fixed; left: var(--space-6); top: var(--space-12);
+    width: 190px; font-size: var(--text-sm); font-family: var(--font-display);
+}
+.section-nav a {
+    display: block; padding: var(--space-1) var(--space-3);
+    color: var(--fg-muted); text-decoration: none;
+    border-left: 2px solid transparent; transition: all 0.15s;
+    line-height: var(--leading-normal);
+}
+.section-nav a.active, .section-nav a:hover {
+    color: var(--accent); border-left-color: var(--accent);
+}
+
+/* === Mobile Nav === */
+.nav-mobile {
+    display: none; position: sticky; top: 0; z-index: 50;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    padding: var(--space-2) var(--space-4); overflow-x: auto; white-space: nowrap;
+}
+.nav-mobile a {
+    display: inline-block; padding: var(--space-1) var(--space-3);
+    font-size: var(--text-sm); color: var(--fg-muted); text-decoration: none;
+    font-family: var(--font-display);
+}
+.nav-mobile a.active { color: var(--accent); }
+
+@media (max-width: 1200px) {
+    .section-nav { display: none; }
+    .nav-mobile { display: block; }
+}
+@media (min-width: 1201px) {
+    .nav-mobile { display: none; }
+}
+
+/* === Typography === */
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: var(--leading-tight); }
+h1 { font-size: var(--text-3xl); margin-bottom: var(--space-4); letter-spacing: -0.02em; }
+h2 { font-size: var(--text-2xl); margin-top: var(--space-16); margin-bottom: var(--space-6); letter-spacing: -0.01em; }
+h3 { font-size: var(--text-xl); margin-top: var(--space-8); margin-bottom: var(--space-4); }
+p { margin-bottom: var(--space-4); }
+.executive-summary {
+    font-size: var(--text-lg); color: var(--fg-muted);
+    border-left: 3px solid var(--accent); padding-left: var(--space-6);
+    margin-bottom: var(--space-12); line-height: var(--leading-relaxed);
+}
+
+/* === Intro Note === */
+.intro-note {
+    background: var(--bg-inset); border-radius: 8px;
+    padding: var(--space-6); margin-bottom: var(--space-12);
+    font-size: var(--text-sm); color: var(--fg-muted);
+    border: 1px solid var(--border);
+}
+.intro-note strong { color: var(--fg); }
+
+/* === Flag Cards === */
+.flag-grid {
+    display: grid; gap: var(--space-4);
+    margin: var(--space-6) 0;
+}
+.flag-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: var(--space-4) var(--space-6);
+    display: grid; grid-template-columns: auto 1fr;
+    gap: var(--space-4); align-items: start;
+}
+.flag-icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: var(--text-lg); flex-shrink: 0;
+    margin-top: 2px;
+}
+.flag-card.red .flag-icon {
+    background: light-dark(rgba(220,38,38,0.08), rgba(248,113,113,0.1));
+    color: var(--danger);
+}
+.flag-card.green .flag-icon {
+    background: light-dark(rgba(22,163,74,0.08), rgba(74,222,128,0.1));
+    color: var(--success);
+}
+.flag-card h4 {
+    margin: 0 0 var(--space-2) 0;
+    font-size: var(--text-base); font-weight: 600;
+}
+.flag-card p { margin-bottom: 0; font-size: var(--text-sm); color: var(--fg-muted); }
+.flag-card .they-say {
+    font-style: italic; color: var(--fg);
+    margin-top: var(--space-2);
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--border);
+    font-size: var(--text-sm);
+}
+
+/* === Question Cards === */
+.question-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    counter-increment: question;
+}
+.question-card::before {
+    content: 'Q' counter(question);
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-xs); letter-spacing: 0.08em;
+    color: var(--accent); text-transform: uppercase;
+    display: block; margin-bottom: var(--space-3);
+}
+.question-card .the-question {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: var(--text-lg); margin-bottom: var(--space-4);
+    color: var(--fg);
+}
+.question-card .why {
+    font-size: var(--text-sm); color: var(--fg-muted);
+    margin-bottom: var(--space-3);
+}
+.listen-for {
+    background: var(--accent-muted);
+    border-radius: 6px;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+}
+.listen-for strong {
+    font-family: var(--font-display); font-size: var(--text-xs);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--accent); display: block;
+    margin-bottom: var(--space-1);
+}
+
+/* === Scorecard Table === */
+.scorecard {
+    width: 100%; border-collapse: collapse;
+    margin: var(--space-6) 0;
+    font-size: var(--text-sm);
+}
+.scorecard th {
+    font-family: var(--font-display); font-weight: 600;
+    text-align: left; padding: var(--space-3) var(--space-4);
+    border-bottom: 2px solid var(--accent);
+    font-size: var(--text-xs); text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--fg-muted);
+}
+.scorecard td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+.scorecard .dimension {
+    font-family: var(--font-display); font-weight: 600;
+    white-space: nowrap;
+}
+.scorecard .scale {
+    font-family: var(--font-mono); font-size: var(--text-xs);
+    white-space: nowrap; color: var(--fg-muted);
+}
+.scorecard input[type="range"] {
+    width: 100%; accent-color: var(--accent);
+    cursor: pointer;
+}
+.score-row {
+    display: flex; align-items: center; gap: var(--space-3);
+}
+.score-labels {
+    display: flex; justify-content: space-between;
+    font-size: var(--text-xs); color: var(--fg-faint);
+    font-family: var(--font-mono);
+    margin-top: 2px;
+}
+
+/* === Modality Tags === */
+/* === Predictor Stack === */
+.predictor-stack {
+    display: flex; flex-direction: column; gap: var(--space-3);
+    margin: var(--space-6) 0;
+}
+.predictor-row {
+    display: flex; gap: 0; border-radius: 8px;
+    background: var(--bg-raised); border: 1px solid var(--border);
+    overflow: hidden; transition: box-shadow 0.2s;
+}
+.predictor-row:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.predictor-bar {
+    width: 5px; flex-shrink: 0;
+}
+.predictor-row.high .predictor-bar { background: var(--success); }
+.predictor-row.medium .predictor-bar { background: var(--accent); }
+.predictor-row.low .predictor-bar { background: var(--caution); }
+.predictor-row.none .predictor-bar { background: var(--fg-faint); }
+
+.predictor-content {
+    padding: var(--space-4) var(--space-6); flex: 1;
+}
+.predictor-label {
+    display: flex; align-items: center; gap: var(--space-3);
+    margin-bottom: var(--space-2);
+}
+.predictor-rank {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: var(--text-sm); color: var(--fg-faint);
+    min-width: 1.8rem;
+}
+.predictor-row.high .predictor-rank { color: var(--success); }
+.predictor-row.medium .predictor-rank { color: var(--accent); }
+.predictor-row.low .predictor-rank { color: var(--caution); }
+
+.predictor-content h4 {
+    margin: 0; font-size: var(--text-base); line-height: var(--leading-tight);
+}
+.predictor-content > p {
+    font-size: var(--text-sm); color: var(--fg-muted);
+    margin: 0;
+}
+.predictor-content details {
+    margin-top: var(--space-2); border: none; background: none;
+}
+.predictor-content details summary {
+    font-size: var(--text-xs); color: var(--accent); background: none;
+    padding: var(--space-1) 0; font-weight: 500;
+}
+.predictor-content details p {
+    font-size: var(--text-sm); padding: var(--space-2) 0 0 0;
+    color: var(--fg-muted);
+}
+
+/* === Author Footer === */
+.author-footer {
+    display: flex; align-items: center; gap: var(--space-6);
+    margin-top: var(--space-16); padding: var(--space-8) 0;
+    border-top: 1px solid var(--border);
+}
+.author-headshot {
+    width: 72px; height: 72px; border-radius: 50%;
+    object-fit: cover; flex-shrink: 0;
+    border: 2px solid var(--border);
+}
+.author-info { font-size: var(--text-sm); color: var(--fg-muted); }
+.author-info .author-name {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: var(--text-base); color: var(--fg);
+    margin-bottom: var(--space-1); display: block;
+}
+.author-info a {
+    color: var(--accent); text-decoration: none;
+}
+.author-info a:hover { text-decoration: underline; }
+@media (max-width: 500px) {
+    .author-footer { flex-direction: column; text-align: center; }
+}
+
+/* === Divider === */
+.divider {
+    height: 1px; background: var(--border);
+    margin: var(--space-16) 0; border: none;
+}
+
+/* === Details === */
+details {
+    margin: var(--space-4) 0; border: 1px solid var(--border);
+    border-radius: 6px; overflow: hidden;
+}
+details summary {
+    padding: var(--space-3) var(--space-4); cursor: pointer;
+    font-weight: 500; font-family: var(--font-display);
+    background: var(--bg-inset); list-style: none;
+}
+details summary::before { content: '\25B8\00a0'; }
+details[open] summary::before { content: '\25BE\00a0'; }
+details > :not(summary) { padding: var(--space-4); }
+
+/* === Bottom Line === */
+.bottom-line {
+    background: var(--accent-muted);
+    border: 1px solid light-dark(rgba(15,118,110,0.2), rgba(45,212,191,0.2));
+    border-radius: 8px;
+    padding: var(--space-8);
+    margin-top: var(--space-12);
+}
+.bottom-line h3 {
+    margin-top: 0; color: var(--accent-strong);
+}
+
+/* === Section Performance === */
+.doc-section:not(:first-of-type) { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+
+/* === Print === */
+@media print {
+    .section-nav, .nav-mobile, .progress-bar { display: none; }
+    .doc-grid { display: block; max-width: 100%; padding: 1cm; }
+    body { font-size: 10pt; color: #1a1a2e; background: white; }
+    .flag-card, .question-card, .predictor-row { break-inside: avoid; border-color: #ccc; }
+    .bottom-line { background: #f8f9fa; border-color: #ccc; }
+    h2 { page-break-before: always; }
+    h2:first-of-type { page-break-before: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" role="progressbar" aria-label="Reading progress"></div>
+
+<nav class="nav-mobile" aria-label="Sections">
+    <a href="#what-matters">What Matters</a>
+    <a href="#red-flags">Red Flags</a>
+    <a href="#green-flags">Green Flags</a>
+    <a href="#questions">Questions</a>
+    <a href="#scorecard">Scorecard</a>
+</nav>
+
+<nav class="section-nav" aria-label="Sections">
+    <a href="#what-matters">What Matters</a>
+    <a href="#red-flags">Red Flags</a>
+    <a href="#green-flags">Green Flags</a>
+    <a href="#questions">Discovery Questions</a>
+    <a href="#scorecard">Scorecard</a>
+</nav>
+
+<main class="doc-grid">
+    <header>
+        <h1>Finding the Right Mindset Coach</h1>
+        <p class="executive-summary">
+            A structured evaluation framework for someone navigating burnout, performance pressure, and a possible career inflection point. Not a generic checklist — a rubric built for the specific intersection you're sitting at.
+        </p>
+    </header>
+
+    <div class="intro-note">
+        <strong>How to use this:</strong> Interview at least three coach candidates before deciding. Use the red flags to eliminate quickly, the green flags to identify depth, and the discovery questions to pressure-test in real time. The scorecard at the end lets you compare candidates side-by-side after your calls. This entire process should take 20 minutes per candidate — less time than you'd spend evaluating a new sales tool, and the stakes are higher.
+    </div>
+
+    <!-- ==================== WHAT MATTERS ==================== -->
+    <section class="doc-section" id="what-matters">
+        <h2>What Actually Predicts Whether Coaching Works</h2>
+
+        <p>The short version: it's not credentials, methodology, or experience level. It's the <strong>quality of the relationship</strong> between you and the coach. This is backed by the largest meta-analysis in the field (27 studies, 3,563 participants) and mirrors 50+ years of psychotherapy research.</p>
+
+        <div class="predictor-stack">
+            <div class="predictor-row high">
+                <div class="predictor-bar"></div>
+                <div class="predictor-content">
+                    <div class="predictor-label">
+                        <span class="predictor-rank">#1</span>
+                        <h4>How you feel in the room with them</h4>
+                    </div>
+                    <p>Do they make you feel understood, or sold to? Can you imagine being honest with them? The discovery call is a sample of the work. Trust that feeling — it's your most reliable data point.</p>
+                    <details><summary>What the research says</summary><p>The working alliance — agreement on goals, tasks, and the bond between coach and coachee — is the single strongest predictor of outcomes. De Haan's RCT (180 coachees, 66 coaches) found effect sizes up to d = 1.1. Personality match, on the other hand, does <em>not</em> predict outcomes (De Haan, 2013, 2016).</p></details>
+                </div>
+            </div>
+
+            <div class="predictor-row high">
+                <div class="predictor-bar"></div>
+                <div class="predictor-content">
+                    <div class="predictor-label">
+                        <span class="predictor-rank">#2</span>
+                        <h4>Your own readiness to do the work</h4>
+                    </div>
+                    <p>Your motivation and self-efficacy predict outcomes as strongly as anything the coach does. The fact that you're evaluating coaches is a good sign.</p>
+                    <details><summary>What the research says</summary><p>De Haan et al. (2016, N = 1,895) found coachee self-efficacy was a significant predictor independent of the working alliance. A great coach can build readiness — but they can't substitute for it.</p></details>
+                </div>
+            </div>
+
+            <div class="predictor-row medium">
+                <div class="predictor-bar"></div>
+                <div class="predictor-content">
+                    <div class="predictor-label">
+                        <span class="predictor-rank">#3</span>
+                        <h4>Body-level tools, not just mindset</h4>
+                    </div>
+                    <p>Specific to your situation: performance anxiety lives in the nervous system. A coach who only works with thoughts is working on the second floor of a building with foundation problems.</p>
+                    <details><summary>Why this matters for you</summary><p>The general coaching research doesn't isolate somatic vs. cognitive approaches well. But for burnout-to-performance recovery specifically, the body stores the pattern. Look for someone who can hand you a concrete physiological technique, not just a reframe.</p></details>
+                </div>
+            </div>
+
+            <div class="predictor-row low">
+                <div class="predictor-bar"></div>
+                <div class="predictor-content">
+                    <div class="predictor-label">
+                        <span class="predictor-rank">#4</span>
+                        <h4>Which methodology they use</h4>
+                    </div>
+                    <p>GROW, Co-Active, CBT, Solutions-Focused — none has proven superior. Having <em>a</em> structure matters. <em>Which</em> structure doesn't.</p>
+                    <details><summary>What the research says</summary><p>De Haan & Nilsson (2023) found coaching methodology did not emerge as a significant moderator. Methodology is scaffolding — necessary, but not load-bearing. The relationship is load-bearing.</p></details>
+                </div>
+            </div>
+
+            <div class="predictor-row low">
+                <div class="predictor-bar"></div>
+                <div class="predictor-content">
+                    <div class="predictor-label">
+                        <span class="predictor-rank">#5</span>
+                        <h4>Credentials and certifications</h4>
+                    </div>
+                    <p>ICF's entry credential takes ~7 working days. Evidence that credentialed coaches produce better outcomes is thin.</p>
+                    <details><summary>What the research says</summary><p>Effects are "larger with qualified coaches in non-leadership applications" (De Haan & Nilsson, 2023) — but independent evidence on whether credentialed coaches outperform uncredentialed ones is thin. 85% of clients say credentials matter to them, but the data doesn't back it up.</p></details>
+                </div>
+            </div>
+
+            <div class="predictor-row none">
+                <div class="predictor-bar"></div>
+                <div class="predictor-content">
+                    <div class="predictor-label">
+                        <span class="predictor-rank">&mdash;</span>
+                        <h4>Personality match</h4>
+                    </div>
+                    <p>Tested directly. Doesn't predict outcomes. Don't screen for "vibe" — screen for relational capacity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== RED FLAGS ==================== -->
+    <section class="doc-section" id="red-flags">
+        <h2>Red Flags</h2>
+        <p>Any one of these is enough to walk. Two is a certainty. These aren't theoretical — they're the patterns that indicate a coach won't be able to handle the specific intersection of burnout, performance pressure, and career questioning you're navigating.</p>
+
+        <div class="flag-grid">
+            <div class="flag-card red">
+                <div class="flag-icon">&times;</div>
+                <div>
+                    <h4>They treat burnout as a motivation problem</h4>
+                    <p>If a coach hears "I stopped cold calling for six months" and reaches for accountability tools, goal-setting, or motivation frameworks — they're solving the wrong problem. Burnout that presents as avoidance is almost always a nervous system issue, not a willpower issue. The body is protecting you from something. A good coach investigates what.</p>
+                    <div class="they-say">"Sounds like you need to reconnect with your why."</div>
+                </div>
+            </div>
+
+            <div class="flag-card red">
+                <div class="flag-icon">&times;</div>
+                <div>
+                    <h4>They have no structured approach at all</h4>
+                    <p>The research shows that <em>which</em> methodology a coach uses doesn't predict outcomes. But having <em>some</em> structure does matter — it keeps the work focused and gives you a sense of progression. If you ask "What does an engagement look like?" and the answer is all vibes — "I meet people where they are," "it depends on the client," "I use an intuitive approach" — that's not flexibility. That's the absence of a system.</p>
+                    <div class="they-say">"Every client is different, so I don't really follow a set process."</div>
+                </div>
+            </div>
+
+            <div class="flag-card red">
+                <div class="flag-icon">&times;</div>
+                <div>
+                    <h4>They only work at the level of thought</h4>
+                    <p>Mindset reframes alone won't touch performance anxiety. If everything is about "changing your beliefs," "reframing your narrative," or "building a growth mindset" — with no reference to the body, nervous system, or physiological state management — they're working on the second floor of a building with foundation problems. The body stores the pattern. The mind follows.</p>
+                    <div class="they-say">"Once you change your mindset about rejection, the calls will feel different."</div>
+                </div>
+            </div>
+
+            <div class="flag-card red">
+                <div class="flag-icon">&times;</div>
+                <div>
+                    <h4>They pressure you on the discovery call</h4>
+                    <p>Hard closes, urgency tactics, "I only have two spots left this month." A coach who sells like a closer is telling you exactly how they'll coach you: with pressure, not partnership. The discovery call is a sample of the work. If you feel pushed, that's your answer.</p>
+                    <div class="they-say">"I'd hate for you to lose momentum — can we get you started this week?"</div>
+                </div>
+            </div>
+
+            <div class="flag-card red">
+                <div class="flag-icon">&times;</div>
+                <div>
+                    <h4>They promise transformation on a timeline</h4>
+                    <p>"In 90 days you'll be a different person." The truth: meaningful change in burnout and performance patterns takes 3-6 months minimum, and the timeline depends on factors neither of you fully control yet. Coaches who sell certainty are selling what you want to hear, not what's honest. The honest ones say: "Here's how we'll know it's working."</p>
+                    <div class="they-say">"My 12-week program is designed to completely eliminate your limiting beliefs."</div>
+                </div>
+            </div>
+
+            <div class="flag-card red">
+                <div class="flag-icon">&times;</div>
+                <div>
+                    <h4>"I did it, so I'll teach you how"</h4>
+                    <p>A coach whose primary credential is their own success story. "I was burned out too, and here's what I did." Teaching is not coaching. What worked for them is a sample size of one. A good coach draws from a methodology that works across different people and contexts — not from a playbook that assumes your path matches theirs.</p>
+                    <div class="they-say">"I've been where you are, and I can tell you exactly what to do."</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== GREEN FLAGS ==================== -->
+    <section class="doc-section" id="green-flags">
+        <h2>Green Flags</h2>
+        <p>These signal a coach who can actually handle the complexity of what you're navigating. You don't need all of them — but the more that are present, the more likely this person can go where the work needs to go.</p>
+
+        <div class="flag-grid">
+            <div class="flag-card green">
+                <div class="flag-icon">&#10003;</div>
+                <div>
+                    <h4>They have a concrete protocol for performance under pressure</h4>
+                    <p>Not "breathe deep" — an actual sequenced technique for managing state in high-repetition, high-rejection contexts. Something physiological that works in under 90 seconds. If they can describe <em>what they'd have you do</em> before a cold calling block, rather than <em>what they'd have you think</em> — that's a strong signal. The body leads. The mind follows.</p>
+                </div>
+            </div>
+
+            <div class="flag-card green">
+                <div class="flag-icon">&#10003;</div>
+                <div>
+                    <h4>They distinguish between tactical and strategic problems</h4>
+                    <p>Can they hold the difference between "I'm burned out from cold calling" and "I might be outgrowing this role" — without collapsing one into the other? The first is a performance optimization question. The second is a career architecture question. A coach who can work both levels without rushing to either is rare and valuable.</p>
+                </div>
+            </div>
+
+            <div class="flag-card green">
+                <div class="flag-icon">&#10003;</div>
+                <div>
+                    <h4>They ask more than they tell — especially in the first session</h4>
+                    <p>A coach who is curious before they're certain. If your discovery call is mostly them talking, that's data. If it's mostly them asking open-ended questions — and the questions are sharp, not generic — that's a different kind of signal. Great coaches are built on great questions, not great advice.</p>
+                </div>
+            </div>
+
+            <div class="flag-card green">
+                <div class="flag-icon">&#10003;</div>
+                <div>
+                    <h4>They have experience with identity-tied performance</h4>
+                    <p>Someone who understands what happens when "I do hard things" becomes the load-bearing identity. Athletes, military, founders, and high-output sales professionals all share this pattern: discipline as identity, where a performance dip doesn't just feel like a bad quarter — it feels like a threat to who you are. A coach who gets this won't misdiagnose the burnout.</p>
+                </div>
+            </div>
+
+            <div class="flag-card green">
+                <div class="flag-icon">&#10003;</div>
+                <div>
+                    <h4>They can name the nervous system states you're cycling through</h4>
+                    <p>You don't need a polyvagal theory lecture. But if a coach can say something like "it sounds like your nervous system is toggling between fight mode and shutdown — the avoidance isn't laziness, it's your body's protective response" — they understand the mechanism, not just the symptom. That's the difference between a coach who treats the surface and one who treats the structure.</p>
+                </div>
+            </div>
+
+            <div class="flag-card green">
+                <div class="flag-icon">&#10003;</div>
+                <div>
+                    <h4>They have their own supervision or professional development</h4>
+                    <p>Ask: "Who do you work with on your own coaching?" Good coaches have mentors, supervisors, or their own coach. This means they practice what they preach and have someone holding <em>them</em> to standards. Coaches who've stopped investing in their own development tend to coast on pattern recognition instead of genuine presence.</p>
+                </div>
+            </div>
+
+            <div class="flag-card green">
+                <div class="flag-icon">&#10003;</div>
+                <div>
+                    <h4>They're comfortable saying "I don't know yet"</h4>
+                    <p>If a coach can sit in uncertainty with you — "That's a real question and I think we'd need a few sessions to see what's actually happening underneath it" — that's not weakness. That's honesty. The coaches to worry about are the ones who diagnose you in the discovery call.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ==================== DISCOVERY QUESTIONS ==================== -->
+    <section class="doc-section" id="questions" style="counter-reset: question;">
+        <h2>Discovery Call Questions</h2>
+        <p>Use these in your first conversation with each candidate. They're designed to expose methodology, not credentials. What you're listening for matters more than what they say — so each question comes with a "listen for" note.</p>
+
+        <div class="question-card">
+            <div class="the-question">"I've been avoiding something important at work for months. What's your approach when a client comes to you with an avoidance pattern?"</div>
+            <div class="why">This is the most direct test. You're describing your actual situation without naming it specifically. Their answer reveals whether they work at the behavioral level, the nervous system level, or both.</div>
+            <div class="listen-for">
+                <strong>Listen for:</strong>
+                Reference to the body or nervous system, not just mindset. Curiosity about what the avoidance is protecting you from. A distinction between "won't do" and "can't do." Red flag: they immediately reach for accountability or goal-setting.
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="the-question">"How do you tell the difference between someone who's burned out in their current role versus someone who's outgrowing it entirely?"</div>
+            <div class="why">This is the career architecture question. A coach who can hold both possibilities — and help you figure out which one is true — is qualitatively different from one who optimizes for the first.</div>
+            <div class="listen-for">
+                <strong>Listen for:</strong>
+                An acknowledgment that both are real and common. A framework or set of questions they'd use to investigate. Comfort with the possibility that the answer might be "you need to leave," not just "let's fix your energy." Red flag: they assume it's burnout and start prescribing recovery.
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="the-question">"If I'm about to make a series of high-stakes phone calls and I'm feeling tight, what would you actually have me do in the 60 seconds before I pick up the phone?"</div>
+            <div class="why">This tests whether they have concrete, executable techniques — not just concepts. A coach who works with performers in high-pressure contexts should be able to answer this immediately and specifically.</div>
+            <div class="listen-for">
+                <strong>Listen for:</strong>
+                A specific physiological technique they can walk you through right now: controlled exhale, vagal toning, a physical reset. Something that takes under 90 seconds. Red flag: they pivot to affirmations, visualization alone, or "let's explore why the calls make you feel that way."
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="the-question">"Tell me about a client who came to you with a performance block that wasn't really about performance. What did the work end up being about?"</div>
+            <div class="why">You want to know if they've seen your pattern before. Somebody who presents with a performance problem that's actually a career identity question, or a burnout that's actually grief for a version of themselves they've outgrown. Can they go underneath the presenting issue?</div>
+            <div class="listen-for">
+                <strong>Listen for:</strong>
+                A real story with specifics (while protecting client confidentiality). Evidence that they followed the thread from surface to structure. Evidence they didn't rush to a solution. Red flag: they only have stories about helping people hit their numbers.
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="the-question">"What does a typical engagement look like with you — and how do we both know if it's actually working?"</div>
+            <div class="why">This tests whether they have a clear structure and success criteria, or whether it's "we'll figure it out as we go." Structure matters. Especially for someone who values data and measurable progress.</div>
+            <div class="listen-for">
+                <strong>Listen for:</strong>
+                A defined cadence (weekly, biweekly). Clear intake or assessment process. Defined checkpoints — "at session 4 we'd expect to see X." Willingness to talk about what happens if it's not working. Red flag: indefinite engagement with no milestones.
+            </div>
+        </div>
+
+        <div class="question-card">
+            <div class="the-question">"Who do you work with on your own development? Do you have a supervisor, mentor, or your own coach?"</div>
+            <div class="why">The best coaches are still being coached. This question also signals to them that you're evaluating seriously — which changes the dynamic of the conversation in a useful way.</div>
+            <div class="listen-for">
+                <strong>Listen for:</strong>
+                A specific answer with a name or at least a type of professional. Ongoing, not past tense. Red flag: "I don't really need one anymore" or "I do a lot of self-reflection."
+            </div>
+        </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ==================== SCORECARD ==================== -->
+    <section class="doc-section" id="scorecard">
+        <h2>Scorecard</h2>
+        <p>After each discovery call, score the candidate across these seven dimensions. Use a 1-5 scale. Don't overthink it — your gut plus the data from the conversation is the right input.</p>
+
+        <table class="scorecard">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Dimension</th>
+                    <th>What You're Measuring</th>
+                    <th style="width: 15%;">Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="dimension">Methodology</td>
+                    <td>Can they articulate a clear, repeatable approach? Not rigid — clear.</td>
+                    <td class="scale">_ / 5</td>
+                </tr>
+                <tr>
+                    <td class="dimension">Body-Mind Integration</td>
+                    <td>Do they work with the nervous system, not just thoughts and beliefs?</td>
+                    <td class="scale">_ / 5</td>
+                </tr>
+                <tr>
+                    <td class="dimension">Performance Context</td>
+                    <td>Have they worked with people in high-output, high-rejection roles? Do they get it?</td>
+                    <td class="scale">_ / 5</td>
+                </tr>
+                <tr>
+                    <td class="dimension">Depth vs. Surface</td>
+                    <td>Can they tell the difference between a tactical slump and a structural problem?</td>
+                    <td class="scale">_ / 5</td>
+                </tr>
+                <tr>
+                    <td class="dimension">Concrete Techniques</td>
+                    <td>Do they have specific, executable protocols — things you can do before a call block?</td>
+                    <td class="scale">_ / 5</td>
+                </tr>
+                <tr>
+                    <td class="dimension">Curiosity vs. Certainty</td>
+                    <td>Did they ask good questions, or did they diagnose you in 15 minutes?</td>
+                    <td class="scale">_ / 5</td>
+                </tr>
+                <tr>
+                    <td class="dimension">Felt Safety</td>
+                    <td>Did you feel understood and respected — or managed and sold to?</td>
+                    <td class="scale">_ / 5</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <details>
+            <summary>How to read the scores</summary>
+            <p><strong>30-35:</strong> This is your person. Move forward.</p>
+            <p><strong>24-29:</strong> Strong candidate. Dig into the low-scoring dimensions in a follow-up conversation before committing.</p>
+            <p><strong>17-23:</strong> Probably not the right fit for what you're navigating, even if they're a good coach for someone else.</p>
+            <p><strong>Below 17:</strong> Next.</p>
+        </details>
+
+        <div class="bottom-line">
+            <h3>The One Question That Matters Most</h3>
+            <p>After the discovery call, ask yourself this: <em>Did this person make me feel like a problem to be solved, or a person to be understood?</em></p>
+            <p>The best methodology in the world fails if you don't feel safe enough to be honest. You're looking for someone who makes it easy to say the hard thing — because that's where the real work happens.</p>
+            <p style="margin-bottom: 0; color: var(--fg-muted); font-size: var(--text-sm); margin-top: var(--space-6);">Built for someone navigating the intersection of performance pressure, personal discipline, and a career question that doesn't have an obvious answer. You deserve better than guesswork for this decision.</p>
+        </div>
+    </section>
+
+    <footer class="author-footer">
+        <img src="sam-headshot.png" alt="Sam Millunchick" class="author-headshot">
+        <div class="author-info">
+            <span class="author-name">Sam Millunchick</span>
+            Executive coach — high-stakes communication and performance under pressure.<br>
+            <a href="https://pathoslabs.co" target="_blank" rel="noopener">pathoslabs.co</a>
+        </div>
+    </footer>
+</main>
+
+<script>
+// Reading progress fallback
+if (!CSS.supports('animation-timeline', 'scroll()')) {
+    const bar = document.querySelector('.progress-bar');
+    window.addEventListener('scroll', () => {
+        const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+        bar.style.transform = `scaleX(${Math.min(pct, 1)})`;
+    }, { passive: true });
+}
+
+// Section nav active state
+const sections = document.querySelectorAll('.doc-section');
+const navLinks = document.querySelectorAll('.section-nav a, .nav-mobile a');
+const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+        }
+    });
+}, { rootMargin: '-20% 0px -60% 0px' });
+sections.forEach(s => obs.observe(s));
+</script>
+<script data-goatcounter="https://pathos-labs.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
