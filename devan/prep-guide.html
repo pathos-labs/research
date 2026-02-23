@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Military Experience Is Your Advantage | Interview Prep Guide</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+    <style>
+        /* ===========================================
+           CUSTOM PROPERTIES
+           =========================================== */
+        :root {
+            --bg: #FAFBFC;
+            --bg-alt: #F1F5F9;
+            --text: #0F172A;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --accent: #2563EB;
+            --accent-light: #DBEAFE;
+            --accent-dark: #1D4ED8;
+            --green: #059669;
+            --green-bg: #D1FAE5;
+            --amber: #D97706;
+            --amber-bg: #FEF3C7;
+            --red: #DC2626;
+            --red-bg: #FEE2E2;
+            --border: #E2E8F0;
+            --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            --max-width: 65ch;
+            --content-width: 960px;
+            --nav-width: 200px;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* ===========================================
+           RESET & BASE
+           =========================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 5rem;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.018) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+        }
+
+        /* ===========================================
+           READING PROGRESS BAR
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.15s var(--ease-out-quart);
+        }
+
+        /* ===========================================
+           STICKY SECTION NAV (Desktop)
+           =========================================== */
+        .section-nav {
+            position: fixed;
+            top: 50%;
+            left: max(1rem, calc((100vw - var(--content-width)) / 2 - var(--nav-width) - 2rem));
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            max-width: var(--nav-width);
+        }
+
+        .section-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            padding: 0.3rem 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .section-nav a:hover {
+            color: var(--text-secondary);
+            background: rgba(37, 99, 235, 0.04);
+        }
+
+        .section-nav a.active {
+            color: var(--accent);
+            background: var(--accent-light);
+            font-weight: 600;
+        }
+
+        .nav-pip {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            border: 1.5px solid currentColor;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .section-nav a.active .nav-pip {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.3);
+        }
+
+        /* ===========================================
+           MAIN CONTENT LAYOUT
+           =========================================== */
+        main {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem 6rem 1.5rem;
+        }
+
+        /* ===========================================
+           HERO SECTION
+           =========================================== */
+        .hero {
+            padding: 6rem 0 4rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3.5rem;
+        }
+
+        .hero-meta {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1.25rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.5;
+            max-width: 55ch;
+        }
+
+        .accent-line {
+            width: 3.5rem;
+            height: 3px;
+            background: var(--accent);
+            border: none;
+            margin: 1.5rem 0;
+            border-radius: 2px;
+        }
+
+        /* ===========================================
+           SECTION HEADINGS
+           =========================================== */
+        .section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+
+        .section-header .accent-line {
+            margin: 1rem 0 0 0;
+        }
+
+        .section-intro {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-top: 1rem;
+            max-width: 60ch;
+        }
+
+        /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+        .prose p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .prose strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .prose ol {
+            padding-left: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .prose ol li {
+            font-size: 1rem;
+            line-height: 1.65;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+            padding-left: 0.25rem;
+        }
+
+        .prose ol li strong {
+            color: var(--text);
+        }
+
+        .lead-text {
+            font-size: 1.1rem;
+            color: var(--text);
+            line-height: 1.65;
+            font-weight: 400;
+        }
+
+        /* ===========================================
+           ARCHETYPE CARDS (2x2 Grid)
+           =========================================== */
+        .archetype-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .archetype-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .archetype-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+        }
+
+        .archetype-card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .archetype-card-header .archetype-track {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .archetype-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .translation-table {
+            width: 100%;
+            margin-top: 0.25rem;
+        }
+
+        .translation-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            font-size: 0.78rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .translation-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .trans-header {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .trans-from {
+            color: var(--text-muted);
+            text-decoration: line-through;
+            font-style: italic;
+            line-height: 1.45;
+        }
+
+        .trans-to {
+            color: var(--text);
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        .archetype-prompt {
+            margin-top: auto;
+            padding: 0.65rem 0.85rem;
+            background: var(--bg-alt);
+            border-radius: 6px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            border-left: 3px solid var(--accent);
+            line-height: 1.5;
+        }
+
+        .archetype-prompt strong {
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* ===========================================
+           RULES
+           =========================================== */
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .rule-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .rule-card:last-child {
+            border-bottom: none;
+        }
+
+        .rule-number {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 1.8rem;
+            flex-shrink: 0;
+            padding-top: 0.15em;
+        }
+
+        .rule-content {
+            flex: 1;
+        }
+
+        .rule-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+            margin-bottom: 0.4rem;
+        }
+
+        .rule-explanation {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .rule-example {
+            margin-top: 0.75rem;
+            padding: 0.65rem 0.85rem;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            border-left: 3px solid var(--accent);
+            line-height: 1.5;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+        }
+
+        .rule-example strong {
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        /* ===========================================
+           FIRM TABLE
+           =========================================== */
+        .firm-table-wrapper {
+            overflow-x: auto;
+            margin-top: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: white;
+        }
+
+        .firm-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        .firm-table thead th {
+            background: var(--bg-alt);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            padding: 0.85rem 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .firm-table tbody td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border);
+            line-height: 1.5;
+            vertical-align: top;
+        }
+
+        .firm-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .firm-table tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        .firm-table tbody tr:hover {
+            background: rgba(37, 99, 235, 0.02);
+        }
+
+        .firm-table .col-test {
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .firm-table .col-meaning {
+            color: var(--text-secondary);
+        }
+
+        .firm-table .col-edge {
+            font-weight: 500;
+        }
+
+        .edge-strong {
+            color: var(--green);
+            background: var(--green-bg);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.82rem;
+            display: inline-block;
+            line-height: 1.5;
+        }
+
+        .edge-mixed {
+            color: var(--amber);
+            background: var(--amber-bg);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.82rem;
+            display: inline-block;
+            line-height: 1.5;
+        }
+
+        .edge-gap {
+            color: var(--red);
+            background: var(--red-bg);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.82rem;
+            display: inline-block;
+            line-height: 1.5;
+        }
+
+        /* ===========================================
+           HONEST TRUTH CARDS
+           =========================================== */
+        .truth-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .truth-card {
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            border-left: 4px solid #F59E0B;
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: rgba(245, 158, 11, 0.03);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .truth-card:hover {
+            box-shadow: 0 2px 12px rgba(245, 158, 11, 0.06);
+        }
+
+        .truth-card:last-child {
+            border-left-color: var(--accent);
+            background: rgba(37, 99, 235, 0.03);
+        }
+
+        .truth-card:last-child:hover {
+            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.06);
+        }
+
+        .truth-card-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+            margin-bottom: 0.35rem;
+        }
+
+        .truth-card-body {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===========================================
+           RESOURCE CARDS
+           =========================================== */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .resource-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .resource-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+        }
+
+        .resource-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .resource-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            flex: 1;
+        }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 0.45rem 0.85rem;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            align-self: flex-start;
+            margin-top: 0.25rem;
+        }
+
+        .resource-link:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .resource-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ===========================================
+           FOOTER
+           =========================================== */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===========================================
+           REVEAL ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.05s; }
+        .reveal-delay-2 { transition-delay: 0.12s; }
+        .reveal-delay-3 { transition-delay: 0.19s; }
+        .reveal-delay-4 { transition-delay: 0.26s; }
+
+        /* ===========================================
+           PREFERS-REDUCED-MOTION
+           =========================================== */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .progress-bar { transition: none; }
+            .archetype-card,
+            .resource-card,
+            .truth-card,
+            .section-nav a { transition: none; }
+        }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-width: 1280px) {
+            .section-nav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 0 1rem 4rem 1rem;
+            }
+
+            .hero {
+                padding: 4rem 0 3rem 0;
+            }
+
+            .archetype-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .firm-table {
+                font-size: 0.8rem;
+            }
+
+            .firm-table thead th,
+            .firm-table tbody td {
+                padding: 0.65rem 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.35rem;
+            }
+
+            .archetype-card {
+                padding: 1.15rem;
+            }
+
+            .translation-row {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
+            }
+
+            .trans-from {
+                font-size: 0.72rem;
+            }
+
+            .trans-to {
+                font-size: 0.78rem;
+            }
+        }
+
+        /* ===========================================
+           FOCUS STYLES (ACCESSIBILITY)
+           =========================================== */
+        a:focus-visible,
+        .section-nav a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* ===========================================
+           PRINT STYLES
+           =========================================== */
+        @media print {
+            .progress-bar,
+            .section-nav { display: none; }
+            body { background: white; background-image: none; }
+            .reveal { opacity: 1; transform: none; }
+            .archetype-card, .resource-card, .truth-card {
+                break-inside: avoid;
+            }
+            .section { break-before: auto; }
+        }
+
+        /* ===========================================
+           SKIP LINK (ACCESSIBILITY)
+           =========================================== */
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            z-index: 10000;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus {
+            top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Reading Progress Bar -->
+    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Reading progress"></div>
+
+    <!-- Sticky Section Nav (Desktop) -->
+    <nav class="section-nav" aria-label="Section navigation">
+        <a href="#before-you-read" data-section="before-you-read">
+            <span class="nav-pip"></span>
+            Before You Read
+        </a>
+        <a href="#archetypes" data-section="archetypes">
+            <span class="nav-pip"></span>
+            Find Your Archetype
+        </a>
+        <a href="#three-rules" data-section="three-rules">
+            <span class="nav-pip"></span>
+            Three Rules
+        </a>
+        <a href="#what-firms-want" data-section="what-firms-want">
+            <span class="nav-pip"></span>
+            What Firms Want
+        </a>
+        <a href="#year-one" data-section="year-one">
+            <span class="nav-pip"></span>
+            Year One
+        </a>
+        <a href="#resources" data-section="resources">
+            <span class="nav-pip"></span>
+            Resources
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+
+        <!-- =============================================
+             HERO
+             ============================================= -->
+        <header class="hero">
+            <div class="hero-meta">Interview Prep Guide</div>
+            <h1>Your Military Experience Is <span>Your Advantage</span></h1>
+            <hr class="accent-line">
+            <p class="hero-subtitle">An interview prep guide for veterans entering financial services. You already have what it takes. This guide helps you show it.</p>
+        </header>
+
+        <!-- =============================================
+             BEFORE YOU READ
+             ============================================= -->
+        <section id="before-you-read" class="section reveal" aria-labelledby="heading-before">
+            <div class="section-header">
+                <h2 id="heading-before">Before You Read This</h2>
+                <hr class="accent-line">
+            </div>
+            <div class="prose">
+                <p class="lead-text">You already have what it takes to succeed as a financial advisor. The problem isn't your qualifications &mdash; it's how you talk about them.</p>
+                <p>Research shows that veterans interviewing for civilian roles make three consistent mistakes:</p>
+                <ol>
+                    <li><strong>Over-explaining military context</strong> &mdash; spending most of the answer teaching the interviewer what your job was, instead of why it matters</li>
+                    <li><strong>Using jargon</strong> &mdash; acronyms and military shorthand that mean nothing to a civilian hiring manager</li>
+                    <li><strong>Leading with operations instead of people</strong> &mdash; talking about what you did instead of who you did it for</li>
+                </ol>
+                <p>This guide fixes that.</p>
+            </div>
+        </section>
+
+        <!-- =============================================
+             FIND YOUR ARCHETYPE
+             ============================================= -->
+        <section id="archetypes" class="section reveal" aria-labelledby="heading-archetypes">
+            <div class="section-header">
+                <h2 id="heading-archetypes">Find Your Archetype</h2>
+                <hr class="accent-line">
+                <p class="section-intro">Most military experience maps to one of four archetypes. Find yours and use the translations below as starting points &mdash; not scripts. Adapt them to your actual experience.</p>
+            </div>
+
+            <div class="archetype-grid">
+
+                <!-- Card 1: Combat Leader -->
+                <article class="archetype-card reveal reveal-delay-1">
+                    <div class="archetype-card-header">
+                        <h3>The Combat Leader</h3>
+                        <span class="archetype-track">Infantry, Armor, Special Operations, Combat Arms</span>
+                    </div>
+                    <p class="archetype-description">You led teams in high-stakes environments. You made decisions under pressure with incomplete information. You were responsible for people's lives.</p>
+                    <div class="translation-table">
+                        <div class="translation-row">
+                            <span class="trans-header">Instead of saying...</span>
+                            <span class="trans-header">Say this...</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I led a platoon of 40 Marines"</span>
+                            <span class="trans-to">"I was responsible for 40 people's outcomes in environments where the plan changed daily"</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I conducted operations in hostile territory"</span>
+                            <span class="trans-to">"I built trust with teams under real pressure &mdash; the kind where people's futures depended on my judgment"</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I briefed senior leadership"</span>
+                            <span class="trans-to">"I translated complex situations into clear recommendations for decision-makers &mdash; similar to translating a client's financial picture into an actionable plan"</span>
+                        </div>
+                    </div>
+                    <div class="archetype-prompt">
+                        <strong>Practice Question</strong>
+                        Tell me about a time you had to make a call that affected someone's future &mdash; and you didn't have all the information you wanted.
+                    </div>
+                </article>
+
+                <!-- Card 2: Operations / Logistics Specialist -->
+                <article class="archetype-card reveal reveal-delay-2">
+                    <div class="archetype-card-header">
+                        <h3>The Operations / Logistics Specialist</h3>
+                        <span class="archetype-track">Supply Chain, Budget Management, Personnel, Compliance</span>
+                    </div>
+                    <p class="archetype-description">You built and maintained systems that kept entire units functioning. You managed budgets, personnel flows, and complex organizations.</p>
+                    <div class="translation-table">
+                        <div class="translation-row">
+                            <span class="trans-header">Instead of saying...</span>
+                            <span class="trans-header">Say this...</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I managed a $12M annual budget"</span>
+                            <span class="trans-to">"I was personally accountable for resource allocation decisions that affected hundreds of people &mdash; and every dollar had to be justified"</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I oversaw supply chain operations"</span>
+                            <span class="trans-to">"I built systems that ensured people got what they needed, when they needed it &mdash; even when conditions changed unexpectedly"</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I maintained 98% readiness rates"</span>
+                            <span class="trans-to">"I measured what mattered and held myself to a standard where failure wasn't abstract &mdash; it meant someone didn't have what they needed"</span>
+                        </div>
+                    </div>
+                    <div class="archetype-prompt">
+                        <strong>Practice Question</strong>
+                        Tell me about a system you built or fixed that people depended on &mdash; and what happened when it was tested.
+                    </div>
+                </article>
+
+                <!-- Card 3: Human Services Professional -->
+                <article class="archetype-card reveal reveal-delay-3">
+                    <div class="archetype-card-header">
+                        <h3>The Human Services Professional</h3>
+                        <span class="archetype-track">Medical, Chaplain, Family Readiness, Counseling</span>
+                    </div>
+                    <p class="archetype-description">You held space for people in crisis. You made decisions when emotions were high and stakes were real. You built trust in minutes with strangers.</p>
+                    <div class="translation-table">
+                        <div class="translation-row">
+                            <span class="trans-header">Instead of saying...</span>
+                            <span class="trans-header">Say this...</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I provided medical care to service members"</span>
+                            <span class="trans-to">"I made critical decisions about people's wellbeing while maintaining their trust in the process"</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I counseled families during deployment"</span>
+                            <span class="trans-to">"I guided people through the most stressful periods of their lives &mdash; helping them see clearly when everything felt uncertain"</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I triaged under pressure"</span>
+                            <span class="trans-to">"I assessed complex situations quickly, prioritized what mattered most, and communicated clearly to people who were scared"</span>
+                        </div>
+                    </div>
+                    <div class="archetype-prompt">
+                        <strong>Practice Question</strong>
+                        Tell me about a time someone trusted you with something that really mattered to them &mdash; and how you handled that trust.
+                    </div>
+                </article>
+
+                <!-- Card 4: Intelligence / Strategy Analyst -->
+                <article class="archetype-card reveal reveal-delay-4">
+                    <div class="archetype-card-header">
+                        <h3>The Intelligence / Strategy Analyst</h3>
+                        <span class="archetype-track">Intelligence, Cyber, Strategic Planning, Research</span>
+                    </div>
+                    <p class="archetype-description">You synthesized large volumes of ambiguous data into actionable intelligence. You briefed commanders on risk. You thought in scenarios and contingencies.</p>
+                    <div class="translation-table">
+                        <div class="translation-row">
+                            <span class="trans-header">Instead of saying...</span>
+                            <span class="trans-header">Say this...</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I produced intelligence assessments"</span>
+                            <span class="trans-to">"I turned incomplete, sometimes contradictory information into clear recommendations that leaders used to make high-stakes decisions"</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I briefed flag officers"</span>
+                            <span class="trans-to">"I regularly presented complex analysis to senior decision-makers and defended my reasoning under direct challenge"</span>
+                        </div>
+                        <div class="translation-row">
+                            <span class="trans-from">"I conducted threat analysis"</span>
+                            <span class="trans-to">"I assessed risk across multiple dimensions and built contingency plans &mdash; the same mindset you need for comprehensive financial planning"</span>
+                        </div>
+                    </div>
+                    <div class="archetype-prompt">
+                        <strong>Practice Question</strong>
+                        Tell me about a time your analysis changed someone's decision &mdash; and what was at stake if you'd gotten it wrong.
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- =============================================
+             THREE RULES FOR EVERY ANSWER
+             ============================================= -->
+        <section id="three-rules" class="section reveal" aria-labelledby="heading-rules">
+            <div class="section-header">
+                <h2 id="heading-rules">Three Rules for Every Answer</h2>
+                <hr class="accent-line">
+            </div>
+
+            <div class="rules-list">
+
+                <div class="rule-card">
+                    <span class="rule-number">01</span>
+                    <div class="rule-content">
+                        <div class="rule-title">Lead with the human, not the operation</div>
+                        <p class="rule-explanation">Every answer should start with a person &mdash; a subordinate, a commander, a family member, a patient &mdash; and what was at stake for them. Operations are context. People are the story.</p>
+                        <div class="rule-example">
+                            <strong>Example</strong>
+                            "One of my team leads was struggling with..." not "During Operation Enduring Freedom, our battalion was tasked with..."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rule-card">
+                    <span class="rule-number">02</span>
+                    <div class="rule-content">
+                        <div class="rule-title">Translate in real time</div>
+                        <p class="rule-explanation">If you say "Battalion S-3," immediately follow with "&mdash; the officer responsible for all training and operations planning for 800 people." Never let jargon sit unexplained. The interviewer won't ask you to clarify. They'll just stop listening.</p>
+                        <div class="rule-example">
+                            <strong>Example</strong>
+                            "As the S-3 &mdash; essentially the COO for an 800-person organization &mdash; I was responsible for..."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rule-card">
+                    <span class="rule-number">03</span>
+                    <div class="rule-content">
+                        <div class="rule-title">Connect the last 10 seconds to financial advising</div>
+                        <p class="rule-explanation">End every answer with a bridge. The interviewer shouldn't have to make the connection between your military experience and this role. You make it for them.</p>
+                        <div class="rule-example">
+                            <strong>Example</strong>
+                            "That's the same discipline I'd bring to helping families build a financial plan" or "Which is why when I think about helping someone navigate a major financial decision..."
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =============================================
+             WHAT FIRMS ARE LOOKING FOR
+             ============================================= -->
+        <section id="what-firms-want" class="section reveal" aria-labelledby="heading-firms">
+            <div class="section-header">
+                <h2 id="heading-firms">What Financial Advisory Firms Are Actually Looking For</h2>
+                <hr class="accent-line">
+            </div>
+
+            <div class="firm-table-wrapper">
+                <table class="firm-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">What They Test</th>
+                            <th scope="col">What That Means</th>
+                            <th scope="col">Your Military Edge</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-test">Relationship building</td>
+                            <td class="col-meaning">Can you connect with strangers and build long-term trust?</td>
+                            <td class="col-edge"><span class="edge-strong">You've built trust under conditions most civilians can't imagine</span></td>
+                        </tr>
+                        <tr>
+                            <td class="col-test">Resilience</td>
+                            <td class="col-meaning">Can you handle rejection and a slow start?</td>
+                            <td class="col-edge"><span class="edge-strong">You've handled worse. This is where you have the biggest advantage</span></td>
+                        </tr>
+                        <tr>
+                            <td class="col-test">Ethical judgment</td>
+                            <td class="col-meaning">Will you do right by clients even when it's not the easiest path?</td>
+                            <td class="col-edge"><span class="edge-strong">Military codes of conduct are among the most demanding ethical frameworks that exist</span></td>
+                        </tr>
+                        <tr>
+                            <td class="col-test">Coachability</td>
+                            <td class="col-meaning">Will you follow the training system?</td>
+                            <td class="col-edge"><span class="edge-strong">Following systems is what you've done your entire career</span></td>
+                        </tr>
+                        <tr>
+                            <td class="col-test">Communication</td>
+                            <td class="col-meaning">Can you explain complex things clearly without jargon?</td>
+                            <td class="col-edge"><span class="edge-mixed">You can &mdash; you just need to practice doing it in civilian language</span></td>
+                        </tr>
+                        <tr>
+                            <td class="col-test">Self-motivation</td>
+                            <td class="col-meaning">Can you work independently and generate your own business?</td>
+                            <td class="col-edge"><span class="edge-mixed">This is the adjustment. It's real. But your discipline gives you an edge most new advisors don't have</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- =============================================
+             THE HONEST TRUTH ABOUT YEAR ONE
+             ============================================= -->
+        <section id="year-one" class="section reveal" aria-labelledby="heading-year-one">
+            <div class="section-header">
+                <h2 id="heading-year-one">The Honest Truth About Year One</h2>
+                <hr class="accent-line">
+                <p class="section-intro">Financial advising is essentially entrepreneurship with a support system. You're building your own practice. That means:</p>
+            </div>
+
+            <div class="truth-cards">
+                <div class="truth-card">
+                    <div class="truth-card-title">The first 1&ndash;2 years are hard.</div>
+                    <p class="truth-card-body">You're building a client base from scratch. Most of your time will be spent prospecting &mdash; calling people, networking, asking for referrals.</p>
+                </div>
+                <div class="truth-card">
+                    <div class="truth-card-title">Income is variable early on.</div>
+                    <p class="truth-card-body">Unlike military pay, your compensation will fluctuate. Plan for this financially before you start.</p>
+                </div>
+                <div class="truth-card">
+                    <div class="truth-card-title">The system works if you work it.</div>
+                    <p class="truth-card-body">The firms that hire veterans have training systems that have been refined over decades. The people who succeed are the ones who trust the system and do the work &mdash; even when it's uncomfortable.</p>
+                </div>
+                <div class="truth-card">
+                    <div class="truth-card-title">Isolation is a risk.</div>
+                    <p class="truth-card-body">Military life is deeply communal. If you're in a solo or small-office setup, you need to actively build your support network. Come into the office. Find a mentor. Don't go it alone.</p>
+                </div>
+                <div class="truth-card">
+                    <div class="truth-card-title">Your military experience is your superpower &mdash; but only if you use it.</div>
+                    <p class="truth-card-body">The discipline, the resilience, the ability to keep going when things are hard &mdash; that's what separates the advisors who make it from the ones who don't.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             RESOURCES WORTH KNOWING ABOUT
+             ============================================= -->
+        <section id="resources" class="section reveal" aria-labelledby="heading-resources">
+            <div class="section-header">
+                <h2 id="heading-resources">Resources Worth Knowing About</h2>
+                <hr class="accent-line">
+            </div>
+
+            <div class="resource-grid">
+
+                <article class="resource-card">
+                    <h4>DoD SkillBridge</h4>
+                    <p>Start building your practice during the last 180 days of active duty while still receiving military pay. Multiple financial firms participate.</p>
+                    <a href="https://skillbridge.osd.mil" class="resource-link" target="_blank" rel="noopener noreferrer">
+                        Visit Site
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" /></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card">
+                    <h4>The American College of Financial Services</h4>
+                    <p>Full scholarships for CFP, ChFC, CLU, and master's degrees for veterans through their Center for Military and Veterans Affairs.</p>
+                    <a href="https://www.theamericancollege.edu/centers-of-excellence/center-for-military-veterans-affairs" class="resource-link" target="_blank" rel="noopener noreferrer">
+                        Visit Site
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" /></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card">
+                    <h4>College for Financial Planning &mdash; Freedom Scholarships</h4>
+                    <p>Tuition scholarships for military members and veterans pursuing financial planning credentials.</p>
+                    <a href="https://www.kaplanfinancial.com/wealth-management/resources/scholarships/freedom-scholarships" class="resource-link" target="_blank" rel="noopener noreferrer">
+                        Visit Site
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" /></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card">
+                    <h4>Hiring Our Heroes</h4>
+                    <p>12-week fellowship program with 95% graduation rate and 97% employment rate.</p>
+                    <a href="https://www.hiringourheroes.org" class="resource-link" target="_blank" rel="noopener noreferrer">
+                        Visit Site
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clip-rule="evenodd" /></svg>
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- =============================================
+             FOOTER
+             ============================================= -->
+        <footer class="footer">
+            <p>Prepared by Sam Millunchick | <a href="mailto:sam@pathoslabs.co">sam@pathoslabs.co</a></p>
+        </footer>
+
+    </main>
+
+    <!-- =============================================
+         JAVASCRIPT
+         ============================================= -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ── Reading Progress Bar ──
+            const progressBar = document.querySelector('.progress-bar');
+
+            function updateProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+                progressBar.setAttribute('aria-valuenow', Math.round(progress));
+            }
+
+            // ── Section Nav Active State ──
+            const navLinks = document.querySelectorAll('.section-nav a');
+            const sections = document.querySelectorAll('.section');
+
+            function updateActiveNav() {
+                const scrollPos = window.scrollY + window.innerHeight * 0.35;
+
+                let currentSection = '';
+                sections.forEach(function(section) {
+                    if (section.offsetTop <= scrollPos) {
+                        currentSection = section.id;
+                    }
+                });
+
+                navLinks.forEach(function(link) {
+                    link.classList.toggle('active', link.getAttribute('data-section') === currentSection);
+                });
+            }
+
+            // ── Reveal on Scroll (Intersection Observer) ──
+            const revealElements = document.querySelectorAll('.reveal');
+
+            // Check for reduced motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            if (prefersReducedMotion) {
+                // Show everything immediately
+                revealElements.forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            } else {
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                revealElements.forEach(function(el) {
+                    observer.observe(el);
+                });
+            }
+
+            // ── Scroll Event Handler (throttled) ──
+            var ticking = false;
+
+            function onScroll() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        updateProgress();
+                        updateActiveNav();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            // Initial calls
+            updateProgress();
+            updateActiveNav();
+
+        })();
+    </script>
+
+</body>
+</html>

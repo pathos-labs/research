@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veteran Recruiting at Northwestern Mutual: A Data-Driven Case</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+    <style>
+        /* ===========================================
+           CUSTOM PROPERTIES
+           =========================================== */
+        :root {
+            --bg: #FAFBFC;
+            --bg-alt: #F1F5F9;
+            --bg-dark: #0F172A;
+            --bg-dark-subtle: #1E293B;
+            --text: #0F172A;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --text-inverse: #F8FAFC;
+            --text-inverse-secondary: #94A3B8;
+            --accent: #2563EB;
+            --accent-light: #DBEAFE;
+            --accent-dark: #1D4ED8;
+            --amber: #F59E0B;
+            --amber-bg: rgba(245, 158, 11, 0.04);
+            --conf-5: #059669; --conf-5-bg: #D1FAE5;
+            --conf-4: #2563EB; --conf-4-bg: #DBEAFE;
+            --conf-3: #D97706; --conf-3-bg: #FEF3C7;
+            --conf-2: #DC2626; --conf-2-bg: #FEE2E2;
+            --border: #E2E8F0;
+            --border-dark: #334155;
+            --font-display: 'Inter', system-ui, sans-serif;
+            --font-body: 'Inter', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+            --duration: 0.5s;
+            --duration-fast: 0.3s;
+        }
+
+        /* ===========================================
+           RESET & BASE
+           =========================================== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            height: 100%;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.018) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        /* ===========================================
+           READING PROGRESS BAR
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.15s var(--ease-out-quart);
+        }
+
+        /* ===========================================
+           STICKY SECTION NAV
+           =========================================== */
+        .section-nav {
+            position: fixed;
+            top: 50%;
+            right: 1.5rem;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            cursor: pointer;
+            padding: 0;
+            border: none;
+            background: none;
+            color: var(--text-muted);
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+            text-decoration: none;
+        }
+
+        .nav-item:hover { opacity: 0.75; }
+        .nav-item.active { opacity: 1; }
+
+        .nav-label {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 500;
+            max-width: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-width 0.3s var(--ease-out-expo), opacity 0.2s ease;
+        }
+
+        .section-nav:hover .nav-label { max-width: 12rem; opacity: 1; }
+
+        .nav-pip {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1.5px solid currentColor;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active .nav-pip {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.3);
+        }
+
+        /* ===========================================
+           DOCUMENT LAYOUT
+           =========================================== */
+        .document {
+            max-width: 65ch;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        /* ===========================================
+           HERO
+           =========================================== */
+        .hero {
+            padding: 6rem 0 4rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .hero-meta {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .hero-divider {
+            width: 3.5rem;
+            height: 3px;
+            background: var(--accent);
+            border: none;
+            border-radius: 2px;
+            margin: 1.5rem 0 0;
+        }
+
+        /* ===========================================
+           SECTIONS
+           =========================================== */
+        .section {
+            margin-bottom: 3.5rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .section-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 3vw, 1.75rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .accent-line {
+            width: 3rem;
+            height: 3px;
+            background: var(--accent);
+            border: none;
+            margin: 0;
+            border-radius: 2px;
+        }
+
+        .section p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .section p strong {
+            font-weight: 600;
+        }
+
+        /* ===========================================
+           STAT CARDS (Hero Stats)
+           =========================================== */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 16px rgba(37,99,235,0.08);
+        }
+
+        .stat-num {
+            font-family: var(--font-mono);
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+
+        .stat-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .stat-source {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: auto;
+            padding-top: 0.5rem;
+        }
+
+        /* ===========================================
+           TABLES
+           =========================================== */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 0.85rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border);
+            background: var(--bg-alt);
+            white-space: nowrap;
+        }
+
+        thead th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        thead th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        tbody td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            line-height: 1.5;
+            vertical-align: top;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: rgba(37, 99, 235, 0.02);
+        }
+
+        tbody td:first-child {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .row-highlight {
+            background: rgba(37, 99, 235, 0.04);
+        }
+
+        .row-highlight td {
+            color: var(--text);
+        }
+
+        .row-highlight td:first-child {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* ===========================================
+           FEATURE TABLE (Veteran Traits)
+           =========================================== */
+        .feature-table {
+            margin: 1.5rem 0;
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            align-items: start;
+        }
+
+        .feature-row:last-child {
+            border-bottom: none;
+        }
+
+        .feature-trait {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .feature-mapping {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* ===========================================
+           METRIC CARDS (Data Gap)
+           =========================================== */
+        .metric-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+            border-left: 4px solid var(--accent);
+        }
+
+        .metric-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 16px rgba(37,99,235,0.08);
+        }
+
+        .metric-name {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .metric-why {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .metric-how {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-style: italic;
+            padding-top: 0.25rem;
+            border-top: 1px solid var(--border);
+            margin-top: 0.25rem;
+        }
+
+        .metric-how-label {
+            font-weight: 600;
+            font-style: normal;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-size: 0.68rem;
+        }
+
+        /* ===========================================
+           CALLOUT
+           =========================================== */
+        .callout {
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .callout p {
+            font-size: 0.95rem;
+            color: var(--accent-dark);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .callout strong {
+            font-weight: 700;
+        }
+
+        .callout-amber {
+            background: rgba(245, 158, 11, 0.06);
+            border-left-color: var(--amber);
+        }
+
+        .callout-amber p {
+            color: #92400E;
+        }
+
+        /* ===========================================
+           WARNING CARDS
+           =========================================== */
+        .warning-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-card {
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--amber);
+            border-top: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--amber-bg);
+            transition: box-shadow var(--duration-fast) ease;
+        }
+
+        .warning-card:hover {
+            box-shadow: 0 2px 12px rgba(245, 158, 11, 0.08);
+        }
+
+        .warning-num {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--amber);
+            margin-bottom: 0.25rem;
+        }
+
+        .warning-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        .warning-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* ===========================================
+           DARK SECTION (Hampton Roads)
+           =========================================== */
+        .section-dark {
+            background: var(--bg-dark);
+            background-image: radial-gradient(ellipse at 70% 30%, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
+            color: var(--text-inverse);
+            margin-left: -2rem;
+            margin-right: -2rem;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 3.5rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .section-dark h2 {
+            color: var(--text-inverse);
+        }
+
+        .section-dark .accent-line {
+            opacity: 0.7;
+        }
+
+        .section-dark p {
+            color: var(--text-inverse-secondary);
+        }
+
+        .section-dark p strong {
+            color: var(--text-inverse);
+        }
+
+        .section-dark ul {
+            margin: 1rem 0;
+            padding-left: 1.25rem;
+        }
+
+        .section-dark li {
+            font-size: 0.95rem;
+            color: var(--text-inverse-secondary);
+            line-height: 1.6;
+            margin-bottom: 0.4rem;
+        }
+
+        .section-dark .callout {
+            background: rgba(37, 99, 235, 0.15);
+            border-left-color: var(--accent);
+        }
+
+        .section-dark .callout p {
+            color: #93C5FD;
+        }
+
+        .section-dark .callout strong {
+            color: white;
+        }
+
+        /* ===========================================
+           STEP CARDS (Next Steps)
+           =========================================== */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .step-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+        }
+
+        .step-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 16px rgba(37,99,235,0.08);
+        }
+
+        .step-num {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            flex-shrink: 0;
+            min-width: 2rem;
+            text-align: center;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .step-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        /* ===========================================
+           BADGE
+           =========================================== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .badge-strategic {
+            background: var(--conf-4-bg);
+            color: var(--conf-4);
+        }
+
+        .badge-opportunity {
+            background: var(--conf-5-bg);
+            color: var(--conf-5);
+        }
+
+        .badge-action {
+            background: var(--conf-3-bg);
+            color: var(--conf-3);
+        }
+
+        /* ===========================================
+           SOURCES
+           =========================================== */
+        .sources-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .sources-list li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sources-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* ===========================================
+           FOOTER
+           =========================================== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===========================================
+           NUMBERED LIST (Translation section)
+           =========================================== */
+        .numbered-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+            counter-reset: item;
+        }
+
+        .numbered-list li {
+            counter-increment: item;
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+
+        .numbered-list li:last-child {
+            border-bottom: none;
+        }
+
+        .numbered-list li::before {
+            content: counter(item);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            min-width: 1.5rem;
+            flex-shrink: 0;
+            padding-top: 0.1em;
+        }
+
+        .numbered-list li strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* ===========================================
+           KEY INSIGHT CALLOUT
+           =========================================== */
+        .key-insight {
+            background: var(--accent-light);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .key-insight-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .key-insight p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--accent-dark);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* ===========================================
+           DATA GAP HEADER
+           =========================================== */
+        .data-gap-header {
+            background: var(--accent);
+            color: white;
+            padding: 1.25rem 1.5rem;
+            border-radius: 10px 10px 0 0;
+            margin-top: 2rem;
+        }
+
+        .data-gap-header h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+        }
+
+        .data-gap-header p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            margin: 0.25rem 0 0;
+        }
+
+        .data-gap-cards {
+            border: 1px solid var(--accent);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+        }
+
+        .data-gap-cards .metric-card {
+            border-radius: 0;
+            border-left: 4px solid var(--accent);
+            border-top: none;
+            border-right: none;
+            border-bottom: 1px solid var(--border);
+            margin: 0;
+        }
+
+        .data-gap-cards .metric-card:last-child {
+            border-bottom: none;
+        }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-width: 768px) {
+            .document {
+                padding: 0 1.25rem 4rem;
+            }
+
+            .hero {
+                padding: 4rem 0 3rem;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-nav {
+                display: none;
+            }
+
+            .feature-row {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
+            }
+
+            .section-dark {
+                margin-left: -1.25rem;
+                margin-right: -1.25rem;
+                padding: 2.5rem 1.25rem;
+                border-radius: 0;
+            }
+
+            .step-card {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .step-num {
+                min-width: auto;
+            }
+        }
+
+        /* ===========================================
+           REDUCED MOTION
+           =========================================== */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .progress-bar {
+                transition: none;
+            }
+
+            .stat-card,
+            .metric-card,
+            .step-card,
+            .warning-card {
+                transition: none;
+            }
+
+            .nav-label {
+                transition: none;
+            }
+
+            .nav-pip {
+                transition: none;
+            }
+
+            .reveal-animate {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        /* ===========================================
+           REVEAL ANIMATION
+           =========================================== */
+        .reveal-animate {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+        }
+
+        .reveal-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===========================================
+           PRINT STYLES
+           =========================================== */
+        @media print {
+            .progress-bar,
+            .section-nav {
+                display: none;
+            }
+
+            .section-dark {
+                background: #333;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            body {
+                background-image: none;
+            }
+        }
+
+        /* ===========================================
+           FOCUS STYLES (Accessibility)
+           =========================================== */
+        .nav-item:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Reading Progress Bar -->
+    <div class="progress-bar" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Reading progress"></div>
+
+    <!-- Sticky Section Nav -->
+    <nav class="section-nav" id="sectionNav" aria-label="Section navigation">
+        <a href="#problem" class="nav-item active" aria-label="The Business Problem">
+            <span class="nav-label">Problem</span>
+            <span class="nav-pip"></span>
+        </a>
+        <a href="#thesis" class="nav-item" aria-label="The Veteran Thesis">
+            <span class="nav-label">Thesis</span>
+            <span class="nav-pip"></span>
+        </a>
+        <a href="#landscape" class="nav-item" aria-label="Competitive Landscape">
+            <span class="nav-label">Landscape</span>
+            <span class="nav-pip"></span>
+        </a>
+        <a href="#data-gap" class="nav-item" aria-label="The Data Gap">
+            <span class="nav-label">Data Gap</span>
+            <span class="nav-pip"></span>
+        </a>
+        <a href="#translation" class="nav-item" aria-label="Translation Problem">
+            <span class="nav-label">Translation</span>
+            <span class="nav-pip"></span>
+        </a>
+        <a href="#retention" class="nav-item" aria-label="Retention Opportunity">
+            <span class="nav-label">Retention</span>
+            <span class="nav-pip"></span>
+        </a>
+        <a href="#hampton" class="nav-item" aria-label="Hampton Roads">
+            <span class="nav-label">Hampton Roads</span>
+            <span class="nav-pip"></span>
+        </a>
+        <a href="#next-steps" class="nav-item" aria-label="Next Steps">
+            <span class="nav-label">Next Steps</span>
+            <span class="nav-pip"></span>
+        </a>
+    </nav>
+
+    <!-- Document Body -->
+    <article class="document">
+
+        <!-- HERO -->
+        <header class="hero reveal-animate">
+            <div class="hero-meta">Internal Briefing</div>
+            <h1>Veteran Recruiting at Northwestern Mutual: A Data-Driven Case</h1>
+            <p class="hero-subtitle">Prepared for Devan Jewell, Director of Recruiting</p>
+            <hr class="hero-divider">
+        </header>
+
+        <!-- SECTION 1: THE BUSINESS PROBLEM -->
+        <section class="section reveal-animate" id="problem">
+            <div class="section-header">
+                <h2>The Business Problem</h2>
+                <hr class="accent-line">
+            </div>
+
+            <p>Northwestern Mutual, like every major financial services firm, faces a dual talent crisis. The pipeline isn't replacing advisors fast enough, and the ones entering the pipeline aren't surviving. The question isn't <em>whether</em> NWM needs new talent. The question is: <strong>which talent survives?</strong></p>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-num">72%</div>
+                    <div class="stat-label">Rookie Failure Rate</div>
+                    <div class="stat-desc">Most new financial representatives fail within three years of entering the industry.</div>
+                    <div class="stat-source">Cerulli Associates, 2023</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">109,000+</div>
+                    <div class="stat-label">Advisors Retiring</div>
+                    <div class="stat-desc">The number of advisors planning to retire within the next decade. The pipeline isn't replacing them.</div>
+                    <div class="stat-source">Industry estimates, 2023-2024</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE VETERAN THESIS -->
+        <section class="section reveal-animate" id="thesis">
+            <div class="section-header">
+                <h2>The Veteran Thesis</h2>
+                <hr class="accent-line">
+            </div>
+
+            <p>Military veterans bring specific, mechanism-level advantages that directly address the number one reason rookies fail: inability to endure the prospecting grind.</p>
+
+            <div class="feature-table">
+                <div class="feature-row">
+                    <div class="feature-trait">Trained tolerance for sustained discomfort</div>
+                    <div class="feature-mapping">Prospecting requires 2-3 years of rejection before the practice builds momentum</div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-trait">Mission discipline</div>
+                    <div class="feature-mapping">Following NWM's training system rather than freelancing</div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-trait">Accountability culture</div>
+                    <div class="feature-mapping">Fiduciary mindset &mdash; personal responsibility for client outcomes</div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-trait">Contingency planning</div>
+                    <div class="feature-mapping">Financial planning is scenario-based by nature</div>
+                </div>
+                <div class="feature-row">
+                    <div class="feature-trait">Trust-building under pressure</div>
+                    <div class="feature-mapping">Clients share fears, family situations, retirement anxieties &mdash; veterans know how to hold that space</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <p><strong>Edward Jones consumer research found:</strong> 77% of individual investors associate military experience with discipline, 73% with goal-orientation, and 72% with integrity.</p>
+            </div>
+
+            <p><strong>First Command Financial Services</strong> has operated with 75% veteran/military-spouse advisors since 1958 &mdash; managing $46.48B in client assets. The model has been proven for nearly seven decades.</p>
+        </section>
+
+        <!-- SECTION 3: COMPETITIVE LANDSCAPE -->
+        <section class="section reveal-animate" id="landscape">
+            <div class="section-header">
+                <h2>The Competitive Landscape</h2>
+                <hr class="accent-line">
+            </div>
+
+            <p>NWM is not the only firm pursuing veteran talent. Understanding the competitive picture is essential to positioning.</p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Firm</th>
+                            <th>Program</th>
+                            <th>Scale</th>
+                            <th>Differentiation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Edward Jones</td>
+                            <td>FORCES (est. 2012)</td>
+                            <td>1,500+ veteran advisors; 11% of all EJ advisors</td>
+                            <td>GI Bill-compatible; structured training + compensation; most comprehensive published program</td>
+                        </tr>
+                        <tr>
+                            <td>First Command</td>
+                            <td>Core model (1958)</td>
+                            <td>75% of 600+ advisors are veterans/mil-spouses</td>
+                            <td>Military-family focused; 34,000 free financial plans/year for active duty</td>
+                        </tr>
+                        <tr class="row-highlight">
+                            <td>Northwestern Mutual</td>
+                            <td>SkillBridge partner</td>
+                            <td>Military Friendly Employer 2020-2025; 70% of new advisors are career changers</td>
+                            <td>Strong training system; SkillBridge integration</td>
+                        </tr>
+                        <tr>
+                            <td>Morgan Stanley</td>
+                            <td>Veterans Employee Network</td>
+                            <td>Unknown scale</td>
+                            <td>ERG-based; career development programs</td>
+                        </tr>
+                        <tr>
+                            <td>JPMorgan Chase</td>
+                            <td>Military &amp; Veterans Affairs</td>
+                            <td>Broad hiring across divisions</td>
+                            <td>Not financial-advisor specific</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>NWM's competitive position:</strong> Strong brand, strong training system, active SkillBridge partnership. But Edward Jones has the most visible and structured veteran-specific program. First Command owns the military-family niche outright.</p>
+
+            <div class="key-insight">
+                <div class="key-insight-label">The Opportunity</div>
+                <p><strong>No firm has published comparative data showing veteran advisors outperform non-veteran peers.</strong> The first firm to build and publish this data owns the narrative.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 4: THE DATA GAP -->
+        <section class="section reveal-animate" id="data-gap">
+            <div class="section-header">
+                <h2>The Data Gap &mdash; And Why It Matters <span class="badge badge-strategic">Strategic Priority</span></h2>
+                <hr class="accent-line">
+            </div>
+
+            <p><strong>No published study &mdash; from any firm or academic institution &mdash; compares veteran vs. non-veteran financial advisor performance on any metric:</strong> retention/attrition rates, AUM growth, client satisfaction, first-year survival rate, or time to profitability.</p>
+
+            <p>This is the single most valuable data NWM could collect.</p>
+
+            <div class="data-gap-header">
+                <h3>What NWM Could Track Starting Now</h3>
+                <p>Five metrics that would create a first-mover advantage in veteran recruiting data</p>
+            </div>
+            <div class="data-gap-cards">
+                <div class="metric-card">
+                    <div class="metric-name">Veteran vs. Non-Veteran 1-Year Retention</div>
+                    <div class="metric-why">Directly tests the thesis that veterans survive the early grind at higher rates.</div>
+                    <div class="metric-how"><span class="metric-how-label">How to collect: </span>Tag veteran status in recruiting pipeline; track at 6, 12, 18, 24 months.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-name">Time to First 50 Clients</div>
+                    <div class="metric-why">Measures prospecting effectiveness &mdash; the core skill that determines advisor survival.</div>
+                    <div class="metric-how"><span class="metric-how-label">How to collect: </span>Already tracked in training metrics; break out by veteran status.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-name">Client Retention by Advisor Background</div>
+                    <div class="metric-why">Measures relationship quality &mdash; do clients of veteran advisors stay longer?</div>
+                    <div class="metric-how"><span class="metric-how-label">How to collect: </span>Cross-reference advisor background with client churn data.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-name">System Adherence Scores</div>
+                    <div class="metric-why">Tests the "coachability" thesis &mdash; do veterans follow the NWM playbook more consistently?</div>
+                    <div class="metric-how"><span class="metric-how-label">How to collect: </span>If NWM tracks training compliance, break out by background.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-name">Source of First 100 Clients</div>
+                    <div class="metric-why">Reveals whether veterans prospect differently &mdash; and whether that difference produces better outcomes.</div>
+                    <div class="metric-how"><span class="metric-how-label">How to collect: </span>Survey or intake data during training reviews.</div>
+                </div>
+            </div>
+
+            <div class="callout" style="margin-top: 1.5rem;">
+                <p><strong>The payoff:</strong> If the data shows what the anecdotal evidence suggests &mdash; that veterans retain longer, build more loyal client bases, and follow the system more consistently &mdash; NWM has a recruiting story no competitor can match. This becomes a national recruiting campaign, not just a local initiative.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 5: THE TRANSLATION PROBLEM -->
+        <section class="section reveal-animate" id="translation">
+            <div class="section-header">
+                <h2>The Translation Problem</h2>
+                <hr class="accent-line">
+            </div>
+
+            <p>A 2024 peer-reviewed study (FIMT-RC, PMC) found that veterans' number one interview weakness is <strong>ineffective translation of military technical skills into civilian language.</strong> Not lack of competence &mdash; lack of translation.</p>
+
+            <p>The same study found that veterans who received interview training were significantly more likely to find jobs and to advance.</p>
+
+            <div class="callout-amber callout">
+                <p><strong>Implication for NWM:</strong> If candidates are washing out at the interview stage because they can't translate their experience &mdash; and that translation gap is fixable &mdash; then NWM is losing qualified candidates to a solvable problem.</p>
+            </div>
+
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin: 1.5rem 0 0.75rem; color: var(--text);">Recommended: Candidate Prep Framework</h3>
+
+            <p>A structured interview prep tool &mdash; the Veteran-to-Advisor Narrative Framework &mdash; maps four military archetypes to the NWM advisor value proposition with specific language translations. This can be used:</p>
+
+            <ol class="numbered-list">
+                <li><strong>Pre-interview:</strong> Send to candidates before they come in, so they arrive prepared to talk about their experience in terms NWM interviewers understand</li>
+                <li><strong>During intake conversations:</strong> Use as a framework for helping candidates see themselves in the advisor role</li>
+                <li><strong>In SkillBridge and TAC recruiting:</strong> Hand to potential candidates at events as a tangible takeaway</li>
+                <li><strong>As LinkedIn content:</strong> Share the framework publicly to attract candidates who self-select</li>
+            </ol>
+        </section>
+
+        <!-- SECTION 6: THE RETENTION OPPORTUNITY -->
+        <section class="section reveal-animate" id="retention">
+            <div class="section-header">
+                <h2>The Retention Opportunity</h2>
+                <hr class="accent-line">
+            </div>
+
+            <p>From industry research and NWM's own experience, new advisor washout is driven by four primary failure modes:</p>
+
+            <div class="warning-list">
+                <div class="warning-card">
+                    <div class="warning-num">#1</div>
+                    <div class="warning-title">Not buying into the system</div>
+                    <div class="warning-desc">Thinking they can do it their own way instead of following the proven training playbook.</div>
+                </div>
+                <div class="warning-card">
+                    <div class="warning-num">#2</div>
+                    <div class="warning-title">Financial unpreparedness</div>
+                    <div class="warning-desc">Not having enough runway for variable income during the ramp-up period.</div>
+                </div>
+                <div class="warning-card">
+                    <div class="warning-num">#3</div>
+                    <div class="warning-title">Emotional/mental unpreparedness</div>
+                    <div class="warning-desc">Underestimating the difficulty of building a practice from scratch.</div>
+                </div>
+                <div class="warning-card">
+                    <div class="warning-num">#4</div>
+                    <div class="warning-title">Isolation</div>
+                    <div class="warning-desc">Not engaging with the office community and support network &mdash; going it alone.</div>
+                </div>
+            </div>
+
+            <p>Veterans should have structural advantages on #1 (system adherence), #2 (military pension/benefits for retirees), and #3 (resilience training). But #4 &mdash; isolation &mdash; is a real risk, especially for veterans transitioning from a deeply communal military culture.</p>
+
+            <div class="key-insight">
+                <div class="key-insight-label">Key Insight</div>
+                <p>The highest-leverage retention intervention for veteran advisors may be <strong>community and mentorship</strong> &mdash; ensuring they're connected, coming into the office, and paired with someone who's been through the hard first year.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 7: THE HAMPTON ROADS ADVANTAGE (Dark Section) -->
+        <div class="section-dark reveal-animate" id="hampton">
+            <div class="section-header">
+                <h2>The Hampton Roads Advantage</h2>
+                <hr class="accent-line">
+            </div>
+
+            <p>Norfolk is home to the world's largest Navy base. The local talent pipeline is uniquely favorable:</p>
+
+            <ul>
+                <li>Constant flow of transitioning service members (both retiring and separating)</li>
+                <li>Active Transition Assistance Center on base</li>
+                <li>SkillBridge fair access through Hampton Roads Veteran Employment Center</li>
+                <li>Devan's personal credibility: 25 years Navy, both enlisted and officer, can speak to every pay grade</li>
+            </ul>
+
+            <div class="callout">
+                <p><strong>This office has the potential to become NWM's proof-of-concept for a national veteran recruiting strategy.</strong> If the data is tracked and the results are strong, the model can scale across every NWM office near a major military installation.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 8: RECOMMENDED NEXT STEPS -->
+        <section class="section reveal-animate" id="next-steps">
+            <div class="section-header">
+                <h2>Recommended Next Steps <span class="badge badge-action">Action Items</span></h2>
+                <hr class="accent-line">
+            </div>
+
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-num">01</div>
+                    <div class="step-content">
+                        <div class="step-title">Start tracking veteran status in the recruiting pipeline</div>
+                        <div class="step-desc">Simple tag, enormous long-term value. This is the foundation everything else builds on.</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">02</div>
+                    <div class="step-content">
+                        <div class="step-title">Deploy the interview prep framework</div>
+                        <div class="step-desc">Send the Veteran-to-Advisor Narrative Framework to veteran candidates before their first conversation.</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">03</div>
+                    <div class="step-content">
+                        <div class="step-title">Build a 12-month data collection plan</div>
+                        <div class="step-desc">Veteran vs. non-veteran retention, system adherence, and client acquisition velocity. Structured metrics from day one.</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">04</div>
+                    <div class="step-content">
+                        <div class="step-title">Document early success stories</div>
+                        <div class="step-desc">The first veteran advisors who succeed become the recruiting content and the proof points for scaling the program.</div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">05</div>
+                    <div class="step-content">
+                        <div class="step-title">Assess and propose at 12 months</div>
+                        <div class="step-desc">Evaluate whether the data supports a formal proposal to NWM regional/national leadership for a structured veteran recruiting program.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 9: SOURCES -->
+        <section class="section reveal-animate" id="sources">
+            <div class="section-header">
+                <h2>Sources</h2>
+                <hr class="accent-line">
+            </div>
+
+            <ul class="sources-list">
+                <li>Cerulli Associates (2023). "The Cerulli Report &mdash; U.S. Advisor Metrics 2023"</li>
+                <li>FIMT-RC (2024). "Capitalizing on strengths and minimizing weaknesses of veterans in civilian employment interviews." PMC/PMC12413033</li>
+                <li>Milken Institute (2025). "The Impact of SkillBridge on Veteran Employment Outcomes"</li>
+                <li>Edward Jones (2013). Consumer research and FORCES program data</li>
+                <li>First Command Financial Services &mdash; Fort Worth Report (Oct 2025)</li>
+                <li>Financial Planning Magazine (Nov 2025). "From serving the country to serving clients"</li>
+                <li>Hire Heroes USA. "Improving Retention Rates Among Veteran Employees"</li>
+                <li>The American College of Financial Services &mdash; Center for Military and Veterans Affairs</li>
+            </ul>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>Prepared by Sam Millunchick | <a href="mailto:sam@pathoslabs.co">sam@pathoslabs.co</a></p>
+        </footer>
+
+    </article>
+
+    <!-- JavaScript: Progress Bar, Section Nav, Reveal Animations -->
+    <script>
+        (function() {
+            'use strict';
+
+            // Reduced motion check
+            var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // --- Reading Progress Bar ---
+            var progressBar = document.getElementById('progressBar');
+
+            function updateProgress() {
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                progressBar.style.width = progress + '%';
+                progressBar.setAttribute('aria-valuenow', Math.round(progress));
+            }
+
+            // --- Sticky Section Nav ---
+            var navItems = document.querySelectorAll('.nav-item');
+            var sections = [];
+
+            navItems.forEach(function(item) {
+                var href = item.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    var el = document.getElementById(href.substring(1));
+                    if (el) sections.push({ id: href.substring(1), el: el, navItem: item });
+                }
+            });
+
+            function updateNav() {
+                var scrollPos = window.pageYOffset + window.innerHeight * 0.35;
+                var active = null;
+
+                for (var i = sections.length - 1; i >= 0; i--) {
+                    if (sections[i].el.offsetTop <= scrollPos) {
+                        active = sections[i];
+                        break;
+                    }
+                }
+
+                navItems.forEach(function(item) { item.classList.remove('active'); });
+                if (active) active.navItem.classList.add('active');
+            }
+
+            // --- Reveal Animations ---
+            var reveals = document.querySelectorAll('.reveal-animate');
+
+            function checkReveals() {
+                if (prefersReducedMotion) {
+                    reveals.forEach(function(el) { el.classList.add('visible'); });
+                    return;
+                }
+
+                reveals.forEach(function(el) {
+                    var rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.88) {
+                        el.classList.add('visible');
+                    }
+                });
+            }
+
+            // --- Scroll Handler (Throttled) ---
+            var ticking = false;
+
+            function onScroll() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        updateProgress();
+                        updateNav();
+                        checkReveals();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+
+            // Initial state
+            updateProgress();
+            updateNav();
+
+            // Trigger reveals on load
+            if (prefersReducedMotion) {
+                reveals.forEach(function(el) { el.classList.add('visible'); });
+            } else {
+                // Small delay so the page settles
+                setTimeout(checkReveals, 100);
+            }
+        })();
+    </script>
+
+</body>
+</html>
