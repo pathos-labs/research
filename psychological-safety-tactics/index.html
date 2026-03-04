@@ -262,7 +262,7 @@
     </style>
 </head>
 <body>
-    <script>if (!localStorage.getItem('pathos_access')) window.location.replace('https://pathoslabs.co/writing/');</script>
+    <script>if (!localStorage.getItem('pathos_access')) window.location.replace('https://pathoslabs.co/writing/?deck=' + location.pathname.split('/').filter(Boolean).pop());</script>
     <div class="progress-bar"></div>
     <nav class="nav-dots"></nav>
     <div class="slide-counter"></div>

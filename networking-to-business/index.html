@@ -1009,7 +1009,7 @@
     <!-- Redirect to landing page if not subscribed (gate lives there) -->
     <script>
         if (location.hostname === 'research.pathoslabs.co' && !localStorage.getItem('pathos_access')) {
-            window.location.replace('/');
+            window.location.replace('https://pathoslabs.co/writing/?deck=' + location.pathname.split('/').filter(Boolean).pop());
         }
     </script>
 
