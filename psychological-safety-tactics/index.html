@@ -231,6 +231,19 @@
             color: var(--success); font-size: var(--small-size);
             display: block; margin-bottom: 0.25rem;
         }
+        /* Force dark text on practice boxes inside dark slides */
+        .dark .practice { color: var(--text-primary); }
+        .dark .practice .practice-label { color: var(--success); }
+        .dark .practice strong { color: var(--text-primary); }
+        .dark .practice .bullets li { color: var(--text-body); }
+        .dark .practice .bullets li::before { background: var(--success); }
+        .dark .practice .steps li { color: var(--text-body); }
+        .dark .practice .steps li::before { color: var(--success); }
+
+        /* Same fix for alert boxes on dark slides */
+        .dark .alert-good { color: var(--text-primary); }
+        .dark .alert-watch { color: var(--text-primary); }
+        .dark .alert-accent { color: var(--text-on-dark); background: var(--bg-dark-surface); }
 
         /* === TACTIC NUMBER === */
         .tactic-num {
@@ -275,7 +288,7 @@
         <div class="slide-content">
             <div class="label reveal">Pathos Labs Research</div>
             <h1 class="reveal">Manufacturing<br>Psychological Safety</h1>
-            <p class="subtitle reveal">5 research-backed tactics for performing under pressure — and the science behind each one</p>
+            <p class="subtitle reveal">What happens in your body when you blank under pressure — and seven ways to get ahead of it</p>
             <div class="meta reveal">
                 <span>7 tactics</span>
                 <span>60-second practices</span>
@@ -290,19 +303,19 @@
     <section class="slide">
         <div class="slide-content">
             <h2 class="reveal">Why You Blank Under Pressure</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap); max-width: 60ch;">The largest cortisol response in humans comes from two conditions happening together: social evaluation and uncontrollability. Being watched and judged in a situation you can't control.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap); max-width: 60ch;">Two things happening at the same time produce the largest cortisol response the human body is capable of: being watched and judged in a situation you can't fully control. That's a board meeting. That's an investor pitch. That's a keynote.</p>
             <div class="split reveal">
                 <div class="evidence">
                     <span class="cite">Dickerson & Kemeny (2004) — 208 stress studies</span>
-                    Social-evaluative threat produces larger cortisol responses and slower recovery than physical pain, cognitive challenge, or financial risk. Your nervous system treats a boardroom like a predator.
+                    Social-evaluative threat produces larger cortisol responses and slower recovery than physical pain, cognitive challenge, or financial risk. Your nervous system treats a boardroom the way it treats a predator. Same chemistry. Same shutdown.
                 </div>
                 <div class="evidence">
                     <span class="cite">Arnsten (2009) — Nature Reviews Neuroscience</span>
-                    Under social threat, stress chemicals flood your prefrontal cortex and physically disconnect the neurons holding your train of thought. The part of you that reads the room, finds the right word, makes the sharp observation — goes offline first.
+                    Under social threat, stress chemicals flood your prefrontal cortex and physically disconnect the neurons responsible for your train of thought. The part of you that reads the room, finds the right word, makes the observation that lands — that goes offline first.
                 </div>
             </div>
             <div class="alert alert-accent reveal">
-                <strong>The key insight:</strong> Your nervous system treats social evaluation as a survival-level threat because, for most of human history, it was. The chemistry is identical to a soldier under fire. The context has changed. The wiring hasn't.
+                <strong>Here's what matters:</strong> Your nervous system treats social evaluation as a survival-level threat because, for most of human history, it was. The chemistry is identical to a soldier under fire. The context has changed. The wiring hasn't. And knowing that changes what you do about it.
             </div>
         </div>
     </section>
@@ -315,25 +328,25 @@
             <div class="tactic-num">01</div>
             <div class="label reveal">Tactic 1</div>
             <h2 class="reveal">Third-Person Self-Talk</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap);">Use your own name instead of "I" when preparing for a high-stakes moment. Your brain processes it like advising someone else — and it costs you nothing.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap);">Use your own name instead of "I" when you're preparing for something that scares you. Your brain processes it as though you're advising someone else — and it costs you nothing.</p>
             <div class="split reveal">
                 <div>
                     <div class="evidence" style="margin-bottom: var(--content-gap);">
                         <span class="cite">Kross et al. (2014) — 7 studies, N=585</span>
-                        Third-person self-talk reduced anticipatory anxiety, improved objective speech performance, and shifted appraisals from threat to challenge — regardless of trait social anxiety.
+                        Third-person self-talk reduced anticipatory anxiety, improved objective speech performance, and shifted appraisals from threat to challenge — regardless of how anxious the person was to begin with.
                     </div>
                     <div class="evidence">
                         <span class="cite">Moser et al. (2017) — ERP + fMRI</span>
-                        The technique regulated emotion within <strong>one second</strong> without increasing prefrontal cognitive control activity. It is effortless — it does not consume the working memory you need to perform.
+                        The technique regulated emotion within <strong>one second</strong> without increasing prefrontal cognitive control activity. It's effortless — it doesn't consume the working memory you need to actually perform.
                     </div>
                 </div>
                 <div>
                     <div class="practice">
                         <span class="practice-label">60-Second Practice</span>
-                        Before your next high-stakes moment, switch the pronoun. Instead of "I'm dreading this presentation," say: "<strong>[Your name], what do you want to communicate? What matters most? What do you know cold?</strong>" Let the conversation continue in third person. You are coaching yourself the way you'd coach someone you believe in.
+                        Before your next high-stakes moment, switch the pronoun. Instead of "I'm dreading this presentation," say: "<strong>[Your name], what do you want to communicate? What matters most? What do you know cold?</strong>" Let it continue in third person. You're coaching yourself the way you'd coach someone you believe in — and it turns out that creates real distance from the panic.
                     </div>
                     <div class="alert alert-watch" style="margin-top: var(--element-gap);">
-                        <strong>Boundary:</strong> Works for fear ("I'll freeze") but not for shame ("they'll see I'm a fraud"). Self-conscious emotions need a different tool — see Tactic 6.
+                        <strong>Boundary:</strong> This works for fear ("I'll freeze") but not for shame ("they'll see I'm a fraud"). Shame needs a different tool — see Tactic 6.
                     </div>
                 </div>
             </div>
@@ -348,25 +361,25 @@
             <div class="tactic-num">02</div>
             <div class="label reveal">Tactic 2</div>
             <h2 class="reveal">Arousal Reappraisal</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap);">Anxiety and excitement are the same physiological event — same heart rate, same adrenaline, same cortisol. The only difference is the label your brain puts on it.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap);">Anxiety and excitement are the same physiological event — same heart rate, same adrenaline, same cortisol. The only difference is the story your brain tells about what's happening.</p>
             <div class="split reveal">
                 <div>
                     <div class="evidence" style="margin-bottom: var(--content-gap);">
                         <span class="cite">Brooks (2014) — 4 studies</span>
-                        Saying "I am excited" outperformed "I am calm" across karaoke, public speaking, and math performance. Moving between two high-arousal states is like changing lanes. Trying to calm down is like throwing the car into reverse at highway speed.
+                        Saying "I am excited" outperformed "I am calm" across karaoke, public speaking, and math. Moving between two high-arousal states is like changing lanes. Trying to calm down is like throwing the car into reverse at highway speed — it fights the physiology instead of working with it.
                     </div>
                     <div class="evidence">
                         <span class="cite">Bosshard & Gomez (2024) — meta-analysis, 44 studies</span>
-                        Overall d = 0.23 for reappraisal alone. Public performance tasks: d = 0.34. Mixed interventions (reappraisal combined with other tools): d = 0.45. The effect nearly doubles when combined with other tactics.
+                        Overall d = 0.23 for reappraisal alone. Public performance tasks: d = 0.34. Combined with other tactics: d = 0.45. The effect nearly doubles when you stack it. None of these tools work as well alone as they do together.
                     </div>
                 </div>
                 <div>
                     <div class="practice">
                         <span class="practice-label">60-Second Practice</span>
-                        Build a personal anchor phrase that connects arousal to a domain where you already interpret it positively. Not just "I am excited" — something specific: "<strong>This is the same energy I feel before a trade I'm confident about. It's fuel, not fire.</strong>" Deploy it the moment you notice activation rising. The feelings stay. The panic about the feelings goes.
+                        Build a personal anchor phrase that connects the feeling to something you already read as positive. Not just "I am excited" — something that actually means something to you: "<strong>This is the same energy I feel before a trade I'm confident about. It's fuel, not fire.</strong>" Say it the moment you notice the activation rising. The feelings stay. The panic about the feelings goes.
                     </div>
                     <div class="alert alert-good" style="margin-top: var(--element-gap);">
-                        <strong>Key finding:</strong> Beltzer et al. (2014) showed reappraisal worked equally well for people with clinical-level social anxiety. Your severity does not disqualify you.
+                        <strong>Worth knowing:</strong> Beltzer et al. (2014) showed this worked equally well for people with clinical-level social anxiety. How bad it feels right now doesn't disqualify you from this working.
                     </div>
                 </div>
             </div>
@@ -381,12 +394,12 @@
             <div class="tactic-num">03</div>
             <div class="label reveal">Tactic 3</div>
             <h2 class="reveal">Cyclic Sighing</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap);">The fastest available lever for activating your calming circuits. One breath. Four seconds. Nobody in the room will notice.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap);">The fastest lever you have for activating your calming circuits. One breath. Four seconds. Nobody in the room will notice you doing it.</p>
             <div class="split reveal">
                 <div>
                     <div class="evidence">
                         <span class="cite">Balban et al. (2023) — Cell Reports Medicine, RCT, N=111</span>
-                        Cyclic sighing produced greater mood improvement and physiological arousal reduction than mindfulness meditation, box breathing, <em>and</em> cyclic hyperventilation — with just 5 minutes of daily practice. The mechanism is vagal stimulation through extended exhalation.
+                        Cyclic sighing produced greater mood improvement and physiological arousal reduction than mindfulness meditation, box breathing, <em>and</em> cyclic hyperventilation — with just 5 minutes of daily practice. The mechanism is vagal stimulation through extended exhalation. It's the simplest tool on this list, and it's the one I'd start with.
                     </div>
                 </div>
                 <div>
@@ -395,11 +408,11 @@
                         <ol class="steps" style="margin-top: var(--element-gap);">
                             <li><strong>Double inhale</strong> through the nose — first breath fills the lungs, second short sniff tops them off</li>
                             <li><strong>Slow extended exhale</strong> through the mouth — longer than the inhale</li>
-                            <li>That's one cycle. <strong>One is enough</strong> in the moment. For training, do 5 minutes daily.</li>
+                            <li>That's one cycle. <strong>One is enough</strong> in the moment. For building the habit, do 5 minutes daily.</li>
                         </ol>
                     </div>
                     <div class="alert alert-accent" style="margin-top: var(--element-gap);">
-                        Deploy this as the <strong>first move</strong> in any pre-performance sequence. The physiological reset creates a window for the cognitive tools that follow.
+                        This should be your <strong>first move</strong> in any pre-performance sequence. The physiological reset buys you a window for the cognitive tools that follow.
                     </div>
                 </div>
             </div>
@@ -414,7 +427,7 @@
             <div class="tactic-num">04</div>
             <div class="label reveal">Tactic 4</div>
             <h2 class="reveal">If-Then Planning</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap);">Pre-decide your responses to predictable disruptions. Your brain doesn't have to improvise under fire if you've already loaded the answer.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap);">Pre-decide your responses to the disruptions you can see coming. Your brain doesn't have to improvise under fire if the answer is already loaded.</p>
             <div class="split reveal">
                 <div>
                     <div class="evidence" style="margin-bottom: var(--content-gap);">
@@ -423,17 +436,17 @@
                     </div>
                     <div class="evidence">
                         <span class="cite">Thurmer, McCrea & Gollwitzer (2013)</span>
-                        If-then planning specifically reduced self-handicapping under ego threat — directly relevant to performance anxiety where the fear of judgment creates the very behaviour that confirms it.
+                        If-then planning specifically reduced self-handicapping under ego threat. That's the exact loop where the fear of judgment creates the very behaviour that confirms it.
                     </div>
                 </div>
                 <div>
                     <div class="practice">
                         <span class="practice-label">60-Second Practice</span>
-                        Before your next high-stakes moment, write three if-then plans for the disruptions you fear most:
+                        Before your next high-stakes moment, write three if-then plans for the disruptions you actually fear:
                         <ul class="bullets" style="margin-top: var(--element-gap);">
-                            <li><strong>"If my heart starts racing</strong> before I stand up, <strong>then</strong> I take one cyclic sigh and state my intention."</li>
+                            <li><strong>"If my heart starts racing</strong> before I stand up, <strong>then</strong> I take one cyclic sigh and say my first line."</li>
                             <li><strong>"If I lose my train of thought,</strong> then I pause, take a sip of water, and return to my last key point."</li>
-                            <li><strong>"If someone asks a question I wasn't expecting,</strong> then I say 'Let me think about that for a moment.'"</li>
+                            <li><strong>"If someone asks something I wasn't expecting,</strong> then I say 'Let me think about that for a moment' — and I actually think about it."</li>
                         </ul>
                     </div>
                 </div>
@@ -449,26 +462,26 @@
             <div class="tactic-num">05</div>
             <div class="label reveal">Tactic 5</div>
             <h2 class="reveal">The Rehearsed Launch</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap);">A sentence rehearsed fifty times runs on different neural hardware than one rehearsed five times. Procedural memory survives the stress chemicals that shut down working memory.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap);">A sentence rehearsed fifty times runs on completely different neural hardware than one rehearsed five times. Procedural memory survives the stress chemicals that shut everything else down.</p>
             <div class="split reveal">
                 <div>
                     <div class="evidence" style="margin-bottom: var(--content-gap);">
                         <span class="cite">Beilock et al. (2001) — Choking under pressure</span>
-                        Procedural memory — stored in the basal ganglia and cerebellum — is resistant to the catecholamine flood that impairs working memory. Material rehearsed to automaticity runs on these stress-resistant circuits.
+                        Procedural memory — stored in the basal ganglia and cerebellum — is resistant to the catecholamine flood that impairs working memory. Material rehearsed to automaticity runs on stress-resistant circuits. It's the reason a pianist can perform under stage fright when they can't remember their own name.
                     </div>
                     <div class="evidence">
                         <span class="cite">Arnsten (2009) + Allen et al. (2017)</span>
-                        The catecholamine surge peaks in the first 1–5 minutes, then subsides. A rehearsed opening buys you 60–90 seconds — which is typically enough for habituation to kick in and your prefrontal cortex to come back online.
+                        The catecholamine surge peaks in the first 1–5 minutes, then subsides. A rehearsed opening buys you 60–90 seconds — and that's usually enough for habituation to kick in and your thinking brain to come back online.
                     </div>
                 </div>
                 <div>
                     <div class="practice">
                         <span class="practice-label">60-Second Practice</span>
                         <ol class="steps" style="margin-top: var(--element-gap);">
-                            <li>Craft one opening sentence for your next talk. Not "Thank you for having me" — a content-rich line. A bold claim. A striking data point.</li>
-                            <li>Say it aloud, standing, projecting. <strong>50 times.</strong> Until you can say it while someone interrupts you.</li>
-                            <li>Add a bridge phrase: "The question that keeps coming back to me is..." or "Here's what I've seen play out..."</li>
-                            <li>Then 60 seconds of material you know so deeply retrieval is automatic. That's your runway.</li>
+                            <li>Write one opening sentence for your next talk. Not "Thank you for having me" — something with weight. A claim. A number. Something that matters to you.</li>
+                            <li>Say it aloud, standing, projecting. <strong>50 times.</strong> Until you can say it while someone is talking to you.</li>
+                            <li>Add a bridge: "The question that keeps coming back to me is..." or "Here's what I've seen play out..."</li>
+                            <li>Then 60 seconds of material you know so deeply that retrieval is automatic. That's your runway. You only need to survive until the flood recedes.</li>
                         </ol>
                     </div>
                 </div>
@@ -482,7 +495,7 @@
     <section class="slide section-slide">
         <div class="slide-content">
             <h2 class="reveal">Going Deeper</h2>
-            <h3 class="reveal">Two More the Research Surfaced</h3>
+            <h3 class="reveal">Two more that the research kept pointing to</h3>
         </div>
         <div class="section-number">+2</div>
     </section>
@@ -494,16 +507,16 @@
         <div class="slide-content">
             <div class="label reveal">Bonus Tactic 6</div>
             <h2 class="reveal">Cognitive Defusion</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap);">Self-distancing works for fear. It fails for shame. And shame — not general anxiety — is the emotional core of social-evaluative threat.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap);">Self-distancing works for fear. It fails for shame. And shame — not general anxiety — is what's actually running the show in most high-stakes social situations.</p>
             <div class="split reveal">
                 <div>
                     <div class="evidence" style="margin-bottom: var(--content-gap);">
                         <span class="cite">Katzir & Eyal (2013)</span>
-                        Self-distancing attenuated anger and sadness but had <strong>no effect on shame or guilt</strong>. Self-conscious emotions involve evaluating yourself through others' eyes — taking a distanced observer perspective IS the perspective that generates shame.
+                        Self-distancing attenuated anger and sadness but had <strong>no effect on shame or guilt</strong>. The reason is structural: self-conscious emotions involve evaluating yourself through other people's eyes. Taking a distanced observer perspective IS the perspective that generates shame. You can't distance yourself out of it.
                     </div>
                     <div class="evidence">
                         <span class="cite">Tyndall et al. (2020) — N=63</span>
-                        A single-session cognitive defusion intervention significantly reduced public speaking anxiety and subjective distress compared to controls. The technique works through a different pathway than distancing — it changes your relationship to the thought without requiring perspective-shifting.
+                        A single-session cognitive defusion intervention significantly reduced public speaking anxiety compared to controls. It works through a different pathway — changing your relationship to the thought without requiring you to step outside yourself.
                     </div>
                 </div>
                 <div>
@@ -511,10 +524,10 @@
                         <span class="practice-label">60-Second Practice</span>
                         When a shame-based thought arrives — "they'll see I'm a fraud," "I don't belong up here" — add five words to the front:
                         <p style="margin: var(--element-gap) 0; font-weight: 600; font-size: clamp(0.9rem, 1.5vw, 1.15rem);">"I'm having the thought that they'll see I'm a fraud."</p>
-                        The thought goes from being the air you breathe — invisible, all-encompassing, taken as reality — to being an object you can look at. You don't have to believe it's wrong. You don't have to replace it. You just have to see it as a thought rather than a verdict.
+                        The thought goes from being the air you breathe — invisible, total, taken as reality — to being an object you can look at. You don't have to believe it's wrong. You don't have to replace it with something positive. You just have to see it as a thought rather than a verdict.
                     </div>
                     <div class="alert alert-accent" style="margin-top: var(--element-gap);">
-                        <strong>When to reach for this one:</strong> If your distress centers on "what if I freeze" — use third-person self-talk. If it centers on "they'll see who I really am" — use defusion. Different layer, different tool.
+                        <strong>Which tool when:</strong> If your distress is "what if I freeze" — use third-person self-talk (Tactic 1). If it's "they'll see who I really am" — use defusion. Different layer, different tool.
                     </div>
                 </div>
             </div>
@@ -528,26 +541,26 @@
         <div class="slide-content">
             <div class="label reveal">Bonus Tactic 7</div>
             <h2 class="reveal">Pre-Loaded Recovery</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap);">What feels like a 30-second catastrophe looks like a 3-second composed pause from the outside. Having even one rehearsed recovery move breaks the feedforward panic loop.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap);">What feels like a 30-second catastrophe looks like a 3-second composed pause from the outside. Having even one rehearsed recovery move is enough to break the feedforward panic loop.</p>
             <div class="split reveal">
                 <div>
                     <div class="evidence" style="margin-bottom: var(--content-gap);">
                         <span class="cite">McManus et al. (2009)</span>
-                        Video feedback comparing predicted appearance to actual appearance produced significant cognitive and anxiety change. The typical discovery: the internal catastrophe maps to slight nervousness at worst, composed thoughtfulness at best.
+                        When researchers showed people video of their own presentations alongside their predicted performance, the gap was enormous. What feels like visible meltdown reads as slight nervousness at worst, composed thoughtfulness at best. We are terrible judges of how we look under pressure.
                     </div>
                     <div class="evidence">
                         <span class="cite">Craske (2014; 2024) — Inhibitory learning</span>
-                        The most potent learning occurs when the feared event happens and the predicted catastrophe does not follow. Every blank you recover from is evidence that blanking is recoverable.
+                        The most powerful learning happens when the feared event occurs and the catastrophe you predicted doesn't follow. Every blank you recover from is evidence — felt in the body, not just understood intellectually — that blanking is survivable.
                     </div>
                 </div>
                 <div>
                     <div class="practice">
                         <span class="practice-label">Pick Two, Memorise Them</span>
                         <ul class="bullets" style="margin-top: var(--element-gap);">
-                            <li><strong>Pause and breathe.</strong> Three seconds of silence. One slow exhale. Three seconds reads as gravitas.</li>
-                            <li><strong>Repeat and reframe.</strong> "The key point there is..." Buys 5–10 seconds. You only need to remember what you just said.</li>
-                            <li><strong>Bridge to known territory.</strong> "The key point I want to make sure lands is..." then pivot to anything you know cold. The audience doesn't have your outline.</li>
-                            <li><strong>Acknowledge directly.</strong> "Let me gather my thoughts for a moment." Senior people take moments to think before consequential decisions. No one faults them.</li>
+                            <li><strong>Pause and breathe.</strong> Three seconds of silence. One slow exhale. Three seconds reads as gravitas, not panic.</li>
+                            <li><strong>Repeat and reframe.</strong> "The key point there is..." buys you 5–10 seconds. You only need to remember what you just said.</li>
+                            <li><strong>Bridge to known territory.</strong> "What I want to make sure lands is..." then pivot to anything you know cold. The audience doesn't have your outline. They won't notice.</li>
+                            <li><strong>Name it.</strong> "Let me gather my thoughts for a moment." Senior people do this before consequential decisions. Nobody faults them for it.</li>
                         </ul>
                     </div>
                 </div>
@@ -562,7 +575,7 @@
         <div class="slide-content" style="align-items: center; text-align: center;">
             <div class="label reveal">Putting It Together</div>
             <h2 class="reveal" style="max-width: 25ch; font-size: clamp(1.5rem, 4vw, 3rem);">The 60-Second Protocol</h2>
-            <p class="muted reveal" style="margin-bottom: var(--content-gap); max-width: 50ch;">Five steps. Under 60 seconds. Buys your prefrontal cortex enough time to come back online.</p>
+            <p class="muted reveal" style="margin-bottom: var(--content-gap); max-width: 50ch;">Five steps. Under 60 seconds. All you're doing is buying your thinking brain enough time to come back online.</p>
             <div class="grid-3 reveal" style="margin-bottom: var(--content-gap); width: 100%; max-width: 900px;">
                 <div class="card" style="text-align: center;">
                     <div class="label">1. Sigh</div>
@@ -570,7 +583,7 @@
                 </div>
                 <div class="card" style="text-align: center;">
                     <div class="label">2. Relabel</div>
-                    <p class="muted">"This is fuel, not fire." Redirect the arousal. 3 seconds.</p>
+                    <p class="muted">"This is fuel, not fire." Relabel the arousal. 3 seconds.</p>
                 </div>
                 <div class="card" style="text-align: center;">
                     <div class="label">3. Plan</div>
@@ -580,11 +593,11 @@
             <div class="grid-2 reveal" style="width: 100%; max-width: 600px;">
                 <div class="card" style="text-align: center;">
                     <div class="label">4. Ground</div>
-                    <p class="muted">Feet on floor. Spine tall. The body can't freeze and move at the same time.</p>
+                    <p class="muted">Feet on floor. Spine tall. Your body can't freeze and move at the same time.</p>
                 </div>
                 <div class="card" style="text-align: center;">
                     <div class="label">5. Launch</div>
-                    <p class="muted">Rehearsed first sentence. Procedural memory. It survives the flood.</p>
+                    <p class="muted">Your rehearsed first sentence. Procedural memory. It survives the flood.</p>
                 </div>
             </div>
         </div>
