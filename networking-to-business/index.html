@@ -1003,6 +1003,70 @@
             .progress-bar, .nav-sections, .slide-counter, .keyboard-hint { display: none; }
             .reveal, .reveal-left { opacity: 1; transform: none; }
         }
+
+        /* ===========================================
+           CTA SLIDE
+           =========================================== */
+        .cta-slide {
+            background: var(--bg-dark);
+            color: var(--text-inverse);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .cta-content {
+            max-width: 42ch;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--content-gap);
+        }
+        .cta-content h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0;
+        }
+        .cta-content p {
+            font-size: var(--body-size);
+            line-height: 1.6;
+            color: var(--text-inverse-secondary);
+        }
+        .cta-actions {
+            display: flex;
+            align-items: center;
+            gap: clamp(1rem, 3vw, 2rem);
+            margin-top: clamp(0.5rem, 2vh, 1.5rem);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .cta-btn-primary {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: var(--body-size);
+            color: #fff;
+            background: var(--accent);
+            padding: 0.75em 2em;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: background var(--duration-fast) ease;
+        }
+        .cta-btn-primary:hover {
+            background: var(--accent-dark);
+        }
+        .cta-btn-secondary {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: var(--body-size);
+            color: var(--text-inverse-secondary);
+            text-decoration: none;
+            transition: color var(--duration-fast) ease;
+        }
+        .cta-btn-secondary:hover {
+            color: var(--text-inverse);
+        }
     </style>
 </head>
 <body>
@@ -2047,6 +2111,20 @@
             </div>
         </div>
         <span class="section-number reveal" style="opacity: 0.03;">PL</span>
+    </section>
+
+    <!-- =============================================
+         SLIDE 34: CTA
+         ============================================= -->
+    <section class="slide cta-slide" id="cta">
+        <div class="cta-content reveal">
+            <h2>Want to go deeper?</h2>
+            <p>This research is a sample of how we think at Pathos Labs. If something here resonated — or challenged something you believed — that's exactly the kind of conversation we have with clients.</p>
+            <div class="cta-actions">
+                <a href="https://cal.com/pathos-labs/fit-match-30" target="_blank" rel="noopener" class="cta-btn cta-btn-primary">Start the Conversation</a>
+                <a href="https://pathoslabs.co/writing/" class="cta-btn cta-btn-secondary">More Research &rarr;</a>
+            </div>
+        </div>
     </section>
 
 
